@@ -45,119 +45,159 @@ type MiddleSectionProps = {
   subtitle: string;
 };
 
-const mainProduct: Product = {
-  id: "amla",
-  name: "Amla (Amalaki) Fruit Powder - Organic",
-  subtitle: "Tart • Versatile • Easy to Mix",
-  description:
-    "A bright, versatile fruit powder that works well in water, smoothies, tea-style drinks, and simple recipes.",
-  image: "/images/amla-powder.png",
-  badges: ["Organic", "Versatile", "Daily Ritual"],
-  href: "https://www.znaturalfoods.com/products/amla-amalaki-fruit-powder-organic",
+const mainProducts: Record<string, Product> = {
+  endurance: {
+    id: "beet-root-juice-powder",
+    name: "Beet Root Juice Powder - Organic",
+    subtitle: "Bright • Smooth • Easy to Mix",
+    description:
+      "A vibrant beet option with a smooth, juice-style profile that fits naturally into drinks, smoothies, and pre-workout style routines.",
+    image: "/images/beet-root-juice-powder.png",
+    badges: ["Organic", "Smooth Mixing", "Drink-Friendly"],
+    href: "https://www.znaturalfoods.com/products/beet-root-juice-powder-organic",
+  },
+  daily: {
+    id: "beet-root-powder",
+    name: "Beet Root Powder - Organic",
+    subtitle: "Earthy-Sweet • Versatile • Whole Root",
+    description:
+      "A versatile whole beet root powder with an earthy-sweet flavor that works well in smoothies, juices, bowls, and everyday recipes.",
+    image: "/images/beet-root-powder.png",
+    badges: ["Organic", "Versatile", "Whole Root"],
+    href: "https://www.znaturalfoods.com/products/beet-root-powder-organic",
+  },
+  performance: {
+    id: "beet-root-juice-powder",
+    name: "Beet Root Juice Powder - Organic",
+    subtitle: "Bright • Smooth • Easy to Mix",
+    description:
+      "A vibrant beet option with a smooth, juice-style profile that fits naturally into drinks, smoothies, and active routines.",
+    image: "/images/beet-root-juice-powder.png",
+    badges: ["Organic", "Smooth Mixing", "Active Routine"],
+    href: "https://www.znaturalfoods.com/products/beet-root-juice-powder-organic",
+  },
+  natural: {
+    id: "beet-root-powder",
+    name: "Beet Root Powder - Organic",
+    subtitle: "Earthy-Sweet • Versatile • Whole Root",
+    description:
+      "A simple whole-food style beet powder that adds natural color, flavor, and plant-based nutrition to drinks and recipes.",
+    image: "/images/beet-root-powder.png",
+    badges: ["Organic", "Whole Root", "Recipe-Friendly"],
+    href: "https://www.znaturalfoods.com/products/beet-root-powder-organic",
+  },
 };
 
-const secondaryProduct: Product = {
-  id: "booster-c",
-  name: "Booster C Blend - Organic",
-  subtitle: "Bright • Fruity • Easy Add-On",
-  description:
-    "A vibrant blend that pairs naturally with daily wellness routines and can be worked into simple drinks and smoothies.",
-  image: "/images/booster-c-blend-organic.png",
-  badges: [
-    "Naturally rich in vitamin C",
-    "May support immunity",
-    "Supports overall wellness",
-  ],
-  href: "https://www.znaturalfoods.com/products/booster-c-blend-organic",
-};
+const secondaryProducts: Product[] = [
+  {
+    id: "beet-root-powder",
+    name: "Beet Root Powder - Organic",
+    subtitle: "Earthy-Sweet • Versatile • Whole Root",
+    description:
+      "A versatile whole beet root powder that works well in smoothies, juices, bowls, and recipes.",
+    image: "/images/beet-root-powder.png",
+    badges: ["Organic", "Whole Root", "Versatile"],
+    href: "https://www.znaturalfoods.com/products/beet-root-powder-organic",
+  },
+  {
+    id: "beet-root-juice-powder",
+    name: "Beet Root Juice Powder - Organic",
+    subtitle: "Bright • Smooth • Easy to Mix",
+    description:
+      "A smooth beet juice powder option designed for drinks, smoothies, and easy daily use.",
+    image: "/images/beet-root-juice-powder.png",
+    badges: ["Organic", "Drink-Friendly", "Smooth Mixing"],
+    href: "https://www.znaturalfoods.com/products/beet-root-juice-powder-organic",
+  },
+];
 
 const questions: Question[] = [
   {
     id: "goal",
-    title: "What's your #1 wellness goal right now?",
+    title: "What are you hoping to support most right now?",
     answers: [
       {
-        id: "immunity",
-        title: "Support my everyday wellness",
-        desc: "I want something simple I can stay consistent with",
-        icon: "🛡️",
-      },
-      {
-        id: "beauty",
-        title: "Support my skin, hair, and nails",
-        desc: "I like routines that feel beauty-friendly and easy to repeat",
-        icon: "✨",
-      },
-      {
-        id: "energy",
-        title: "Feel more refreshed in my routine",
+        id: "endurance",
+        title: "Daily energy and stamina",
         desc: "I want something that fits naturally into active days",
         icon: "⚡",
       },
       {
-        id: "digestion",
-        title: "Support my digestion routine",
-        desc: "I’m looking for something steady and easy to work into the day",
+        id: "daily",
+        title: "Everyday nourishment",
+        desc: "I like adding nutrient-dense foods into my routine",
+        icon: "🥬",
+      },
+      {
+        id: "performance",
+        title: "Workout or movement support",
+        desc: "I want something that feels good before training or activity",
+        icon: "🏃",
+      },
+      {
+        id: "natural",
+        title: "A more natural food-based option",
+        desc: "I prefer simple ingredients and whole-food style choices",
         icon: "🌿",
       },
     ],
   },
   {
     id: "routine",
-    title: "How would you describe your daily routine?",
+    title: "Which routine sounds most like you?",
     answers: [
       {
-        id: "strict-morning",
-        title: "I like starting the day with a simple routine",
-        desc: "Morning habits are easier for me to keep",
+        id: "morning",
+        title: "I like getting started early",
+        desc: "Morning routines are easiest for me to keep",
         icon: "🌅",
       },
       {
-        id: "busy-consistent",
-        title: "I try to stay consistent, even on busy days",
-        desc: "I need something practical and low effort",
+        id: "busy",
+        title: "I need something fast",
+        desc: "If it takes too long, I probably won’t stick with it",
         icon: "🕒",
       },
       {
-        id: "building-habits",
-        title: "I’m building healthier habits little by little",
-        desc: "I want something approachable and easy to stick with",
-        icon: "🌱",
+        id: "steady",
+        title: "I like keeping things simple and consistent",
+        desc: "I’d rather repeat one easy habit than overcomplicate it",
+        icon: "✅",
       },
       {
-        id: "evening",
-        title: "I prefer something later in the day",
-        desc: "Evening rituals feel more natural to me",
-        icon: "🌙",
+        id: "flexible",
+        title: "I like having options",
+        desc: "Some days I drink it, other days I mix it into food",
+        icon: "🧭",
       },
     ],
   },
   {
     id: "format",
-    title: "How would you most likely enjoy Amla powder?",
+    title: "How would you be most likely to use beet powder?",
     answers: [
       {
-        id: "water",
-        title: "Stirred into lukewarm water",
-        desc: "Quick, clean, and simple",
-        icon: "💧",
+        id: "drink",
+        title: "Mixed into water or juice",
+        desc: "Quick and straightforward",
+        icon: "🥤",
       },
       {
         id: "smoothie",
         title: "Blended into a smoothie",
-        desc: "I like a more enjoyable, mixed drink",
-        icon: "🥤",
+        desc: "I like a smoother, more enjoyable option",
+        icon: "🍓",
       },
       {
-        id: "warm-drink",
-        title: "Mixed into tea or another warm drink",
-        desc: "I prefer something cozy and easy to sip",
-        icon: "🍵",
+        id: "warm",
+        title: "Stirred into something warm",
+        desc: "I like cozy, easy-to-sip routines",
+        icon: "☕",
       },
       {
         id: "food",
-        title: "Worked into simple recipes",
-        desc: "I like flexibility more than strict routines",
+        title: "Added into food or recipes",
+        desc: "I prefer flexible, everyday ways to use it",
         icon: "🥣",
       },
     ],
@@ -167,28 +207,28 @@ const questions: Question[] = [
     title: "Which of these sounds most like you?",
     answers: [
       {
-        id: "optimizer",
-        title: "I like simple wellness habits that are easy to repeat",
-        desc: "Consistency matters more to me than complexity",
-        icon: "📈",
-      },
-      {
-        id: "natural",
-        title: "I prefer clean, plant-based options",
-        desc: "I’m drawn to simple ingredient choices",
-        icon: "🍃",
-      },
-      {
-        id: "busy",
-        title: "I need things to fit a busy schedule",
-        desc: "If it’s too complicated, I probably won’t stick with it",
+        id: "active",
+        title: "I’m usually on the go",
+        desc: "I want things to fit into a busy day",
         icon: "🚀",
       },
       {
+        id: "wholefood",
+        title: "I like whole-food style choices",
+        desc: "Simple, recognizable ingredients matter to me",
+        icon: "🍃",
+      },
+      {
+        id: "routine-first",
+        title: "I care most about consistency",
+        desc: "The best routine is the one I’ll actually keep",
+        icon: "📈",
+      },
+      {
         id: "explorer",
-        title: "I enjoy trying new wellness ideas",
-        desc: "I like variety and new ways to use products",
-        icon: "🧭",
+        title: "I enjoy trying new ways to use things",
+        desc: "I like variety more than strict rules",
+        icon: "✨",
       },
     ],
   },
@@ -196,40 +236,40 @@ const questions: Question[] = [
 
 function getProfile(goalId?: string): ProfileResult {
   switch (goalId) {
-    case "immunity":
+    case "endurance":
       return {
-        key: "daily-defender",
-        name: "The Daily Defender",
+        key: "endurance",
+        name: "The Daily Mover",
         shortDescription:
-          "You’re best matched with a simple Amla ritual that feels easy to repeat and fits naturally into an everyday wellness routine.",
+          "You’re best matched with a beet routine that feels energizing, practical, and easy to work into active days.",
       };
-    case "beauty":
+    case "daily":
       return {
-        key: "beauty-within",
-        name: "Beauty from Within",
+        key: "daily",
+        name: "The Everyday Nourisher",
         shortDescription:
-          "You’re best matched with an Amla ritual that feels smooth, enjoyable, and easy to work into a beauty-friendly daily routine.",
+          "You’re best matched with a more balanced beet routine that feels simple, versatile, and easy to repeat day after day.",
       };
-    case "energy":
+    case "performance":
       return {
-        key: "vital-type",
-        name: "The Vital Type",
+        key: "performance",
+        name: "The Performance Type",
         shortDescription:
-          "You’re best matched with a more refreshing Amla ritual that works well with active days and flexible routines.",
+          "You’re best matched with a beet routine that feels bright, purposeful, and easy to use before movement or exercise.",
       };
-    case "digestion":
+    case "natural":
       return {
-        key: "gentle-reset",
-        name: "The Gentle Reset",
+        key: "natural",
+        name: "The Whole-Food Minimalist",
         shortDescription:
-          "You’re best matched with a steadier Amla ritual that feels simple, supportive, and easy to build into your day.",
+          "You’re best matched with a simple beet option that feels natural, flexible, and easy to use in everyday food and drink routines.",
       };
     default:
       return {
-        key: "daily-defender",
-        name: "The Daily Defender",
+        key: "daily",
+        name: "The Everyday Nourisher",
         shortDescription:
-          "You’re best matched with a simple Amla ritual that feels easy to repeat and fits naturally into your routine.",
+          "You’re best matched with a balanced beet routine that feels simple, versatile, and easy to repeat.",
       };
   }
 }
@@ -241,37 +281,72 @@ function buildPersonalizedTips(
 ) {
   const tips: string[] = [];
 
-  if (routineId === "strict-morning") {
-    tips.push("A simple morning drink looks like the easiest routine for you to stay consistent with.");
-  } else if (routineId === "busy-consistent") {
-    tips.push("You’ll probably do best with a fast, low-effort option that still feels intentional.");
-  } else if (routineId === "building-habits") {
-    tips.push("Starting with the easiest version first is likely your best long-term fit.");
-  } else if (routineId === "evening") {
-    tips.push("A later-in-the-day Amla drink may feel more natural than forcing a strict morning habit.");
+  if (routineId === "morning") {
+    tips.push(
+      "A morning beet routine looks like your best fit because it will be easier for you to keep consistent."
+    );
+  } else if (routineId === "busy") {
+    tips.push(
+      "You’ll probably do best with a quick, low-effort option that still feels intentional."
+    );
+  } else if (routineId === "steady") {
+    tips.push(
+      "A simple beet habit you can repeat easily looks like your strongest long-term fit."
+    );
+  } else if (routineId === "flexible") {
+    tips.push(
+      "You’ll probably enjoy a beet option that can move between drinks, smoothies, and simple recipes."
+    );
   }
 
-  if (formatId === "water") {
-    tips.push("A lukewarm water mix looks like your cleanest and most repeatable option.");
+  if (formatId === "drink") {
+    tips.push(
+      "A water-or-juice based beet ritual looks like the easiest option for your routine."
+    );
   } else if (formatId === "smoothie") {
-    tips.push("A smoothie-based ritual looks like the most enjoyable way for you to use Amla regularly.");
-  } else if (formatId === "warm-drink") {
-    tips.push("A tea-style or warm cup option looks like the smoothest fit for your routine.");
+    tips.push(
+      "A smoothie-based beet routine looks like the most enjoyable fit for you."
+    );
+  } else if (formatId === "warm") {
+    tips.push(
+      "A warm beet drink looks like a smoother, more comfortable fit for your style."
+    );
   } else if (formatId === "food") {
-    tips.push("You seem like a good fit for a more flexible mix of drinks and simple recipe ideas.");
+    tips.push(
+      "A more flexible recipe-based approach looks like the best fit for how you like to use products."
+    );
   }
 
-  if (personaId === "optimizer") {
-    tips.push("You seem like someone who does best with simple habits you can actually repeat.");
-  } else if (personaId === "natural") {
-    tips.push("A clean, plant-based style ritual fits your preferences well.");
-  } else if (personaId === "busy") {
-    tips.push("The easiest format will probably be the one you stick with best.");
+  if (personaId === "active") {
+    tips.push(
+      "You seem like someone who benefits most from routines that feel fast, clean, and easy to fit into movement-focused days."
+    );
+  } else if (personaId === "wholefood") {
+    tips.push(
+      "A simpler whole-food style beet option fits your preferences best."
+    );
+  } else if (personaId === "routine-first") {
+    tips.push(
+      "Consistency matters most for you, so the easiest repeatable version is likely your best match."
+    );
   } else if (personaId === "explorer") {
-    tips.push("You’ll likely enjoy rotating between a couple of different Amla formats during the week.");
+    tips.push(
+      "You’ll probably enjoy rotating between a few different beet ideas during the week."
+    );
   }
 
   return tips.slice(0, 3);
+}
+
+function getMainProduct(profileKey?: string): Product {
+  if (profileKey === "endurance") return mainProducts.endurance;
+  if (profileKey === "performance") return mainProducts.performance;
+  if (profileKey === "natural") return mainProducts.natural;
+  return mainProducts.daily;
+}
+
+function getAlsoWorthTrying(mainProductId: string): Product[] {
+  return secondaryProducts.filter((product) => product.id !== mainProductId);
 }
 
 function buildIdeas(
@@ -279,174 +354,224 @@ function buildIdeas(
   routineId?: string,
   formatId?: string
 ): RitualIdea[] {
-  const baseFormat = formatId || "water";
-  const isEvening = routineId === "evening";
+  const isMorning = routineId === "morning";
+  const isBusy = routineId === "busy";
 
-  if (baseFormat === "water") {
+  if (formatId === "drink") {
+    if (goalId === "performance" || goalId === "endurance") {
+      return [
+        {
+          title: isMorning ? "Morning Beet Juice Mix" : "Simple Beet Juice Mix",
+          image:
+            "https://images.unsplash.com/photo-1577234286642-fc512a5f8f11?auto=format&fit=crop&w=1200&q=80",
+          time: "2 min",
+          intro: "A fast beet drink option for active days.",
+          ingredients: [
+            "8–10 oz water or juice",
+            "**1 tsp Beet Root Juice Powder - Organic**",
+          ],
+          steps: [
+            "Add **Beet Root Juice Powder - Organic** to water or juice.",
+            "Stir or shake well.",
+            "Drink fresh.",
+          ],
+        },
+        {
+          title: "Beet Citrus Drink",
+          image:
+            "https://images.unsplash.com/photo-1600271886742-f049cd5bba3f?auto=format&fit=crop&w=1200&q=80",
+          time: "3 min",
+          intro: "A brighter beet option with a more refreshing feel.",
+          ingredients: [
+            "8–10 oz water",
+            "**1 tsp Beet Root Juice Powder - Organic**",
+            "Squeeze of orange or lemon",
+          ],
+          steps: [
+            "Add **Beet Root Juice Powder - Organic** to water.",
+            "Stir well.",
+            "Add citrus and drink fresh.",
+          ],
+        },
+        {
+          title: "Quick Beet Water",
+          image:
+            "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=1200&q=80",
+          time: "2 min",
+          intro: "The easiest place to start when you want something simple.",
+          ingredients: [
+            "8–10 oz water",
+            "**1 tsp Beet Root Powder - Organic**",
+          ],
+          steps: [
+            "Add **Beet Root Powder - Organic** to water.",
+            "Stir well.",
+            "Drink right away.",
+          ],
+        },
+      ];
+    }
+
     return [
       {
-        title: isEvening ? "Evening Amla Water" : "Simple Amla Water",
+        title: isMorning ? "Morning Beet Water" : "Simple Beet Water",
         image:
-          "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=1200&q=80",
         time: "2 min",
-        intro: "The easiest place to start with Amla powder.",
+        intro: "A straightforward beet ritual for everyday use.",
         ingredients: [
-          "1 glass lukewarm water",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
+          "8–10 oz water",
+          "**1 tsp Beet Root Powder - Organic**",
         ],
         steps: [
-          "Add **Amla (Amalaki) Fruit Powder - Organic** to lukewarm water.",
+          "Add **Beet Root Powder - Organic** to water.",
           "Stir well.",
-          "Drink right away, even if a few particles remain.",
+          "Drink fresh.",
         ],
       },
       {
-        title: "Amla Lemon Water",
+        title: "Beet Lemon Water",
         image:
-          "https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1600271886742-f049cd5bba3f?auto=format&fit=crop&w=1200&q=80",
         time: "3 min",
-        intro: "A brighter variation for a more refreshing feel.",
+        intro: "A brighter beet drink when you want a lighter taste.",
         ingredients: [
-          "1 glass lukewarm water",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
+          "8–10 oz water",
+          "**1 tsp Beet Root Powder - Organic**",
           "Squeeze of lemon",
         ],
         steps: [
-          "Add **Amla (Amalaki) Fruit Powder - Organic** to water.",
+          "Add **Beet Root Powder - Organic** to water.",
           "Stir well.",
-          "Add lemon and drink fresh.",
+          "Add lemon and enjoy.",
         ],
       },
       {
-        title: "Mint Amla Water",
+        title: "Beet Juice Mix",
         image:
-          "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=80",
-        time: "4 min",
-        intro: "A simple variation when you want a lighter everyday ritual.",
+          "https://images.unsplash.com/photo-1577234286642-fc512a5f8f11?auto=format&fit=crop&w=1200&q=80",
+        time: "2 min",
+        intro: "A smooth drink option when you want something easy.",
         ingredients: [
-          "1 glass lukewarm water",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
-          "A few mint leaves",
+          "8–10 oz water or juice",
+          "**1 tsp Beet Root Juice Powder - Organic**",
         ],
         steps: [
-          "Add **Amla (Amalaki) Fruit Powder - Organic** to water.",
-          "Stir well.",
-          "Add mint leaves, let sit briefly, and enjoy.",
+          "Add **Beet Root Juice Powder - Organic** to water or juice.",
+          "Stir or shake well.",
+          "Drink fresh.",
         ],
       },
     ];
   }
 
-  if (baseFormat === "smoothie") {
+  if (formatId === "smoothie") {
     return [
       {
-        title: "Tropical Amla Smoothie",
+        title: "Berry Beet Smoothie",
+        image:
+          "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=1200&q=80",
+        time: isBusy ? "4 min" : "5 min",
+        intro: "A smooth, colorful option that makes beet powder easy to enjoy.",
+        ingredients: [
+          "1 cup mixed berries",
+          "3/4 cup yogurt or milk of choice",
+          "**1 tsp Beet Root Juice Powder - Organic**",
+        ],
+        steps: [
+          "Add everything to a blender.",
+          "Blend until smooth.",
+          "Serve immediately.",
+        ],
+      },
+      {
+        title: "Tropical Beet Smoothie",
         image:
           "https://images.unsplash.com/photo-1638176066666-ffb2f013c7dd?auto=format&fit=crop&w=1200&q=80",
         time: "5 min",
-        intro: "A simple blended option for a smoother daily ritual.",
+        intro: "A fruit-forward smoothie option for a brighter routine.",
         ingredients: [
           "1 banana",
           "1/2 cup pineapple",
           "1 cup milk of choice",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
+          "**1 tsp Beet Root Juice Powder - Organic**",
         ],
         steps: [
-          "Add all ingredients to a blender.",
+          "Add ingredients to a blender.",
           "Blend until smooth.",
           "Pour and enjoy right away.",
         ],
       },
       {
-        title: "Berry Amla Smoothie",
+        title: "Banana Beet Blend",
         image:
-          "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=1200&q=80",
-        time: "5 min",
-        intro: "A fruit-forward option that fits easily into a daily routine.",
-        ingredients: [
-          "1 cup mixed berries",
-          "3/4 cup yogurt or milk of choice",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
-          "Ice if desired",
-        ],
-        steps: [
-          "Add everything to a blender.",
-          "Blend until smooth and creamy.",
-          "Serve immediately.",
-        ],
-      },
-      {
-        title: "Green Amla Blend",
-        image:
-          "https://images.unsplash.com/photo-1610970881699-44a5587cabec?auto=format&fit=crop&w=1200&q=80",
-        time: "6 min",
-        intro: "A flexible smoothie option for more routine-minded drinkers.",
+          "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=1200&q=80",
+        time: "4 min",
+        intro: "A simple smoothie choice when you want something easy and repeatable.",
         ingredients: [
           "1 banana",
-          "Handful of spinach",
-          "1 cup water or milk of choice",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
+          "1 cup milk of choice",
+          "**1 tsp Beet Root Powder - Organic**",
         ],
         steps: [
           "Add ingredients to a blender.",
-          "Blend until the texture is smooth.",
-          "Pour into a glass and serve.",
+          "Blend until smooth.",
+          "Serve fresh.",
         ],
       },
     ];
   }
 
-  if (baseFormat === "warm-drink") {
+  if (formatId === "warm") {
     return [
       {
-        title: isEvening ? "Evening Amla Tea" : "Simple Amla Tea",
+        title: "Warm Beet Latte",
+        image:
+          "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
+        time: "4 min",
+        intro: "A cozy beet option when you prefer something warm and easy to sip.",
+        ingredients: [
+          "1 cup warm milk of choice",
+          "**1 tsp Beet Root Juice Powder - Organic**",
+          "Cinnamon optional",
+        ],
+        steps: [
+          "Warm the milk gently.",
+          "Whisk in **Beet Root Juice Powder - Organic**.",
+          "Add cinnamon if desired and serve warm.",
+        ],
+      },
+      {
+        title: "Warm Beet Cocoa",
+        image:
+          "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=80",
+        time: "5 min",
+        intro: "A richer warm beet drink for a more comforting routine.",
+        ingredients: [
+          "1 cup warm milk of choice",
+          "**1 tsp Beet Root Powder - Organic**",
+          "1 tsp cocoa powder",
+        ],
+        steps: [
+          "Warm the milk gently.",
+          "Whisk in **Beet Root Powder - Organic** and cocoa.",
+          "Serve warm.",
+        ],
+      },
+      {
+        title: "Simple Warm Beet Drink",
         image:
           "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1200&q=80",
-        time: "4 min",
-        intro: "A warm, easy-to-sip option for a gentler ritual.",
-        ingredients: [
-          "1 cup warm water or mild tea",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
-          "Honey optional",
-        ],
-        steps: [
-          "Pour warm water or tea into a mug.",
-          "Stir in **Amla (Amalaki) Fruit Powder - Organic**.",
-          "Sweeten lightly if desired and sip warm.",
-        ],
-      },
-      {
-        title: "Warm Amla Lemon Drink",
-        image:
-          "https://images.unsplash.com/photo-1519096845289-95806ee03a1a?auto=format&fit=crop&w=1200&q=80",
-        time: "4 min",
-        intro: "A bright warm drink that still feels light and simple.",
+        time: "3 min",
+        intro: "A simple warm option when you want something softer and easier.",
         ingredients: [
           "1 cup warm water",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
-          "Squeeze of lemon",
+          "**1 tsp Beet Root Juice Powder - Organic**",
         ],
         steps: [
-          "Add **Amla (Amalaki) Fruit Powder - Organic** to warm water.",
+          "Add **Beet Root Juice Powder - Organic** to warm water.",
           "Stir well.",
-          "Add a squeeze of lemon and drink fresh.",
-        ],
-      },
-      {
-        title: "Spiced Amla Apple Cup",
-        image:
-          "https://images.unsplash.com/photo-1603048719539-9ecb4f1f8f88?auto=format&fit=crop&w=1200&q=80",
-        time: "6 min",
-        intro: "A cozier option when you want something warmer and more comforting.",
-        ingredients: [
-          "1 cup warm apple drink",
-          "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
-          "Pinch of cinnamon",
-        ],
-        steps: [
-          "Warm the apple drink gently.",
-          "Stir in **Amla (Amalaki) Fruit Powder - Organic**.",
-          "Add cinnamon and serve warm.",
+          "Sip warm.",
         ],
       },
     ];
@@ -454,54 +579,54 @@ function buildIdeas(
 
   return [
     {
-      title: "Simple Amla Yogurt Bowl",
+      title: "Beet Yogurt Bowl",
       image:
         "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80",
       time: "3 min",
-      intro: "An easy, flexible way to work Amla into food.",
+      intro: "An easy way to add beet powder into a simple food routine.",
       ingredients: [
         "3/4 cup yogurt",
-        "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
+        "**1 tsp Beet Root Powder - Organic**",
         "Fruit topping of choice",
       ],
       steps: [
         "Add yogurt to a bowl.",
-        "Stir in **Amla (Amalaki) Fruit Powder - Organic**.",
+        "Stir in **Beet Root Powder - Organic**.",
         "Top with fruit and enjoy.",
       ],
     },
     {
-      title: "Amla Oat Bowl",
+      title: "Beet Oat Bowl",
       image:
         "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?auto=format&fit=crop&w=1200&q=80",
       time: "5 min",
-      intro: "A simple breakfast-friendly option.",
+      intro: "A breakfast-friendly option for a more everyday beet habit.",
       ingredients: [
         "Prepared oats",
-        "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
+        "**1 tsp Beet Root Powder - Organic**",
         "Banana or berries",
       ],
       steps: [
         "Prepare your oats.",
-        "Stir in **Amla (Amalaki) Fruit Powder - Organic**.",
+        "Stir in **Beet Root Powder - Organic**.",
         "Top with fruit and serve.",
       ],
     },
     {
-      title: "Amla Fruit Mix",
+      title: "Beet Energy Bites",
       image:
-        "https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?auto=format&fit=crop&w=1200&q=80",
-      time: "4 min",
-      intro: "A quick option when you want something flexible and light.",
+        "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80",
+      time: "10 min",
+      intro: "A flexible recipe option when you want something a little different.",
       ingredients: [
-        "Cut fruit of choice",
-        "**1 tsp Amla (Amalaki) Fruit Powder - Organic**",
-        "Splash of juice if needed",
+        "1 cup oats",
+        "2 tbsp nut butter",
+        "**1 tsp Beet Root Powder - Organic**",
       ],
       steps: [
-        "Add fruit to a bowl.",
-        "Sprinkle in **Amla (Amalaki) Fruit Powder - Organic**.",
-        "Toss lightly and enjoy fresh.",
+        "Mix ingredients in a bowl.",
+        "Roll into small bites.",
+        "Chill briefly and enjoy.",
       ],
     },
   ];
@@ -698,6 +823,13 @@ export default function MiddleSection({
     [answers]
   );
 
+  const mainProduct = useMemo(() => getMainProduct(profile.key), [profile.key]);
+
+  const alsoWorthTrying = useMemo(
+    () => getAlsoWorthTrying(mainProduct.id),
+    [mainProduct.id]
+  );
+
   const handleAnswer = (answer: AnswerOption) => {
     if (!currentQuestion) return;
 
@@ -803,7 +935,7 @@ export default function MiddleSection({
           <div className="mb-4 text-5xl">🎁</div>
 
           <h2 className="mb-3 text-4xl font-extrabold text-slate-900">
-            Your recipes are ready!
+            Your beet recipe ideas are ready!
           </h2>
 
           <div className="mb-5 text-3xl font-light leading-tight text-slate-900 md:text-4xl">
@@ -812,7 +944,7 @@ export default function MiddleSection({
           </div>
 
           <p className="mx-auto mb-7 max-w-2xl text-center text-lg leading-8 text-gray-500">
-            Subscribe to get your coupon code and 3 Amla recipe ideas
+            Subscribe to get your coupon code and 3 beet recipe ideas
             <br className="hidden md:block" />
             matched to your routine.
           </p>
@@ -850,10 +982,8 @@ export default function MiddleSection({
 
             <div className="text-xs text-gray-500">
               ✉️ By entering your email, you agree to receive marketing emails
-              from Z Natural Foods. We never spam. You can unsubscribe at any time.
-            </div>
-            <div className="text-xs text-gray-400">
-              
+              from Z Natural Foods. We never spam. You can unsubscribe at any
+              time.
             </div>
           </div>
         </section>
@@ -888,7 +1018,7 @@ export default function MiddleSection({
 
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 text-center text-2xl font-extrabold">
-              3 simple Amla ideas for your routine
+              3 simple beet ideas for your routine
             </div>
 
             <div className="space-y-6">
@@ -903,7 +1033,13 @@ export default function MiddleSection({
               ALSO WORTH TRYING
             </div>
 
-            <SecondaryProductCard product={secondaryProduct} />
+            <div className="flex justify-center">
+              <div className="w-full max-w-md">
+                {alsoWorthTrying.map((product) => (
+                  <SecondaryProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       )}
