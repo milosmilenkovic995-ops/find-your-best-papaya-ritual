@@ -45,69 +45,36 @@ type MiddleSectionProps = {
   subtitle: string;
 };
 
-const mainProducts: Record<string, Product> = {
-  endurance: {
-    id: "beet-root-juice-powder",
-    name: "Beet Root Juice Powder - Organic",
-    subtitle: "Bright • Smooth • Easy to Mix",
-    description:
-      "A vibrant beet option with a smooth, juice-style profile that fits naturally into drinks, smoothies, and pre-workout style routines.",
-    image: "/images/beet-root-juice-powder.png",
-    badges: ["Organic", "Smooth Mixing", "Drink-Friendly"],
-    href: "https://www.znaturalfoods.com/products/beet-root-juice-powder-organic",
-  },
-  daily: {
-    id: "beet-root-powder",
-    name: "Beet Root Powder - Organic",
-    subtitle: "Earthy-Sweet • Versatile • Whole Root",
-    description:
-      "A versatile whole beet root powder with an earthy-sweet flavor that works well in smoothies, juices, bowls, and everyday recipes.",
-    image: "/images/beet-root-powder.png",
-    badges: ["Organic", "Versatile", "Whole Root"],
-    href: "https://www.znaturalfoods.com/products/beet-root-powder-organic",
-  },
-  performance: {
-    id: "beet-root-juice-powder",
-    name: "Beet Root Juice Powder - Organic",
-    subtitle: "Bright • Smooth • Easy to Mix",
-    description:
-      "A vibrant beet option with a smooth, juice-style profile that fits naturally into drinks, smoothies, and active routines.",
-    image: "/images/beet-root-juice-powder.png",
-    badges: ["Organic", "Smooth Mixing", "Active Routine"],
-    href: "https://www.znaturalfoods.com/products/beet-root-juice-powder-organic",
-  },
-  natural: {
-    id: "beet-root-powder",
-    name: "Beet Root Powder - Organic",
-    subtitle: "Earthy-Sweet • Versatile • Whole Root",
-    description:
-      "A simple whole-food style beet powder that adds natural color, flavor, and plant-based nutrition to drinks and recipes.",
-    image: "/images/beet-root-powder.png",
-    badges: ["Organic", "Whole Root", "Recipe-Friendly"],
-    href: "https://www.znaturalfoods.com/products/beet-root-powder-organic",
-  },
-};
-
-const secondaryProducts: Product[] = [
+const allProducts: Product[] = [
   {
-    id: "beet-root-powder",
-    name: "Beet Root Powder - Organic",
-    subtitle: "Earthy-Sweet • Versatile • Whole Root",
+    id: "green-papaya-unripe",
+    name: "Green Papaya Powder (Unripe)",
+    subtitle: "Mild • Earthy • Versatile",
     description:
-      "A versatile whole beet root powder that works well in smoothies, juices, bowls, and recipes.",
-    image: "/images/beet-root-powder.png",
-    badges: ["Organic", "Whole Root", "Versatile"],
-    href: "https://www.znaturalfoods.com/products/beet-root-powder-organic",
+      "A mild, slightly earthy green papaya powder that blends well into smoothies, teas, soups, sauces, and both sweet and savory recipes.",
+    image: "/images/green-papaya-powder-unripe.png",
+    badges: ["Versatile", "Mild Flavor", "Recipe-Friendly"],
+    href: "https://www.znaturalfoods.com/products/green-papaya-powder-unripe",
   },
   {
-    id: "beet-root-juice-powder",
-    name: "Beet Root Juice Powder - Organic",
-    subtitle: "Bright • Smooth • Easy to Mix",
+    id: "papaya-juice-organic",
+    name: "Papaya Juice Powder - Organic",
+    subtitle: "Sweet • Fruity • Easy to Mix",
     description:
-      "A smooth beet juice powder option designed for drinks, smoothies, and easy daily use.",
-    image: "/images/beet-root-juice-powder.png",
-    badges: ["Organic", "Drink-Friendly", "Smooth Mixing"],
-    href: "https://www.znaturalfoods.com/products/beet-root-juice-powder-organic",
+      "A naturally sweet and fruity papaya powder that mixes easily into water, smoothies, shakes, desserts, sauces, and teas.",
+    image: "/images/papaya-juice-powder-organic.png",
+    badges: ["Organic", "Sweet Flavor", "Drink-Friendly"],
+    href: "https://www.znaturalfoods.com/products/papaya-juice-powder-organic",
+  },
+  {
+    id: "green-papaya-organic",
+    name: "Green Papaya Powder (Unripe) - Organic",
+    subtitle: "Organic • Mild • Flexible",
+    description:
+      "An organic green papaya powder with a mild, slightly earthy taste that works smoothly in smoothies, soups, teas, sauces, and everyday recipes.",
+    image: "/images/green-papaya-powder-organic.png",
+    badges: ["Organic", "Mild Flavor", "Flexible Use"],
+    href: "https://www.znaturalfoods.com/products/green-papaya-powder-organic",
   },
 ];
 
@@ -117,28 +84,28 @@ const questions: Question[] = [
     title: "What are you hoping to support most right now?",
     answers: [
       {
-        id: "endurance",
-        title: "Daily energy and stamina",
-        desc: "I want something that fits naturally into active days",
-        icon: "⚡",
-      },
-      {
-        id: "daily",
-        title: "Everyday nourishment",
-        desc: "I like adding nutrient-dense foods into my routine",
-        icon: "🥬",
-      },
-      {
-        id: "performance",
-        title: "Workout or movement support",
-        desc: "I want something that feels good before training or activity",
-        icon: "🏃",
-      },
-      {
-        id: "natural",
-        title: "A more natural food-based option",
-        desc: "I prefer simple ingredients and whole-food style choices",
+        id: "digestion",
+        title: "A lighter, digestion-friendly routine",
+        desc: "I want something that feels gentle and easy to work into the day",
         icon: "🌿",
+      },
+      {
+        id: "glow",
+        title: "A brighter, glowier daily routine",
+        desc: "I’m drawn to fruity, colorful options that feel fresh",
+        icon: "✨",
+      },
+      {
+        id: "everyday",
+        title: "Simple everyday nourishment",
+        desc: "I like versatile products I can use in more than one way",
+        icon: "🥣",
+      },
+      {
+        id: "sweet",
+        title: "Something naturally sweet and easy to enjoy",
+        desc: "I’m more likely to stick with something that tastes bright and fruity",
+        icon: "🍑",
       },
     ],
   },
@@ -160,45 +127,45 @@ const questions: Question[] = [
       },
       {
         id: "steady",
-        title: "I like keeping things simple and consistent",
-        desc: "I’d rather repeat one easy habit than overcomplicate it",
+        title: "I prefer simple and repeatable",
+        desc: "I’d rather keep one easy habit going",
         icon: "✅",
       },
       {
         id: "flexible",
-        title: "I like having options",
-        desc: "Some days I drink it, other days I mix it into food",
+        title: "I like variety",
+        desc: "Some days I want drinks, other days recipes",
         icon: "🧭",
       },
     ],
   },
   {
     id: "format",
-    title: "How would you be most likely to use beet powder?",
+    title: "How would you be most likely to use papaya powder?",
     answers: [
       {
         id: "drink",
         title: "Mixed into water or juice",
-        desc: "Quick and straightforward",
+        desc: "Quick and easy is best for me",
         icon: "🥤",
       },
       {
         id: "smoothie",
         title: "Blended into a smoothie",
         desc: "I like a smoother, more enjoyable option",
-        icon: "🍓",
+        icon: "🍹",
       },
       {
         id: "warm",
-        title: "Stirred into something warm",
+        title: "Stirred into tea or something warm",
         desc: "I like cozy, easy-to-sip routines",
         icon: "☕",
       },
       {
         id: "food",
         title: "Added into food or recipes",
-        desc: "I prefer flexible, everyday ways to use it",
-        icon: "🥣",
+        desc: "I want flexible everyday ways to use it",
+        icon: "🥗",
       },
     ],
   },
@@ -207,71 +174,77 @@ const questions: Question[] = [
     title: "Which of these sounds most like you?",
     answers: [
       {
-        id: "active",
-        title: "I’m usually on the go",
-        desc: "I want things to fit into a busy day",
-        icon: "🚀",
-      },
-      {
         id: "wholefood",
         title: "I like whole-food style choices",
-        desc: "Simple, recognizable ingredients matter to me",
+        desc: "Simple ingredients matter to me",
         icon: "🍃",
       },
       {
+        id: "fruity",
+        title: "I’m drawn to sweet tropical flavors",
+        desc: "I’m more likely to stick with something I really enjoy drinking",
+        icon: "🍍",
+      },
+      {
         id: "routine-first",
-        title: "I care most about consistency",
+        title: "Consistency matters most",
         desc: "The best routine is the one I’ll actually keep",
         icon: "📈",
       },
       {
         id: "explorer",
-        title: "I enjoy trying new ways to use things",
-        desc: "I like variety more than strict rules",
+        title: "I like trying different uses",
+        desc: "I enjoy rotating between drinks and recipes",
         icon: "✨",
       },
     ],
   },
 ];
 
-function getProfile(goalId?: string): ProfileResult {
-  switch (goalId) {
-    case "endurance":
-      return {
-        key: "endurance",
-        name: "The Daily Mover",
-        shortDescription:
-          "You’re best matched with a beet routine that feels energizing, practical, and easy to work into active days.",
-      };
-    case "daily":
-      return {
-        key: "daily",
-        name: "The Everyday Nourisher",
-        shortDescription:
-          "You’re best matched with a more balanced beet routine that feels simple, versatile, and easy to repeat day after day.",
-      };
-    case "performance":
-      return {
-        key: "performance",
-        name: "The Performance Type",
-        shortDescription:
-          "You’re best matched with a beet routine that feels bright, purposeful, and easy to use before movement or exercise.",
-      };
-    case "natural":
-      return {
-        key: "natural",
-        name: "The Whole-Food Minimalist",
-        shortDescription:
-          "You’re best matched with a simple beet option that feels natural, flexible, and easy to use in everyday food and drink routines.",
-      };
-    default:
-      return {
-        key: "daily",
-        name: "The Everyday Nourisher",
-        shortDescription:
-          "You’re best matched with a balanced beet routine that feels simple, versatile, and easy to repeat.",
-      };
+function getProfile(goalId?: string, personaId?: string): ProfileResult {
+  if (goalId === "digestion") {
+    return {
+      key: "green-digestive",
+      name: "The Gentle Green Routine",
+      shortDescription:
+        "You’re best matched with a green papaya routine that feels mild, flexible, and easy to work into a digestion-friendly day.",
+    };
   }
+
+  if (goalId === "sweet" || goalId === "glow" || personaId === "fruity") {
+    return {
+      key: "ripe-bright",
+      name: "The Bright Tropical Routine",
+      shortDescription:
+        "You’re best matched with a sweeter papaya option that feels bright, fruity, and easy to enjoy in drinks and smoothies.",
+    };
+  }
+
+  if (goalId === "everyday" && personaId === "wholefood") {
+    return {
+      key: "green-organic",
+      name: "The Everyday Green Ritual",
+      shortDescription:
+        "You’re best matched with a more versatile green papaya routine that feels simple, pantry-friendly, and easy to repeat.",
+    };
+  }
+
+  return {
+    key: "green-organic",
+    name: "The Everyday Green Ritual",
+    shortDescription:
+      "You’re best matched with a flexible papaya routine that feels simple, useful, and easy to fit into daily life.",
+  };
+}
+
+function getMainProduct(profileKey: string): Product {
+  if (profileKey === "green-digestive") return allProducts[0];
+  if (profileKey === "ripe-bright") return allProducts[1];
+  return allProducts[2];
+}
+
+function getAlsoWorthTrying(mainProductId: string): Product[] {
+  return allProducts.filter((product) => product.id !== mainProductId);
 }
 
 function buildPersonalizedTips(
@@ -283,47 +256,47 @@ function buildPersonalizedTips(
 
   if (routineId === "morning") {
     tips.push(
-      "A morning beet routine looks like your best fit because it will be easier for you to keep consistent."
+      "A simple papaya routine in the morning looks like your best fit because it will be easier for you to keep consistent."
     );
   } else if (routineId === "busy") {
     tips.push(
-      "You’ll probably do best with a quick, low-effort option that still feels intentional."
+      "You’ll probably do best with a low-effort option that feels quick but still intentional."
     );
   } else if (routineId === "steady") {
     tips.push(
-      "A simple beet habit you can repeat easily looks like your strongest long-term fit."
+      "A simple repeatable papaya habit looks like your strongest long-term fit."
     );
   } else if (routineId === "flexible") {
     tips.push(
-      "You’ll probably enjoy a beet option that can move between drinks, smoothies, and simple recipes."
+      "You’ll probably enjoy a papaya option that can move between drinks, smoothies, and recipes."
     );
   }
 
   if (formatId === "drink") {
     tips.push(
-      "A water-or-juice based beet ritual looks like the easiest option for your routine."
+      "A water-or-juice based papaya ritual looks like the easiest option for your routine."
     );
   } else if (formatId === "smoothie") {
     tips.push(
-      "A smoothie-based beet routine looks like the most enjoyable fit for you."
+      "A smoothie-based papaya routine looks like the most enjoyable fit for you."
     );
   } else if (formatId === "warm") {
     tips.push(
-      "A warm beet drink looks like a smoother, more comfortable fit for your style."
+      "A warm papaya drink looks like a smoother, more comfortable fit for your style."
     );
   } else if (formatId === "food") {
     tips.push(
-      "A more flexible recipe-based approach looks like the best fit for how you like to use products."
+      "A more recipe-based approach looks like the best fit for how you like to use products."
     );
   }
 
-  if (personaId === "active") {
+  if (personaId === "wholefood") {
     tips.push(
-      "You seem like someone who benefits most from routines that feel fast, clean, and easy to fit into movement-focused days."
+      "A simpler whole-food style papaya option fits your preferences especially well."
     );
-  } else if (personaId === "wholefood") {
+  } else if (personaId === "fruity") {
     tips.push(
-      "A simpler whole-food style beet option fits your preferences best."
+      "A sweeter, brighter papaya option looks like the one you’re most likely to genuinely enjoy and keep using."
     );
   } else if (personaId === "routine-first") {
     tips.push(
@@ -331,82 +304,73 @@ function buildPersonalizedTips(
     );
   } else if (personaId === "explorer") {
     tips.push(
-      "You’ll probably enjoy rotating between a few different beet ideas during the week."
+      "You’ll probably enjoy rotating between a few different papaya ideas during the week."
     );
   }
 
   return tips.slice(0, 3);
 }
 
-function getMainProduct(profileKey?: string): Product {
-  if (profileKey === "endurance") return mainProducts.endurance;
-  if (profileKey === "performance") return mainProducts.performance;
-  if (profileKey === "natural") return mainProducts.natural;
-  return mainProducts.daily;
-}
-
-function getAlsoWorthTrying(mainProductId: string): Product[] {
-  return secondaryProducts.filter((product) => product.id !== mainProductId);
-}
-
 function buildIdeas(
   goalId?: string,
   routineId?: string,
-  formatId?: string
+  formatId?: string,
+  personaId?: string
 ): RitualIdea[] {
+  const fruity =
+    goalId === "sweet" || goalId === "glow" || personaId === "fruity";
   const isMorning = routineId === "morning";
-  const isBusy = routineId === "busy";
 
   if (formatId === "drink") {
-    if (goalId === "performance" || goalId === "endurance") {
+    if (fruity) {
       return [
         {
-          title: isMorning ? "Morning Beet Juice Mix" : "Simple Beet Juice Mix",
+          title: isMorning ? "Morning Papaya Juice Mix" : "Simple Papaya Juice Mix",
           image:
-            "https://images.unsplash.com/photo-1577234286642-fc512a5f8f11?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=1200&q=80",
           time: "2 min",
-          intro: "A fast beet drink option for active days.",
+          intro: "A bright and easy papaya drink for everyday use.",
           ingredients: [
-            "8–10 oz water or juice",
-            "**1 tsp Beet Root Juice Powder - Organic**",
+            "8–10 oz cold water",
+            "**1 tsp Papaya Juice Powder - Organic**",
           ],
           steps: [
-            "Add **Beet Root Juice Powder - Organic** to water or juice.",
+            "Add **Papaya Juice Powder - Organic** to cold water.",
             "Stir or shake well.",
             "Drink fresh.",
           ],
         },
         {
-          title: "Beet Citrus Drink",
+          title: "Papaya Citrus Cooler",
           image:
-            "https://images.unsplash.com/photo-1600271886742-f049cd5bba3f?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=1200&q=80",
           time: "3 min",
-          intro: "A brighter beet option with a more refreshing feel.",
+          intro: "A brighter tropical option with a more refreshing feel.",
           ingredients: [
             "8–10 oz water",
-            "**1 tsp Beet Root Juice Powder - Organic**",
-            "Squeeze of orange or lemon",
+            "**1 tsp Papaya Juice Powder - Organic**",
+            "Squeeze of lime or orange",
           ],
           steps: [
-            "Add **Beet Root Juice Powder - Organic** to water.",
+            "Add **Papaya Juice Powder - Organic** to water.",
             "Stir well.",
-            "Add citrus and drink fresh.",
+            "Add citrus and enjoy cold.",
           ],
         },
         {
-          title: "Quick Beet Water",
+          title: "Papaya Iced Drink",
           image:
-            "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=1200&q=80",
+            "https://images.unsplash.com/photo-1499638673689-79a0b5115d87?auto=format&fit=crop&w=1200&q=80",
           time: "2 min",
-          intro: "The easiest place to start when you want something simple.",
+          intro: "An easy chilled drink when you want something simple and fruity.",
           ingredients: [
-            "8–10 oz water",
-            "**1 tsp Beet Root Powder - Organic**",
+            "8–10 oz water over ice",
+            "**1 tsp Papaya Juice Powder - Organic**",
           ],
           steps: [
-            "Add **Beet Root Powder - Organic** to water.",
-            "Stir well.",
-            "Drink right away.",
+            "Add **Papaya Juice Powder - Organic** to water.",
+            "Stir well over ice.",
+            "Serve immediately.",
           ],
         },
       ];
@@ -414,104 +378,126 @@ function buildIdeas(
 
     return [
       {
-        title: isMorning ? "Morning Beet Water" : "Simple Beet Water",
+        title: isMorning ? "Morning Green Papaya Tea" : "Simple Green Papaya Drink",
         image:
-          "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=1200&q=80",
-        time: "2 min",
-        intro: "A straightforward beet ritual for everyday use.",
+          "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1200&q=80",
+        time: "3 min",
+        intro: "A milder green papaya option for a more gentle routine.",
         ingredients: [
-          "8–10 oz water",
-          "**1 tsp Beet Root Powder - Organic**",
+          "8–10 oz warm water",
+          "**1 tsp Green Papaya Powder (Unripe) - Organic**",
         ],
         steps: [
-          "Add **Beet Root Powder - Organic** to water.",
+          "Add **Green Papaya Powder (Unripe) - Organic** to warm water.",
           "Stir well.",
-          "Drink fresh.",
+          "Sip warm.",
         ],
       },
       {
-        title: "Beet Lemon Water",
+        title: "Green Papaya Lemon Drink",
         image:
-          "https://images.unsplash.com/photo-1600271886742-f049cd5bba3f?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1519096845289-95806ee03a1a?auto=format&fit=crop&w=1200&q=80",
         time: "3 min",
-        intro: "A brighter beet drink when you want a lighter taste.",
+        intro: "A simple option when you want something lighter and brighter.",
         ingredients: [
           "8–10 oz water",
-          "**1 tsp Beet Root Powder - Organic**",
+          "**1 tsp Green Papaya Powder (Unripe)**",
           "Squeeze of lemon",
         ],
         steps: [
-          "Add **Beet Root Powder - Organic** to water.",
+          "Add **Green Papaya Powder (Unripe)** to water.",
           "Stir well.",
           "Add lemon and enjoy.",
         ],
       },
       {
-        title: "Beet Juice Mix",
+        title: "Green Papaya Warm Cup",
         image:
-          "https://images.unsplash.com/photo-1577234286642-fc512a5f8f11?auto=format&fit=crop&w=1200&q=80",
-        time: "2 min",
-        intro: "A smooth drink option when you want something easy.",
+          "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
+        time: "3 min",
+        intro: "A softer, more comfortable option for a simple daily routine.",
         ingredients: [
-          "8–10 oz water or juice",
-          "**1 tsp Beet Root Juice Powder - Organic**",
+          "1 cup warm water",
+          "**1 tsp Green Papaya Powder (Unripe) - Organic**",
         ],
         steps: [
-          "Add **Beet Root Juice Powder - Organic** to water or juice.",
-          "Stir or shake well.",
-          "Drink fresh.",
+          "Add **Green Papaya Powder (Unripe) - Organic** to warm water.",
+          "Stir well.",
+          "Drink warm.",
         ],
       },
     ];
   }
 
   if (formatId === "smoothie") {
+    if (fruity) {
+      return [
+        {
+          title: "Papaya Mango Smoothie",
+          image:
+            "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=1200&q=80",
+          time: "5 min",
+          intro: "A bright tropical smoothie that makes papaya easy to enjoy.",
+          ingredients: [
+            "1/2 cup mango",
+            "1 banana",
+            "1 cup milk of choice",
+            "**1 tsp Papaya Juice Powder - Organic**",
+          ],
+          steps: [
+            "Add everything to a blender.",
+            "Blend until smooth.",
+            "Serve immediately.",
+          ],
+        },
+        {
+          title: "Papaya Berry Smoothie",
+          image:
+            "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=1200&q=80",
+          time: "5 min",
+          intro: "A fruit-forward smoothie with a brighter color and sweeter feel.",
+          ingredients: [
+            "1 cup berries",
+            "3/4 cup yogurt or milk of choice",
+            "**1 tsp Papaya Juice Powder - Organic**",
+          ],
+          steps: [
+            "Add ingredients to a blender.",
+            "Blend until smooth.",
+            "Serve fresh.",
+          ],
+        },
+        {
+          title: "Papaya Banana Blend",
+          image:
+            "https://images.unsplash.com/photo-1638176066666-ffb2f013c7dd?auto=format&fit=crop&w=1200&q=80",
+          time: "4 min",
+          intro: "A simple smoothie option when you want something easy and repeatable.",
+          ingredients: [
+            "1 banana",
+            "1 cup milk of choice",
+            "**1 tsp Papaya Juice Powder - Organic**",
+          ],
+          steps: [
+            "Add ingredients to a blender.",
+            "Blend until smooth.",
+            "Serve right away.",
+          ],
+        },
+      ];
+    }
+
     return [
       {
-        title: "Berry Beet Smoothie",
+        title: "Green Papaya Smoothie",
         image:
-          "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=1200&q=80",
-        time: isBusy ? "4 min" : "5 min",
-        intro: "A smooth, colorful option that makes beet powder easy to enjoy.",
-        ingredients: [
-          "1 cup mixed berries",
-          "3/4 cup yogurt or milk of choice",
-          "**1 tsp Beet Root Juice Powder - Organic**",
-        ],
-        steps: [
-          "Add everything to a blender.",
-          "Blend until smooth.",
-          "Serve immediately.",
-        ],
-      },
-      {
-        title: "Tropical Beet Smoothie",
-        image:
-          "https://images.unsplash.com/photo-1638176066666-ffb2f013c7dd?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1610970881699-44a5587cabec?auto=format&fit=crop&w=1200&q=80",
         time: "5 min",
-        intro: "A fruit-forward smoothie option for a brighter routine.",
-        ingredients: [
-          "1 banana",
-          "1/2 cup pineapple",
-          "1 cup milk of choice",
-          "**1 tsp Beet Root Juice Powder - Organic**",
-        ],
-        steps: [
-          "Add ingredients to a blender.",
-          "Blend until smooth.",
-          "Pour and enjoy right away.",
-        ],
-      },
-      {
-        title: "Banana Beet Blend",
-        image:
-          "https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?auto=format&fit=crop&w=1200&q=80",
-        time: "4 min",
-        intro: "A simple smoothie choice when you want something easy and repeatable.",
+        intro: "A smoother green papaya option for a more balanced daily routine.",
         ingredients: [
           "1 banana",
           "1 cup milk of choice",
-          "**1 tsp Beet Root Powder - Organic**",
+          "**1 tsp Green Papaya Powder (Unripe) - Organic**",
         ],
         steps: [
           "Add ingredients to a blender.",
@@ -519,59 +505,203 @@ function buildIdeas(
           "Serve fresh.",
         ],
       },
+      {
+        title: "Green Papaya Coconut Smoothie",
+        image:
+          "https://images.unsplash.com/photo-1577805947697-89e18249d767?auto=format&fit=crop&w=1200&q=80",
+        time: "5 min",
+        intro: "A milder smoothie option with a softer tropical feel.",
+        ingredients: [
+          "1 cup coconut milk",
+          "1/2 banana",
+          "**1 tsp Green Papaya Powder (Unripe)**",
+        ],
+        steps: [
+          "Add ingredients to a blender.",
+          "Blend until smooth.",
+          "Serve immediately.",
+        ],
+      },
+      {
+        title: "Papaya Green Blend",
+        image:
+          "https://images.unsplash.com/photo-1514995669114-6081e934b693?auto=format&fit=crop&w=1200&q=80",
+        time: "6 min",
+        intro: "A simple smoothie when you want something easy but still fresh.",
+        ingredients: [
+          "1 banana",
+          "Handful of spinach",
+          "1 cup water or milk of choice",
+          "**1 tsp Green Papaya Powder (Unripe) - Organic**",
+        ],
+        steps: [
+          "Add ingredients to a blender.",
+          "Blend until smooth.",
+          "Pour into a glass and serve.",
+        ],
+      },
     ];
   }
 
   if (formatId === "warm") {
+    if (fruity) {
+      return [
+        {
+          title: "Warm Papaya Tea",
+          image:
+            "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1200&q=80",
+          time: "4 min",
+          intro: "A gentler warm option when you want something easy to sip.",
+          ingredients: [
+            "1 cup warm water",
+            "**1 tsp Papaya Juice Powder - Organic**",
+          ],
+          steps: [
+            "Add **Papaya Juice Powder - Organic** to warm water.",
+            "Stir well.",
+            "Sip warm.",
+          ],
+        },
+        {
+          title: "Papaya Honey Cup",
+          image:
+            "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=80",
+          time: "4 min",
+          intro: "A warmer fruit-forward option with a softer feel.",
+          ingredients: [
+            "1 cup warm water",
+            "**1 tsp Papaya Juice Powder - Organic**",
+            "Honey optional",
+          ],
+          steps: [
+            "Add **Papaya Juice Powder - Organic** to warm water.",
+            "Stir well.",
+            "Add honey if desired.",
+          ],
+        },
+        {
+          title: "Simple Warm Papaya Drink",
+          image:
+            "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
+          time: "3 min",
+          intro: "An easy warm version when you want something light and simple.",
+          ingredients: [
+            "1 cup warm water",
+            "**1 tsp Papaya Juice Powder - Organic**",
+          ],
+          steps: [
+            "Add **Papaya Juice Powder - Organic** to warm water.",
+            "Stir well.",
+            "Drink warm.",
+          ],
+        },
+      ];
+    }
+
     return [
       {
-        title: "Warm Beet Latte",
-        image:
-          "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
-        time: "4 min",
-        intro: "A cozy beet option when you prefer something warm and easy to sip.",
-        ingredients: [
-          "1 cup warm milk of choice",
-          "**1 tsp Beet Root Juice Powder - Organic**",
-          "Cinnamon optional",
-        ],
-        steps: [
-          "Warm the milk gently.",
-          "Whisk in **Beet Root Juice Powder - Organic**.",
-          "Add cinnamon if desired and serve warm.",
-        ],
-      },
-      {
-        title: "Warm Beet Cocoa",
-        image:
-          "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=80",
-        time: "5 min",
-        intro: "A richer warm beet drink for a more comforting routine.",
-        ingredients: [
-          "1 cup warm milk of choice",
-          "**1 tsp Beet Root Powder - Organic**",
-          "1 tsp cocoa powder",
-        ],
-        steps: [
-          "Warm the milk gently.",
-          "Whisk in **Beet Root Powder - Organic** and cocoa.",
-          "Serve warm.",
-        ],
-      },
-      {
-        title: "Simple Warm Beet Drink",
+        title: "Green Papaya Tea",
         image:
           "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=1200&q=80",
-        time: "3 min",
-        intro: "A simple warm option when you want something softer and easier.",
+        time: "4 min",
+        intro: "A simple warm cup that fits a gentler daily routine.",
         ingredients: [
           "1 cup warm water",
-          "**1 tsp Beet Root Juice Powder - Organic**",
+          "**1 tsp Green Papaya Powder (Unripe) - Organic**",
         ],
         steps: [
-          "Add **Beet Root Juice Powder - Organic** to warm water.",
+          "Add **Green Papaya Powder (Unripe) - Organic** to warm water.",
           "Stir well.",
           "Sip warm.",
+        ],
+      },
+      {
+        title: "Green Papaya Ginger Cup",
+        image:
+          "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=1200&q=80",
+        time: "4 min",
+        intro: "A warmer option when you want something gentle and simple.",
+        ingredients: [
+          "1 cup warm water",
+          "**1 tsp Green Papaya Powder (Unripe)**",
+          "Pinch of ginger",
+        ],
+        steps: [
+          "Add **Green Papaya Powder (Unripe)** to warm water.",
+          "Stir well.",
+          "Add ginger and sip warm.",
+        ],
+      },
+      {
+        title: "Simple Warm Green Papaya Drink",
+        image:
+          "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80",
+        time: "3 min",
+        intro: "An easy warm choice for a soft, repeatable routine.",
+        ingredients: [
+          "1 cup warm water",
+          "**1 tsp Green Papaya Powder (Unripe) - Organic**",
+        ],
+        steps: [
+          "Add **Green Papaya Powder (Unripe) - Organic** to warm water.",
+          "Stir well.",
+          "Drink warm.",
+        ],
+      },
+    ];
+  }
+
+  if (fruity) {
+    return [
+      {
+        title: "Papaya Yogurt Bowl",
+        image:
+          "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80",
+        time: "3 min",
+        intro: "An easy way to add papaya flavor into a simple snack or breakfast.",
+        ingredients: [
+          "3/4 cup yogurt",
+          "**1 tsp Papaya Juice Powder - Organic**",
+          "Fruit topping of choice",
+        ],
+        steps: [
+          "Add yogurt to a bowl.",
+          "Stir in **Papaya Juice Powder - Organic**.",
+          "Top with fruit and enjoy.",
+        ],
+      },
+      {
+        title: "Papaya Oat Bowl",
+        image:
+          "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?auto=format&fit=crop&w=1200&q=80",
+        time: "5 min",
+        intro: "A simple breakfast-friendly option with a sweeter tropical feel.",
+        ingredients: [
+          "Prepared oats",
+          "**1 tsp Papaya Juice Powder - Organic**",
+          "Banana or mango",
+        ],
+        steps: [
+          "Prepare your oats.",
+          "Stir in **Papaya Juice Powder - Organic**.",
+          "Top with fruit and serve.",
+        ],
+      },
+      {
+        title: "Papaya Chia Cup",
+        image:
+          "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=1200&q=80",
+        time: "5 min",
+        intro: "A lighter tropical option when you want something simple and different.",
+        ingredients: [
+          "Prepared chia pudding",
+          "**1 tsp Papaya Juice Powder - Organic**",
+          "Fruit topping of choice",
+        ],
+        steps: [
+          "Add chia pudding to a bowl or cup.",
+          "Stir in **Papaya Juice Powder - Organic**.",
+          "Top and serve.",
         ],
       },
     ];
@@ -579,54 +709,53 @@ function buildIdeas(
 
   return [
     {
-      title: "Beet Yogurt Bowl",
+      title: "Green Papaya Yogurt Bowl",
       image:
         "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80",
       time: "3 min",
-      intro: "An easy way to add beet powder into a simple food routine.",
+      intro: "An easy way to add green papaya into a simple food routine.",
       ingredients: [
         "3/4 cup yogurt",
-        "**1 tsp Beet Root Powder - Organic**",
+        "**1 tsp Green Papaya Powder (Unripe) - Organic**",
         "Fruit topping of choice",
       ],
       steps: [
         "Add yogurt to a bowl.",
-        "Stir in **Beet Root Powder - Organic**.",
+        "Stir in **Green Papaya Powder (Unripe) - Organic**.",
         "Top with fruit and enjoy.",
       ],
     },
     {
-      title: "Beet Oat Bowl",
+      title: "Green Papaya Oat Bowl",
       image:
         "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?auto=format&fit=crop&w=1200&q=80",
       time: "5 min",
-      intro: "A breakfast-friendly option for a more everyday beet habit.",
+      intro: "A breakfast-friendly option for a more everyday green papaya habit.",
       ingredients: [
         "Prepared oats",
-        "**1 tsp Beet Root Powder - Organic**",
+        "**1 tsp Green Papaya Powder (Unripe)**",
         "Banana or berries",
       ],
       steps: [
         "Prepare your oats.",
-        "Stir in **Beet Root Powder - Organic**.",
+        "Stir in **Green Papaya Powder (Unripe)**.",
         "Top with fruit and serve.",
       ],
     },
     {
-      title: "Beet Energy Bites",
+      title: "Green Papaya Soup Stir-In",
       image:
-        "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1200&q=80",
-      time: "10 min",
-      intro: "A flexible recipe option when you want something a little different.",
+        "https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1200&q=80",
+      time: "5 min",
+      intro: "A simple savory idea when you prefer more flexible recipe uses.",
       ingredients: [
-        "1 cup oats",
-        "2 tbsp nut butter",
-        "**1 tsp Beet Root Powder - Organic**",
+        "1 bowl warm soup",
+        "**1 tsp Green Papaya Powder (Unripe) - Organic**",
       ],
       steps: [
-        "Mix ingredients in a bowl.",
-        "Roll into small bites.",
-        "Chill briefly and enjoy.",
+        "Warm your soup.",
+        "Stir in **Green Papaya Powder (Unripe) - Organic**.",
+        "Mix well and serve.",
       ],
     },
   ];
@@ -805,7 +934,10 @@ export default function MiddleSection({
 
   const currentQuestion = questions[step - 1];
 
-  const profile = useMemo(() => getProfile(answers.goal?.id), [answers]);
+  const profile = useMemo(
+    () => getProfile(answers.goal?.id, answers.persona?.id),
+    [answers]
+  );
 
   const personalizedTips = useMemo(
     () =>
@@ -819,7 +951,12 @@ export default function MiddleSection({
 
   const ritualIdeas = useMemo(
     () =>
-      buildIdeas(answers.goal?.id, answers.routine?.id, answers.format?.id),
+      buildIdeas(
+        answers.goal?.id,
+        answers.routine?.id,
+        answers.format?.id,
+        answers.persona?.id
+      ),
     [answers]
   );
 
@@ -935,7 +1072,7 @@ export default function MiddleSection({
           <div className="mb-4 text-5xl">🎁</div>
 
           <h2 className="mb-3 text-4xl font-extrabold text-slate-900">
-            Your beet recipe ideas are ready!
+            Your papaya ideas are ready!
           </h2>
 
           <div className="mb-5 text-3xl font-light leading-tight text-slate-900 md:text-4xl">
@@ -944,7 +1081,7 @@ export default function MiddleSection({
           </div>
 
           <p className="mx-auto mb-7 max-w-2xl text-center text-lg leading-8 text-gray-500">
-            Subscribe to get your coupon code and 3 beet recipe ideas
+            Subscribe to get your coupon code and 3 papaya recipe ideas
             <br className="hidden md:block" />
             matched to your routine.
           </p>
@@ -1018,7 +1155,7 @@ export default function MiddleSection({
 
           <div className="mx-auto max-w-4xl">
             <div className="mb-6 text-center text-2xl font-extrabold">
-              3 simple beet ideas for your routine
+              3 simple papaya ideas for your routine
             </div>
 
             <div className="space-y-6">
@@ -1028,18 +1165,24 @@ export default function MiddleSection({
             </div>
           </div>
 
-          <div className="mx-auto mt-12 max-w-4xl">
+          <div className="mx-auto mt-12 max-w-5xl">
             <div className="mb-5 text-center text-xs font-extrabold tracking-[0.16em] text-gray-500">
               ALSO WORTH TRYING
             </div>
 
-            <div className="flex justify-center">
-              <div className="w-full max-w-md">
-                {alsoWorthTrying.map((product) => (
-                  <SecondaryProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            </div>
+            <div className="mx-auto mt-12 max-w-5xl">
+  <div className="mb-5 text-center text-xs font-extrabold tracking-[0.16em] text-gray-500">
+    
+  </div>
+
+  <div className="grid gap-6 md:grid-cols-2">
+    {alsoWorthTrying.map((product) => (
+      <div key={product.id} className="w-full">
+        <SecondaryProductCard product={product} />
+      </div>
+    ))}
+  </div>
+</div>
           </div>
         </section>
       )}

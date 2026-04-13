@@ -7,8 +7,8 @@ export default function Page() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Header />
       <MiddleSection
-        title="Find Your Best Beet Ritual"
-        subtitle="Answer 4 quick questions to get a personalized way to enjoy beet powder, plus 3 simple beet recipe ideas matched to your routine."
+        title="Find Your Best Papaya Ritual"
+        subtitle="Answer 4 quick questions to get a personalized way to enjoy papaya powder, plus 3 simple papaya recipe ideas matched to your routine."
       />
       <Footer />
     </div>
