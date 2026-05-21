@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 type AnswerOption = {
   id: string;
@@ -43,6 +43,7 @@ type ProfileResult = {
 type MiddleSectionProps = {
   title: string;
   subtitle: string;
+  quizVersion?: string;
 };
 
 const allProducts: Product[] = [
@@ -924,6 +925,7 @@ function IdeaCard({ idea }: { idea: RitualIdea }) {
 export default function MiddleSection({
   title,
   subtitle,
+  quizVersion = "v1",
 }: MiddleSectionProps) {
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState<Record<string, AnswerOption>>({});
@@ -931,6 +933,23 @@ export default function MiddleSection({
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  const sessionIdRef = useRef(
+    typeof crypto !== "undefined" ? crypto.randomUUID() : Math.random().toString(36).slice(2)
+  );
+
+  const savePart = (updates: {
+    answers?: Record<string, AnswerOption>;
+    email?: string;
+    first_name?: string;
+    completed?: boolean;
+  }) => {
+    fetch("/api/quiz/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ session_id: sessionIdRef.current, quiz_version: quizVersion, ...updates }),
+    }).catch(() => {});
+  };
 
   const currentQuestion = questions[step - 1];
 
@@ -970,12 +989,10 @@ export default function MiddleSection({
   const handleAnswer = (answer: AnswerOption) => {
     if (!currentQuestion) return;
 
-    setAnswers((prev) => ({
-      ...prev,
-      [currentQuestion.id]: answer,
-    }));
-
+    const updatedAnswers = { ...answers, [currentQuestion.id]: answer };
+    setAnswers(updatedAnswers);
     setStep((prev) => prev + 1);
+    savePart({ answers: updatedAnswers });
   };
 
   const handleSubmit = async () => {
@@ -1011,6 +1028,7 @@ export default function MiddleSection({
         return;
       }
 
+      savePart({ answers, email: trimmedEmail, first_name: trimmedFirstName || undefined, completed: true });
       setStep(6);
     } catch (error) {
       console.error("Submit error:", error);
