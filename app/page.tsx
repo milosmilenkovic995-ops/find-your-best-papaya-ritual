@@ -9,7 +9,6 @@ export default function Page() {
       <MiddleSection
         title="Find Your Best Papaya Ritual"
         subtitle="Answer 4 quick questions to get a personalized way to enjoy papaya powder, plus 3 simple papaya recipe ideas matched to your routine."
-        quizVersion="v1"
       />
       <Footer />
     </div>
