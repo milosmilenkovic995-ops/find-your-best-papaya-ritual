@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const submission = {
       email: body.email || null,
       klaviyo_id: body.klid || null,
-      path_id: body.path || "unknown",
+      path_id: body.path || "v2",
       path_name: body.pathName || null,
       submitted_via: body.submittedVia || null,
       coupon_code: body.coupon || null,
@@ -30,14 +30,14 @@ export async function POST(req: Request) {
     };
 
     if (supabase) {
-      const { error } = await supabase.from("submissions").insert(submission);
-      if (error) console.error("Supabase insert error:", error);
+      const { error } = await supabase.from("submissions_v2").insert(submission);
+      if (error) console.error("Supabase v2 insert error:", error);
     } else {
-      console.log("Supabase not configured. Submission body:", JSON.stringify(submission).slice(0, 500));
+      console.log("Supabase not configured. v2 submission body:", JSON.stringify(submission).slice(0, 500));
     }
 
     const klaviyoKey = process.env.KLAVIYO_PRIVATE_API_KEY;
-    const klaviyoList = process.env.KLAVIYO_LIST_ID;
+    const klaviyoList = process.env.KLAVIYO_LIST_ID_V2 || process.env.KLAVIYO_LIST_ID;
     if (body.email && body.submittedVia === "email" && klaviyoKey && klaviyoList) {
       try {
         await fetch(
@@ -76,13 +76,13 @@ export async function POST(req: Request) {
           }
         );
       } catch (err) {
-        console.warn("Klaviyo subscribe error (non-blocking):", err);
+        console.warn("Klaviyo v2 subscribe error (non-blocking):", err);
       }
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Subscribe API error:", error);
+    console.error("Subscribe v2 API error:", error);
     return NextResponse.json({ success: false, error: "Server error" }, { status: 500 });
   }
 }

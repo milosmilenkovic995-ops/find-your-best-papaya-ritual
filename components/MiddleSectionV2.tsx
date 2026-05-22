@@ -1,13 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 
-import { questions, COUPON_CODE, type Question } from "@/lib/questions";
+import {
+  questionsV2 as questions,
+  COUPON_CODE_V2,
+  PATH_ID_V2,
+  PATH_NAME_V2,
+} from "@/lib/questions-v2";
 
-type MiddleSectionProps = { title: string; subtitle: string };
+type MiddleSectionV2Props = { title: string; subtitle: string };
 
-const COUPON = COUPON_CODE;
+const COUPON = COUPON_CODE_V2;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 
 function ProgressDots({ current, total }: { current: number; total: number }) {
   return (
@@ -35,7 +39,7 @@ function CouponBox() {
   );
 }
 
-export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
+export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Props) {
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
   const [submittedWithEmail, setSubmittedWithEmail] = useState<boolean>(false);
@@ -59,19 +63,27 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
   }, []);
 
   const totalQ = questions.length;
-  const totalSteps = totalQ + 1; // 8 dots total
-  const isCouponStep = step === totalSteps; // step 8
+  const totalSteps = totalQ + 1;
+  const isCouponStep = step === totalSteps;
   const currentQ = step <= totalQ ? questions[step - 1] : null;
 
   const scrollTop = () => { if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); };
 
-  const toggleMulti = (qid: string, aid: string) => {
+  const toggleMulti = (qid: string, aid: string, max?: number) => {
     setMulti((prev) => {
       const set = new Set(prev[qid] || []);
-      if (set.has(aid)) set.delete(aid); else set.add(aid);
+      if (set.has(aid)) {
+        set.delete(aid);
+      } else {
+        if (max && set.size >= max) {
+          setError(`You can select up to ${max} option${max === 1 ? "" : "s"}. Unselect one first.`);
+          return prev;
+        }
+        set.add(aid);
+      }
+      setError("");
       return { ...prev, [qid]: Array.from(set) };
     });
-    setError("");
   };
   const pickSingle = (qid: string, aid: string) => {
     setSingle((prev) => ({ ...prev, [qid]: aid }));
@@ -101,8 +113,8 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
   const buildPayload = () => ({
     email: hasValidEmail ? email.trim() : null,
     klid: klid.trim() || null,
-    path: "main_v2",
-    pathName: "Customer Feedback Survey",
+    path: PATH_ID_V2,
+    pathName: PATH_NAME_V2,
     submittedVia: hasValidEmail ? "email" : "skip",
     coupon: COUPON,
     discount: "20% OFF",
@@ -140,7 +152,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
   const submitFinal = () => {
     setError("");
     setSubmittedWithEmail(hasValidEmail);
-    fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(buildPayload()) }).catch(() => {});
+    fetch("/api/subscribe-v2", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(buildPayload()) }).catch(() => {});
     setDone(true);
     scrollTop();
   };
@@ -158,7 +170,6 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     if (step > 1) { setStep(step - 1); scrollTop(); }
   };
 
-  /* ---------------- Done state (after submit) ---------------- */
   if (done) {
     if (submittedWithEmail) {
       return (
@@ -179,7 +190,6 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
         </main>
       );
     }
-    // No-email confirmation
     return (
       <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
         <section className="rounded-3xl border border-gray-200 bg-white p-10 text-center shadow-sm">
@@ -196,7 +206,10 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     );
   }
 
-  /* ---------------- Active survey ---------------- */
+  const multiLabel = currentQ?.type === "multi"
+    ? (currentQ.maxSelect ? ` · SELECT UP TO ${currentQ.maxSelect}` : " · SELECT ALL THAT APPLY")
+    : currentQ?.type === "single" ? " · PICK ONE" : "";
+
   return (
     <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
       <section className="mb-8 text-center">
@@ -210,7 +223,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
       {currentQ && (
         <section className="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm md:p-9">
           <div className="mb-3 text-xs font-extrabold tracking-[0.18em] text-green-700">
-            QUESTION {step} OF {totalQ}{currentQ.type === "multi" ? " · SELECT ALL THAT APPLY" : currentQ.type === "single" ? " · PICK ONE" : ""}
+            QUESTION {step} OF {totalQ}{multiLabel}
           </div>
           <h2 className="mb-7 text-2xl font-extrabold text-slate-900 md:text-3xl">{currentQ.title}</h2>
 
@@ -219,7 +232,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
               {currentQ.answers!.map((a) => {
                 const selected = (multi[currentQ.id] || []).includes(a.id);
                 return (
-                  <button key={a.id} type="button" onClick={() => toggleMulti(currentQ.id, a.id)} className={`flex items-center gap-3 rounded-xl border p-4 text-left transition ${selected ? "border-green-700 bg-green-50 shadow-sm" : "border-gray-200 bg-white hover:border-green-600 hover:shadow-sm"}`}>
+                  <button key={a.id} type="button" onClick={() => toggleMulti(currentQ.id, a.id, currentQ.maxSelect)} className={`flex items-center gap-3 rounded-xl border p-4 text-left transition ${selected ? "border-green-700 bg-green-50 shadow-sm" : "border-gray-200 bg-white hover:border-green-600 hover:shadow-sm"}`}>
                     <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 ${selected ? "border-green-700 bg-green-700" : "border-gray-300 bg-white"}`}>
                       {selected && (<svg className="h-3 w-3 text-white" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5l2.5 2.5L9.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>)}
                     </span>
@@ -252,14 +265,13 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
 
           {(currentQ.type === "multi" || currentQ.type === "single") && (
             <div className="mt-6">
-              <label className="mb-2 block text-sm font-semibold text-slate-700">Add a few words (optional) <span className="font-normal text-gray-400">— for &quot;Other&quot; or extra context</span></label>
+              <label className="mb-2 block text-sm font-semibold text-slate-700">What would you improve, or anything else to add? <span className="font-normal text-gray-400">(optional)</span></label>
               <textarea value={freeTexts[currentQ.id] || ""} onChange={(e) => setFreeText(currentQ.id, e.target.value)} rows={2} className="w-full resize-y rounded-xl border border-gray-300 px-4 py-3 text-[15px] outline-none focus:border-green-600" placeholder="Add a few words here..." />
             </div>
           )}
         </section>
       )}
 
-      {/* Step 8: Thank-you with coupon + optional email */}
       {isCouponStep && (
         <section className="overflow-hidden rounded-3xl border-2 border-green-200 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-8 shadow-md md:p-10">
           <div className="mb-3 text-center text-6xl">💚</div>
