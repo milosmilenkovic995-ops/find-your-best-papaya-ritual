@@ -190,10 +190,6 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
     );
   }
 
-  const multiLabel = currentQ?.type === "multi"
-    ? (currentQ.maxSelect ? ` · SELECT UP TO ${currentQ.maxSelect}` : " · SELECT ALL THAT APPLY")
-    : currentQ?.type === "single" ? " · PICK ONE" : "";
-
   return (
     <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
       <section className="mb-8 text-center">
@@ -205,9 +201,6 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
 
       {currentQ && (
         <section className="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm md:p-9">
-          <div className="mb-3 text-xs font-extrabold tracking-[0.18em] text-green-700">
-            QUESTION {step} OF {totalQ}{multiLabel}
-          </div>
           <h2 className="mb-7 text-2xl font-extrabold text-slate-900 md:text-3xl">{currentQ.title}</h2>
 
           {currentQ.type === "multi" && (
