@@ -208,7 +208,7 @@ export default async function AdminPage({
         <div className="rounded-2xl border-2 border-dashed border-green-700 bg-green-50 p-6">
           <div className="text-xs font-extrabold uppercase tracking-wider text-green-700">Coupon</div>
           <div className="my-1 text-3xl font-extrabold tracking-wider text-slate-900">{COUPON_CODE}</div>
-          <div className="mb-4 text-sm text-slate-700">20% OFF — given to every customer who completed the survey</div>
+          <div className="mb-4 text-sm text-slate-700">$10 OFF — given to every customer who completed the survey</div>
           <div className="rounded-xl bg-white p-3 text-center">
             <div className="text-3xl font-extrabold text-green-700">({fb}) {fbPct}%</div>
             <div className="text-xs text-gray-500">{fb === 1 ? "customer" : "customers"} received this code</div>

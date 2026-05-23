@@ -11,8 +11,8 @@ export type Question = {
   maxSelect?: number; // multi-only: cap on number of selections
 };
 
-export const COUPON_CODE_V2 = "THANKYOU20";
-export const COUPON_LABEL_V2 = "20% OFF";
+export const COUPON_CODE_V2 = "THANKYOU10";
+export const COUPON_LABEL_V2 = "$10 OFF";
 export const PATH_ID_V2 = "v2";
 export const PATH_NAME_V2 = "Customer Feedback Survey v2";
 
@@ -46,20 +46,6 @@ export const questionsV2: Question[] = [
   },
   {
     id: "q3",
-    title: "What kinds of problems frustrated you most?",
-    type: "multi",
-    answers: [
-      { id: "slow_froze", label: "Pages loaded too slowly or froze" },
-      { id: "broken", label: "I clicked something and nothing happened (broken buttons, links, or features)" },
-      { id: "popups", label: "Pop-ups or notifications kept interrupting me" },
-      { id: "scroll_hunt", label: "I had to scroll too much or hunt for info" },
-      { id: "too_many_steps", label: "Too many steps for simple things" },
-      { id: "logout_cart_loss", label: "The site kept logging me out or losing my cart" },
-      { id: "other", label: "Other" },
-    ],
-  },
-  {
-    id: "q4",
     title: "On product pages, what was missing or unclear?",
     type: "multi",
     answers: [
@@ -73,7 +59,7 @@ export const questionsV2: Question[] = [
     ],
   },
   {
-    id: "q5",
+    id: "q4",
     title: "In the cart or checkout, what made it harder than it should be?",
     type: "multi",
     answers: [
@@ -87,18 +73,7 @@ export const questionsV2: Question[] = [
     ],
   },
   {
-    id: "q6",
-    title: "What device were you using when you had these problems?",
-    type: "single",
-    answers: [
-      { id: "phone", label: "Phone" },
-      { id: "tablet", label: "Tablet" },
-      { id: "laptop_desktop", label: "Laptop or desktop" },
-      { id: "other", label: "Other" },
-    ],
-  },
-  {
-    id: "q7",
+    id: "q5",
     title: "If we could fix ONE thing to make your next visit easier, what would it be?",
     type: "multi",
     maxSelect: 3,

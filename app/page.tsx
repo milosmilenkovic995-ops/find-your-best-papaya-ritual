@@ -7,8 +7,8 @@ export default function Page() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Header />
       <MiddleSection
-        title="Help us serve you better"
-        subtitle="Your feedback helps us improve the website and make your experience better. The survey takes about 60 seconds to complete. As a thank-you, you'll get a 20% off discount code at the end 🎁"
+        title="Get $10 off your next order"
+        subtitle="Help us serve you better — answer 5 quick questions (about 60 seconds) and we'll send your $10 coupon the moment you finish. Your feedback shapes what we fix next."
       />
       <Footer />
     </div>

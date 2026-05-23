@@ -12,7 +12,7 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function CouponBox() {
   return (
     <div className="mx-auto mb-7 max-w-md rounded-2xl border-2 border-dashed border-green-700 bg-green-50 px-6 py-5 text-center">
-      <div className="mb-1 text-xs font-extrabold tracking-[0.18em] text-green-700">✨ YOUR 20% OFF CODE ✨</div>
+      <div className="mb-1 text-xs font-extrabold tracking-[0.18em] text-green-700">✨ YOUR $10 OFF CODE ✨</div>
       <div className="text-3xl font-extrabold tracking-wider text-slate-900">{COUPON}</div>
       <div className="mt-2 text-sm text-gray-600">Use this code at checkout on your next order.</div>
     </div>
@@ -89,7 +89,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     pathName: "Customer Feedback Survey",
     submittedVia: hasValidEmail ? "email" : "skip",
     coupon: COUPON,
-    discount: "20% OFF",
+    discount: "$10 OFF",
     sorting: null,
     answers: questions.map((q) => {
       if (q.type === "multi") {
@@ -154,7 +154,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
               Thanks again 💚 — we&apos;ll send a personalized offer to <strong>{email.trim()}</strong> very soon. Keep an eye on your inbox.
             </p>
             <CouponBox />
-            <p className="mb-6 text-sm text-gray-500">Your 20% off code is yours to use right away — no need to wait for the email.</p>
+            <p className="mb-6 text-sm text-gray-500">Your $10 off code is yours to use right away — no need to wait for the email.</p>
             <div className="flex flex-wrap justify-center gap-3">
               <a href="https://www.znaturalfoods.com/" className="rounded-xl bg-green-700 px-6 py-3 font-extrabold text-white hover:bg-green-800">Start shopping →</a>
               <a href="https://www.znaturalfoods.com/specials" className="rounded-xl border border-gray-300 bg-white px-6 py-3 font-extrabold text-slate-700 hover:border-gray-400">See current specials</a>
@@ -185,7 +185,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
       <section className="mb-8 text-center">
         <h1 className="text-3xl font-extrabold leading-tight md:text-5xl">{title}</h1>
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-500 md:text-xl md:leading-8">{subtitle}</p>
+        <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-gray-500 md:text-base md:leading-7">{subtitle}</p>
       </section>
 
       {error && (<div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>)}

@@ -10,8 +10,8 @@ export type Question = {
   answers?: MCAnswer[];
 };
 
-export const COUPON_CODE = "THANKYOU20";
-export const COUPON_LABEL = "20% OFF";
+export const COUPON_CODE = "THANKYOU10";
+export const COUPON_LABEL = "$10 OFF";
 
 export const questions: Question[] = [
   {
@@ -77,31 +77,6 @@ export const questions: Question[] = [
       { id: "not_ready", label: "I just wasn't ready to buy yet" },
       { id: "never", label: "I've never abandoned a checkout" },
       { id: "other", label: "Other (please specify)" },
-    ],
-  },
-  {
-    id: "q5",
-    title: "How would you rate the speed and performance of our website?",
-    type: "single",
-    answers: [
-      { id: "excellent", label: "Excellent — everything loads instantly" },
-      { id: "good", label: "Good — minor delays sometimes" },
-      { id: "average", label: "Average — noticeable but tolerable" },
-      { id: "poor", label: "Poor — slow enough to frustrate me" },
-      { id: "very_poor", label: "Very poor — often unusable" },
-    ],
-  },
-  {
-    id: "q6",
-    title: "Which device do you mostly use to browse our website, and how is the experience?",
-    type: "single",
-    answers: [
-      { id: "mobile_ok", label: "Mobile — works well" },
-      { id: "mobile_issues", label: "Mobile — has issues" },
-      { id: "desktop_ok", label: "Desktop / laptop — works well" },
-      { id: "desktop_issues", label: "Desktop / laptop — has issues" },
-      { id: "tablet_ok", label: "Tablet — works well" },
-      { id: "tablet_issues", label: "Tablet — has issues" },
     ],
   },
   {
