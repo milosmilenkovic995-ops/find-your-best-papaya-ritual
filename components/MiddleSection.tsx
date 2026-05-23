@@ -9,22 +9,6 @@ const COUPON = COUPON_CODE;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
-function ProgressDots({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="mt-6 flex flex-wrap items-center justify-center gap-y-2">
-      {Array.from({ length: total }, (_, i) => i + 1).map((item, i) => {
-        const active = item <= current;
-        return (
-          <div key={item} className="flex items-center">
-            <div className={`flex h-8 w-8 items-center justify-center rounded-full border-2 text-xs font-bold ${active ? "border-green-700 bg-green-700 text-white" : "border-gray-300 bg-white text-gray-400"}`}>{item}</div>
-            {i < total - 1 && (<div className={`h-[2px] w-8 ${item < current ? "bg-green-700" : "bg-gray-300"}`} />)}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 function CouponBox() {
   return (
     <div className="mx-auto mb-7 max-w-md rounded-2xl border-2 border-dashed border-green-700 bg-green-50 px-6 py-5 text-center">
@@ -202,7 +186,6 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
       <section className="mb-8 text-center">
         <h1 className="text-3xl font-extrabold leading-tight md:text-5xl">{title}</h1>
         <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-500 md:text-xl md:leading-8">{subtitle}</p>
-        <ProgressDots current={step} total={totalSteps} />
       </section>
 
       {error && (<div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>)}
