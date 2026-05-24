@@ -374,23 +374,26 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <a
                 href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/fruit-powders`}
-                className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
+                className="rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
-                <div className="mb-1 text-3xl">🍓</div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/fruit-powders.jpg" alt="Fruit Powders" className="mx-auto mb-3 h-28 w-full rounded-xl object-contain" />
                 <div className="text-sm font-bold text-slate-900">Fruit Powders</div>
               </a>
               <a
                 href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/protein-powders`}
-                className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
+                className="rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
-                <div className="mb-1 text-3xl">💪</div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/protein-powders.jpg" alt="Protein and Collagens" className="mx-auto mb-3 h-28 w-full rounded-xl object-contain" />
                 <div className="text-sm font-bold text-slate-900">Protein &amp; Collagens</div>
               </a>
               <a
                 href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/seasonings-spices`}
-                className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
+                className="rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
-                <div className="mb-1 text-3xl">🌶️</div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/images/seasonings-spices.jpg" alt="Seasoning and Spices" className="mx-auto mb-3 h-28 w-full rounded-xl object-contain" />
                 <div className="text-sm font-bold text-slate-900">Seasoning &amp; Spices</div>
               </a>
             </div>
