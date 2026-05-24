@@ -343,29 +343,30 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
             </button>
           </div>
 
-          {/* Shop-by-category links — Shopify /discount/CODE?redirect=/path
-              applies the coupon in one click and forwards to the page. */}
+          {/* Shop-by-category links — direct to collection pages.
+              Headless storefronts don't honor /discount/CODE; swap back
+              once the cart-discount API is wired. */}
           <div className="mt-10">
             <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-gray-500">
-              Or shop by category — your $10 coupon will apply automatically
+              Or shop by category &mdash; remember to use code <strong className="text-green-700">{COUPON}</strong> at checkout
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <a
-                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/fruit-powders`}
+                href="https://www.znaturalfoods.com/collections/fruit-powders"
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">🍓</div>
                 <div className="text-sm font-bold text-slate-900">Fruit Powders</div>
               </a>
               <a
-                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/protein-powders`}
+                href="https://www.znaturalfoods.com/collections/protein-powders"
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">💪</div>
                 <div className="text-sm font-bold text-slate-900">Protein &amp; Collagens</div>
               </a>
               <a
-                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/seasonings-spices`}
+                href="https://www.znaturalfoods.com/collections/seasonings-spices"
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">🌶️</div>
