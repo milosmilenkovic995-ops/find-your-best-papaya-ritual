@@ -4,7 +4,7 @@ import MiddleSectionV2 from "@/components/MiddleSectionV2";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Help us to serve you better 2",
+  title: "Help us to serve you better",
 };
 
 export default function PageV2() {

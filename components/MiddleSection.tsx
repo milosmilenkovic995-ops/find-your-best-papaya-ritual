@@ -21,7 +21,7 @@ function CouponBox() {
 
 // Subtle confetti burst — fires when the survey reaches the final step.
 function fireConfetti() {
-  const duration = 3000;
+  const duration = 6000;
   const animationEnd = Date.now() + duration;
   const defaults = { startVelocity: 25, spread: 70, ticks: 60, zIndex: 50, gravity: 1, scalar: 0.8 };
   const interval = setInterval(() => {
@@ -327,15 +327,47 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
       )}
 
       {isCouponStep ? (
-        <div className="mt-7 flex justify-center">
-          <button
-            type="button"
-            onClick={handleContinue}
-            className="rounded-xl bg-green-700 px-8 py-4 text-base font-extrabold text-white shadow-sm hover:bg-green-800 md:text-lg"
-          >
-            Use My $10 Coupon &rarr;
-          </button>
-        </div>
+        <>
+          <div className="mt-7 flex justify-center">
+            <button
+              type="button"
+              onClick={handleContinue}
+              className="rounded-xl bg-green-700 px-8 py-4 text-base font-extrabold text-white shadow-sm hover:bg-green-800 md:text-lg"
+            >
+              Use My $10 Coupon &rarr;
+            </button>
+          </div>
+
+          {/* Shop-by-category links under the CTA */}
+          <div className="mt-10">
+            <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-gray-500">
+              Or shop by category
+            </p>
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <a
+                href="https://www.znaturalfoods.com/collections/superfood-powders"
+                className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
+              >
+                <div className="mb-1 text-3xl">🌱</div>
+                <div className="text-sm font-bold text-slate-900">Superfood Powders</div>
+              </a>
+              <a
+                href="https://www.znaturalfoods.com/collections/herbal-teas"
+                className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
+              >
+                <div className="mb-1 text-3xl">🍵</div>
+                <div className="text-sm font-bold text-slate-900">Herbal Teas</div>
+              </a>
+              <a
+                href="https://www.znaturalfoods.com/collections/natural-sweeteners"
+                className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
+              >
+                <div className="mb-1 text-3xl">🍯</div>
+                <div className="text-sm font-bold text-slate-900">Natural Sweeteners</div>
+              </a>
+            </div>
+          </div>
+        </>
       ) : (
         <div className="mt-7 flex items-center justify-between gap-3">
           <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:border-gray-400 disabled:opacity-40">&larr; Back</button>
