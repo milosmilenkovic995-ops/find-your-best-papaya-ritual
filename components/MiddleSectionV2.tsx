@@ -38,6 +38,13 @@ function fireConfetti() {
 
 const SESSION_STORAGE_KEY = "znf_session_v2";
 
+// Map of obfuscated URL codes -> real segment names stored in the DB.
+const SEGMENT_URL_MAP: Record<string, string> = {
+  "3": "buyer-30",
+  "18": "buyer-180",
+  "0": "non-buyer",
+};
+
 function getOrCreateSessionId(): string {
   if (typeof window === "undefined") return "";
   try {
@@ -76,10 +83,11 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
-    const s = p.get("segment") || p.get("seg") || "";
+    const rawSeg = p.get("segment") || p.get("seg") || p.get("s") || "";
+    const seg = SEGMENT_URL_MAP[rawSeg] || rawSeg;
     if (e) setEmail(e);
     if (k) setKlid(k);
-    if (s) setSegment(s);
+    if (seg) setSegment(seg);
   }, []);
 
   const totalQ = questions.length;

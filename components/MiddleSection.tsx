@@ -35,6 +35,16 @@ function fireConfetti() {
 
 const SESSION_STORAGE_KEY = "znf_session_v1";
 
+// Map of obfuscated URL codes -> real segment names stored in the DB.
+// Customers see e.g. ?segment=3 in the URL — they can't tell that
+// they're tagged as a "30-day buyer". The admin dashboard still shows
+// the readable names because that's what we store.
+const SEGMENT_URL_MAP: Record<string, string> = {
+  "3": "buyer-30",
+  "18": "buyer-180",
+  "0": "non-buyer",
+};
+
 function getOrCreateSessionId(): string {
   if (typeof window === "undefined") return "";
   try {
@@ -73,10 +83,13 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
-    const s = p.get("segment") || p.get("seg") || "";
+    const rawSeg = p.get("segment") || p.get("seg") || p.get("s") || "";
+    // Translate URL code (e.g. "3") to readable DB name (e.g. "buyer-30").
+    // If the value isn't in the map, keep it as-is so direct readable URLs still work.
+    const seg = SEGMENT_URL_MAP[rawSeg] || rawSeg;
     if (e) setEmail(e);
     if (k) setKlid(k);
-    if (s) setSegment(s);
+    if (seg) setSegment(seg);
   }, []);
 
   const totalQ = questions.length;
