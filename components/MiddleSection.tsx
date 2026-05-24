@@ -183,11 +183,11 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     // after we navigate away from the page below.
     sendSave(true, step);
     try { if (typeof window !== "undefined") window.sessionStorage.removeItem(SESSION_STORAGE_KEY); } catch {}
-    // Temporary: redirect to the homepage. The Shopify /discount/CODE URL will
-    // be wired up once the coupon is created in the store. Replace below with
-    // `https://www.znaturalfoods.com/discount/${COUPON}` when ready.
+    // Auto-apply the discount via Shopify's checkout subdomain (the headless
+    // main storefront doesn't expose /discount/, but checkout.* does).
+    // Customer lands in checkout / cart with the code already applied.
     if (typeof window !== "undefined") {
-      window.location.href = "https://www.znaturalfoods.com/";
+      window.location.href = `https://checkout.znaturalfoods.com/discount/${COUPON}`;
       return;
     }
     setDone(true);
@@ -338,33 +338,29 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
             </button>
           </div>
 
-          {/* Shop-by-category links under the CTA.
-              Headless Shopify storefronts don't expose /discount/CODE,
-              so for now we link straight to the collection pages.
-              Customer manually enters THANKYOU10 (shown in CouponBox above)
-              at checkout. Once the headless cart-discount API is wired up,
-              swap href to /discount/${COUPON}?redirect=/collections/X. */}
+          {/* Shop-by-category links — Shopify checkout.* discount URL applies
+              the coupon and (with redirect param) lands on the collection. */}
           <div className="mt-10">
             <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-gray-500">
-              Or shop by category &mdash; remember to use code <strong className="text-green-700">{COUPON}</strong> at checkout
+              Or shop by category &mdash; your $10 coupon will apply automatically
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <a
-                href="https://www.znaturalfoods.com/collections/fruit-powders"
+                href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/fruit-powders`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">🍓</div>
                 <div className="text-sm font-bold text-slate-900">Fruit Powders</div>
               </a>
               <a
-                href="https://www.znaturalfoods.com/collections/protein-powders"
+                href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/protein-powders`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">💪</div>
                 <div className="text-sm font-bold text-slate-900">Protein &amp; Collagens</div>
               </a>
               <a
-                href="https://www.znaturalfoods.com/collections/seasonings-spices"
+                href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/seasonings-spices`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">🌶️</div>
