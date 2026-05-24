@@ -9,7 +9,7 @@ export default function Page() {
       <MiddleSection
         title={
           <>
-            Answer a couple of questions and get a <strong>$10</strong> coupon for your next order
+            Answer a couple of questions <br className="hidden md:block" />and get a <strong>$10</strong> coupon for your next order
           </>
         }
         subtitle={

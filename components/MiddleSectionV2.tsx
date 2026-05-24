@@ -171,9 +171,15 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
   const submitFinal = () => {
     setError("");
     setSubmittedWithEmail(hasValidEmail);
+    // sendSave uses fetch with keepalive: true so the write completes even
+    // after we navigate away from the page below.
     sendSave(true, step);
-    // Clear sessionStorage so the next visit starts a fresh session ID.
     try { if (typeof window !== "undefined") window.sessionStorage.removeItem(SESSION_STORAGE_KEY); } catch {}
+    // Redirect to znaturalfoods.com with the discount auto-applied at checkout.
+    if (typeof window !== "undefined") {
+      window.location.href = `https://www.znaturalfoods.com/discount/${COUPON}`;
+      return;
+    }
     setDone(true);
     scrollTop();
   };
@@ -231,7 +237,7 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
   return (
     <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
       <section className="mb-8 text-center">
-        <h1 className="text-3xl font-extrabold leading-tight md:text-5xl">{title}</h1>
+        <h1 className="text-3xl font-medium leading-tight md:text-4xl">{title}</h1>
         <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-gray-500 md:text-base md:leading-7">{subtitle}</p>
       </section>
 
@@ -287,33 +293,36 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
       )}
 
       {isCouponStep && (
-        <section className="overflow-hidden rounded-3xl border-2 border-green-200 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-8 shadow-md md:p-10">
-          <div className="mb-3 text-center text-6xl">💚</div>
-          <h2 className="mb-3 text-center text-2xl font-extrabold leading-tight text-slate-900 md:text-4xl">
-            That&apos;s it — thank you.
+        <section className="overflow-hidden rounded-3xl border-2 border-green-200 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-8 text-center shadow-md md:p-10">
+          <div className="mb-3 text-6xl">💚</div>
+          <h2 className="mb-3 text-2xl font-extrabold leading-tight text-slate-900 md:text-4xl">
+            Thank you for your feedback
           </h2>
-          <p className="mx-auto mb-7 max-w-xl text-center text-base leading-7 text-gray-600 md:text-lg">
-            Your $10 coupon is ready. Use it on your next order.
+          <p className="mx-auto mb-3 max-w-xl text-base leading-7 text-gray-600 md:text-lg">
+            Thank you for your valuable time, you helped us a lot. Your coupon is ready &mdash; click below and your coupon will be applied at checkout automatically.
           </p>
-
-          <CouponBox />
-
-          <div className="mx-auto mt-2 max-w-md">
-            <label className="mb-2 block text-sm font-semibold text-slate-700">
-              Want a personalized offer too? Drop your email{" "}
-              <span className="font-normal text-gray-400">(optional)</span>
-            </label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-[15px] outline-none focus:border-green-600" />
-          </div>
+          <p className="mx-auto max-w-xl text-xs italic leading-5 text-gray-500">
+            *The coupon is valid on orders over $50.
+          </p>
         </section>
       )}
 
-      <div className="mt-7 flex items-center justify-between gap-3">
-        <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:border-gray-400 disabled:opacity-40">← Back</button>
-        <button type="button" onClick={handleContinue} className="rounded-xl bg-green-700 px-7 py-3 text-base font-extrabold text-white shadow-sm hover:bg-green-800">
-          {isCouponStep ? (hasValidEmail ? "Send my personal offer →" : "Get my $10 coupon →") : "Continue →"}
-        </button>
-      </div>
+      {isCouponStep ? (
+        <div className="mt-7 flex justify-center">
+          <button
+            type="button"
+            onClick={handleContinue}
+            className="rounded-xl bg-green-700 px-8 py-4 text-base font-extrabold text-white shadow-sm hover:bg-green-800 md:text-lg"
+          >
+            Use My $10 Coupon &rarr;
+          </button>
+        </div>
+      ) : (
+        <div className="mt-7 flex items-center justify-between gap-3">
+          <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:border-gray-400 disabled:opacity-40">&larr; Back</button>
+          <button type="button" onClick={handleContinue} className="rounded-xl bg-green-700 px-7 py-3 text-base font-extrabold text-white shadow-sm hover:bg-green-800">Continue &rarr;</button>
+        </div>
+      )}
     </main>
   );
 }
