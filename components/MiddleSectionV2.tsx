@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import {
   questionsV2 as questions,
@@ -8,7 +8,7 @@ import {
   PATH_NAME_V2,
 } from "@/lib/questions-v2";
 
-type MiddleSectionV2Props = { title: string; subtitle: string };
+type MiddleSectionV2Props = { title: ReactNode; subtitle: ReactNode };
 
 const COUPON = COUPON_CODE_V2;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

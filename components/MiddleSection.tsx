@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { questions, COUPON_CODE, type Question } from "@/lib/questions";
 
-type MiddleSectionProps = { title: string; subtitle: string };
+type MiddleSectionProps = { title: ReactNode; subtitle: ReactNode };
 
 const COUPON = COUPON_CODE;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -7,8 +7,16 @@ export default function Page() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Header />
       <MiddleSection
-        title="$10 off — our way of saying thanks"
-        subtitle="About 60 seconds. Tell us what's working and what's not — we'll use what you say to fix what matters most to you. Your coupon shows up the moment you finish."
+        title={
+          <>
+            Answer a couple of questions and get a <strong>$10</strong> coupon for your next order
+          </>
+        }
+        subtitle={
+          <>
+            This only takes around 30 seconds. Your feedback helps us make your shopping experience better, and as a thank-you for your valuable time, you&rsquo;ll receive <strong>$10 OFF</strong> your next order.
+          </>
+        }
       />
       <Footer />
     </div>
