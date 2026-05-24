@@ -172,6 +172,8 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
     setError("");
     setSubmittedWithEmail(hasValidEmail);
     sendSave(true, step);
+    // Clear sessionStorage so the next visit starts a fresh session ID.
+    try { if (typeof window !== "undefined") window.sessionStorage.removeItem(SESSION_STORAGE_KEY); } catch {}
     setDone(true);
     scrollTop();
   };

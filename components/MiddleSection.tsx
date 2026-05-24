@@ -160,6 +160,12 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     setError("");
     setSubmittedWithEmail(hasValidEmail);
     sendSave(true, step);
+    // Clear sessionStorage so the next visit starts a fresh session ID.
+    // Without this, opening the survey again in the same tab would reuse
+    // this session ID, and partial saves would land on this already-completed
+    // row (the trigger preserves completed=true, so the new "partial" appears
+    // as completed in the dashboard).
+    try { if (typeof window !== "undefined") window.sessionStorage.removeItem(SESSION_STORAGE_KEY); } catch {}
     setDone(true);
     scrollTop();
   };
