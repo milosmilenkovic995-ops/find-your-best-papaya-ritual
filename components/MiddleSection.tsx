@@ -355,14 +355,14 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
                 <div className="text-sm font-bold text-slate-900">Fruit Powders</div>
               </a>
               <a
-                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/protein-collagens`}
+                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/protein-powders`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">💪</div>
                 <div className="text-sm font-bold text-slate-900">Protein &amp; Collagens</div>
               </a>
               <a
-                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/seasoning-spices`}
+                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/seasonings-spices`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 <div className="mb-1 text-3xl">🌶️</div>
