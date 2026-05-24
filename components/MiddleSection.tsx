@@ -63,6 +63,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
 
   const [email, setEmail] = useState("");
   const [klid, setKlid] = useState("");
+  const [segment, setSegment] = useState("");
   const [sessionId, setSessionId] = useState<string>("");
   const [error, setError] = useState("");
 
@@ -72,8 +73,10 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
+    const s = p.get("segment") || p.get("seg") || "";
     if (e) setEmail(e);
     if (k) setKlid(k);
+    if (s) setSegment(s);
   }, []);
 
   const totalQ = questions.length;
@@ -126,6 +129,7 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     sessionId,
     completed,
     lastStep,
+    segment: segment.trim() || null,
     email: hasValidEmail ? email.trim() : null,
     klid: klid.trim() || null,
     path: "main_v2",

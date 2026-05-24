@@ -29,15 +29,22 @@ type SubmissionRow = {
   completed?: boolean;
   last_step?: number | null;
   session_id?: string;
+  segment?: string | null;
 };
+
+const KNOWN_SEGMENTS = ["buyer-30", "buyer-180", "non-buyer"] as const;
+type SegmentFilter = "all" | (typeof KNOWN_SEGMENTS)[number];
 
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; reset?: string; view?: string }>;
+  searchParams: Promise<{ error?: string; reset?: string; view?: string; seg?: string }>;
 }) {
   const params = await searchParams;
   const view: "completed" | "partial" = params.view === "partial" ? "partial" : "completed";
+  const segFilter: SegmentFilter = (KNOWN_SEGMENTS as readonly string[]).includes(params.seg || "")
+    ? (params.seg as SegmentFilter)
+    : "all";
   const cookieStore = await cookies();
   const adminPass = process.env.ADMIN_PASSWORD || "";
   const authed = !!adminPass && cookieStore.get("znf_admin")?.value === adminPass;
@@ -82,7 +89,12 @@ export default async function AdminPage({
   }
 
   // Only count submissions from the current (v1) survey path
-  const all = submissions.filter((s) => s.path_id === "main_v2");
+  const allInPath = submissions.filter((s) => s.path_id === "main_v2");
+  // Apply segment filter to everything below this point.
+  const all = segFilter === "all" ? allInPath : allInPath.filter((s) => s.segment === segFilter);
+  // Counts per segment for the filter UI (always based on full set, not filtered).
+  const segCounts: Record<string, number> = { all: allInPath.length };
+  for (const s of KNOWN_SEGMENTS) segCounts[s] = allInPath.filter((r) => r.segment === s).length;
   const completedRows = all.filter((s) => s.completed !== false); // completed; treat legacy rows (undefined) as completed
   const partialRows = all.filter((s) => s.completed === false);
   const completedTotal = completedRows.length;
@@ -166,15 +178,39 @@ export default async function AdminPage({
         <SummaryCard label="Without email" value={withoutEmail} />
       </div>
 
+      {/* Segment filter pills */}
+      <div className="mb-6">
+        <div className="mb-2 text-xs font-extrabold uppercase tracking-widest text-gray-500">Filter by segment</div>
+        <div className="flex flex-wrap gap-2">
+          {(["all", ...KNOWN_SEGMENTS] as SegmentFilter[]).map((s) => {
+            const active = s === segFilter;
+            const qs = new URLSearchParams();
+            if (view === "partial") qs.set("view", "partial");
+            if (s !== "all") qs.set("seg", s);
+            const href = qs.toString() ? `/admin?${qs}` : "/admin";
+            const label = s === "all" ? "All segments" : s;
+            return (
+              <a
+                key={s}
+                href={href}
+                className={`rounded-full border px-3 py-1 text-xs font-bold transition ${active ? "border-slate-900 bg-slate-900 text-white" : "border-gray-300 bg-white text-gray-700 hover:border-slate-900"}`}
+              >
+                {label} <span className={active ? "text-gray-300" : "text-gray-400"}>({segCounts[s] || 0})</span>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="mb-8 flex gap-2 border-b border-gray-200">
         <a
-          href="/admin"
+          href={segFilter === "all" ? "/admin" : `/admin?seg=${segFilter}`}
           className={`-mb-px border-b-2 px-4 py-2 text-sm font-bold transition ${view === "completed" ? "border-green-700 text-green-700" : "border-transparent text-gray-500 hover:text-slate-900"}`}
         >
           Completed ({completedTotal})
         </a>
         <a
-          href="/admin?view=partial"
+          href={segFilter === "all" ? "/admin?view=partial" : `/admin?view=partial&seg=${segFilter}`}
           className={`-mb-px border-b-2 px-4 py-2 text-sm font-bold transition ${view === "partial" ? "border-amber-600 text-amber-700" : "border-transparent text-gray-500 hover:text-slate-900"}`}
         >
           Partial ({partialTotal})

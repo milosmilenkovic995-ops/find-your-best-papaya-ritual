@@ -23,6 +23,7 @@ export async function POST(req: Request) {
       submitted_at: body.submittedAt || new Date().toISOString(),
       completed,
       last_step: typeof body.lastStep === "number" ? body.lastStep : null,
+      segment: typeof body.segment === "string" && body.segment.trim() ? body.segment.trim() : null,
       email: completed ? body.email || null : null,
       klaviyo_id: body.klid || null,
       path_id: body.path || "v2",
