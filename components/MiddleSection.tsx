@@ -4,7 +4,16 @@ import confetti from "canvas-confetti";
 
 import { questions, COUPON_CODE, type Question } from "@/lib/questions";
 
-type MiddleSectionProps = { title: ReactNode; subtitle: ReactNode };
+type MiddleSectionProps = {
+  title: ReactNode;
+  subtitle: ReactNode;
+  /**
+   * Segment value passed from the server-rendered page, which sees the URL
+   * after middleware rewrites (e.g. /3 → ?segment=3). Falls back to URL
+   * params on the client for direct ?segment= test URLs.
+   */
+  initialSegment?: string;
+};
 
 const COUPON = COUPON_CODE;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,7 +70,7 @@ function getOrCreateSessionId(): string {
   }
 }
 
-export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
+export default function MiddleSection({ title, subtitle, initialSegment = "" }: MiddleSectionProps) {
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
   const [submittedWithEmail, setSubmittedWithEmail] = useState<boolean>(false);
@@ -83,7 +92,8 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
-    const rawSeg = p.get("segment") || p.get("seg") || p.get("s") || "";
+    // Source order: server-prop (set by middleware-rewritten URL) → URL params (direct test URLs).
+    const rawSeg = initialSegment || p.get("segment") || p.get("seg") || p.get("s") || "";
     // Translate URL code (e.g. "3") to readable DB name (e.g. "buyer-30").
     // If the value isn't in the map, keep it as-is so direct readable URLs still work.
     const seg = SEGMENT_URL_MAP[rawSeg] || rawSeg;

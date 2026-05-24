@@ -9,7 +9,11 @@ import {
   PATH_NAME_V2,
 } from "@/lib/questions-v2";
 
-type MiddleSectionV2Props = { title: ReactNode; subtitle: ReactNode };
+type MiddleSectionV2Props = {
+  title: ReactNode;
+  subtitle: ReactNode;
+  initialSegment?: string;
+};
 
 const COUPON = COUPON_CODE_V2;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -61,7 +65,7 @@ function getOrCreateSessionId(): string {
   }
 }
 
-export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Props) {
+export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }: MiddleSectionV2Props) {
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
   const [submittedWithEmail, setSubmittedWithEmail] = useState<boolean>(false);
@@ -83,7 +87,7 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
-    const rawSeg = p.get("segment") || p.get("seg") || p.get("s") || "";
+    const rawSeg = initialSegment || p.get("segment") || p.get("seg") || p.get("s") || "";
     const seg = SEGMENT_URL_MAP[rawSeg] || rawSeg;
     if (e) setEmail(e);
     if (k) setKlid(k);

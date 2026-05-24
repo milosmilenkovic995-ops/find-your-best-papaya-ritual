@@ -1,28 +1,41 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Hostname-based routing so the two custom Vercel subdomains each
-// serve a specific survey at their root path:
-//   help-us-to-serve-you-better-1.vercel.app/  ->  /  (v1)
-//   help-us-to-serve-you-better-2.vercel.app/  ->  /v2 (v2 served at /)
-//
-// The original find-your-best-papaya-ritual.vercel.app and any other
-// host pass through unchanged.
+// Path-based segment codes the customer sees in the URL:
+//   /3   -> buyer-30
+//   /18  -> buyer-180
+//   /0   -> non-buyer
+// The middleware rewrites these to the right page (/ for v1, /v2 for v2)
+// and tacks on ?segment=<code> so the server component picks it up.
+// Customer's browser bar STAYS on /3 — they never see the word "segment".
+const SEGMENT_PATHS = new Set(["3", "18", "0"]);
+
+// Hostname-based routing for the two custom subdomains:
+//   help-us-to-serve-you-better-1.vercel.app/  -> /  (v1)
+//   help-us-to-serve-you-better-2.vercel.app/  -> /v2 (v2 served at /)
+// Original find-your-best-papaya-ritual.vercel.app and any other host
+// pass through unchanged.
 
 export function middleware(req: NextRequest) {
   const host = (req.headers.get("host") || "").toLowerCase();
   const url = req.nextUrl.clone();
+  const bare = url.pathname.replace(/^\/+|\/+$/g, ""); // strip slashes
 
-  // Survey 2 alias: serve v2 at the root.
-  if (host.startsWith("help-us-to-serve-you-better-2")) {
-    if (url.pathname === "/" || url.pathname === "") {
-      url.pathname = "/v2";
-      return NextResponse.rewrite(url);
-    }
+  const onV2Host = host.startsWith("help-us-to-serve-you-better-2");
+
+  // 1) Segment code path: /3, /18, /0  →  serve the right survey + tag it
+  if (SEGMENT_PATHS.has(bare)) {
+    url.searchParams.set("segment", bare);
+    url.pathname = onV2Host ? "/v2" : "/";
+    return NextResponse.rewrite(url);
   }
 
-  // Survey 1 alias: root already serves v1, nothing to rewrite.
-  // (Keeps /admin and other paths reachable from the same host.)
+  // 2) v2 host root → serve /v2 (existing behavior)
+  if (onV2Host && bare === "") {
+    url.pathname = "/v2";
+    return NextResponse.rewrite(url);
+  }
+
   return NextResponse.next();
 }
 
