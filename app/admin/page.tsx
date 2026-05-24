@@ -35,6 +35,12 @@ type SubmissionRow = {
 const KNOWN_SEGMENTS = ["buyer-30", "buyer-180", "non-buyer"] as const;
 type SegmentFilter = "all" | (typeof KNOWN_SEGMENTS)[number];
 
+const SEGMENT_LABELS: Record<string, string> = {
+  "buyer-30": "buyers 30",
+  "buyer-180": "buyers 30-180",
+  "non-buyer": "non buyers",
+};
+
 export default async function AdminPage({
   searchParams,
 }: {
@@ -188,7 +194,7 @@ export default async function AdminPage({
             if (view === "partial") qs.set("view", "partial");
             if (s !== "all") qs.set("seg", s);
             const href = qs.toString() ? `/admin?${qs}` : "/admin";
-            const label = s === "all" ? "All segments" : s;
+            const label = s === "all" ? "All segments" : (SEGMENT_LABELS[s] || s);
             return (
               <a
                 key={s}

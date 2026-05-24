@@ -35,6 +35,14 @@ type SubmissionRow = {
 const KNOWN_SEGMENTS = ["buyer-30", "buyer-180", "non-buyer"] as const;
 type SegmentFilter = "all" | (typeof KNOWN_SEGMENTS)[number];
 
+// Display labels for the segment pills. The DB still stores the slug values
+// above (buyer-30 etc.) — only what's shown to you in the dashboard changes.
+const SEGMENT_LABELS: Record<string, string> = {
+  "buyer-30": "buyers 30",
+  "buyer-180": "buyers 30-180",
+  "non-buyer": "non buyers",
+};
+
 export default async function AdminV2Page({
   searchParams,
 }: {
@@ -189,7 +197,7 @@ export default async function AdminV2Page({
             if (view === "partial") qs.set("view", "partial");
             if (s !== "all") qs.set("seg", s);
             const href = qs.toString() ? `/admin/v2?${qs}` : "/admin/v2";
-            const label = s === "all" ? "All segments" : s;
+            const label = s === "all" ? "All segments" : (SEGMENT_LABELS[s] || s);
             return (
               <a
                 key={s}
