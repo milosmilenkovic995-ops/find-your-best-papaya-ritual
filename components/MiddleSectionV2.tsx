@@ -343,31 +343,33 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
             </button>
           </div>
 
+          {/* Shop-by-category links — Shopify /discount/CODE?redirect=/path
+              applies the coupon in one click and forwards to the page. */}
           <div className="mt-10">
             <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-gray-500">
-              Or shop by category
+              Or shop by category — your $10 coupon will apply automatically
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <a
-                href="https://www.znaturalfoods.com/collections/superfood-powders"
+                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/fruit-powders`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
-                <div className="mb-1 text-3xl">🌱</div>
-                <div className="text-sm font-bold text-slate-900">Superfood Powders</div>
+                <div className="mb-1 text-3xl">🍓</div>
+                <div className="text-sm font-bold text-slate-900">Fruit Powders</div>
               </a>
               <a
-                href="https://www.znaturalfoods.com/collections/herbal-teas"
+                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/protein-collagens`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
-                <div className="mb-1 text-3xl">🍵</div>
-                <div className="text-sm font-bold text-slate-900">Herbal Teas</div>
+                <div className="mb-1 text-3xl">💪</div>
+                <div className="text-sm font-bold text-slate-900">Protein &amp; Collagens</div>
               </a>
               <a
-                href="https://www.znaturalfoods.com/collections/natural-sweeteners"
+                href={`https://www.znaturalfoods.com/discount/${COUPON}?redirect=/collections/seasoning-spices`}
                 className="rounded-2xl border border-gray-200 bg-white px-5 py-5 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
-                <div className="mb-1 text-3xl">🍯</div>
-                <div className="text-sm font-bold text-slate-900">Natural Sweeteners</div>
+                <div className="mb-1 text-3xl">🌶️</div>
+                <div className="text-sm font-bold text-slate-900">Seasoning &amp; Spices</div>
               </a>
             </div>
           </div>
