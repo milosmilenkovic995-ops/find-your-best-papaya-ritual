@@ -8,19 +8,32 @@ export async function POST(req: Request) {
     const body = await req.json();
     const headers = req.headers;
 
-    const submission = {
-      email: body.email || null,
+    const sessionId = typeof body.sessionId === "string" ? body.sessionId.trim() : "";
+    if (!sessionId) {
+      return NextResponse.json(
+        { success: false, error: "Missing sessionId" },
+        { status: 400 }
+      );
+    }
+
+    const completed = body.completed === true;
+
+    const row = {
+      session_id: sessionId,
+      submitted_at: body.submittedAt || new Date().toISOString(),
+      completed,
+      last_step: typeof body.lastStep === "number" ? body.lastStep : null,
+      email: completed ? body.email || null : null,
       klaviyo_id: body.klid || null,
       path_id: body.path || "v2",
       path_name: body.pathName || null,
-      submitted_via: body.submittedVia || null,
-      coupon_code: body.coupon || null,
-      discount_label: body.discount || null,
+      submitted_via: completed ? body.submittedVia || null : null,
+      coupon_code: completed ? body.coupon || null : null,
+      discount_label: completed ? body.discount || null : null,
       sorting_answer_id: body.sorting?.answerId || null,
       sorting_answer_label: body.sorting?.answerLabel || null,
       sorting_free_text: body.sorting?.freeText || null,
       answers: body.answers || [],
-      submitted_at: body.submittedAt || new Date().toISOString(),
       user_agent: headers.get("user-agent") || null,
       referrer: headers.get("referer") || null,
       ip_address:
@@ -30,15 +43,17 @@ export async function POST(req: Request) {
     };
 
     if (supabase) {
-      const { error } = await supabase.from("submissions_v2").insert(submission);
-      if (error) console.error("Supabase v2 insert error:", error);
+      const { error } = await supabase
+        .from("submissions_v2")
+        .upsert(row, { onConflict: "session_id" });
+      if (error) console.error("Supabase v2 upsert error:", error);
     } else {
-      console.log("Supabase not configured. v2 submission body:", JSON.stringify(submission).slice(0, 500));
+      console.log("Supabase not configured. v2 payload:", JSON.stringify(row).slice(0, 500));
     }
 
     const klaviyoKey = process.env.KLAVIYO_PRIVATE_API_KEY;
     const klaviyoList = process.env.KLAVIYO_LIST_ID_V2 || process.env.KLAVIYO_LIST_ID;
-    if (body.email && body.submittedVia === "email" && klaviyoKey && klaviyoList) {
+    if (completed && body.email && body.submittedVia === "email" && klaviyoKey && klaviyoList) {
       try {
         await fetch(
           "https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/",
@@ -80,7 +95,7 @@ export async function POST(req: Request) {
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, sessionId, completed });
   } catch (error) {
     console.error("Subscribe v2 API error:", error);
     return NextResponse.json({ success: false, error: "Server error" }, { status: 500 });

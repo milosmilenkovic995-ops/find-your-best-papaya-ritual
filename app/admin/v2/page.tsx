@@ -26,6 +26,9 @@ type SubmissionRow = {
   coupon_code: string | null;
   discount_label: string | null;
   answers: unknown;
+  completed?: boolean;
+  last_step?: number | null;
+  session_id?: string;
 };
 
 export default async function AdminV2Page({
@@ -77,8 +80,13 @@ export default async function AdminV2Page({
     dbError = "Supabase not configured.";
   }
 
-  const current = submissions.filter((s) => s.path_id === PATH_ID_V2);
+  const all = submissions.filter((s) => s.path_id === PATH_ID_V2);
+  const current = all.filter((s) => s.completed !== false);
+  const partials = all.filter((s) => s.completed === false);
   const total = current.length;
+  const partialTotal = partials.length;
+  const allTotal = all.length;
+  const completionRate = allTotal > 0 ? Math.round((total / allTotal) * 100) : 0;
   const withEmail = current.filter((s) => s.email).length;
   const withoutEmail = total - withEmail;
   const emailRate = total > 0 ? Math.round((withEmail / total) * 100) : 0;
@@ -146,10 +154,14 @@ export default async function AdminV2Page({
       {params.reset === "error" && (<div className="mb-6 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm font-semibold text-red-800">⚠ Reset failed. Check Vercel logs.</div>)}
       {dbError && (<div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{dbError}</div>)}
 
-      <div className="mb-10 grid gap-4 sm:grid-cols-3">
-        <SummaryCard label="Total submissions" value={total} />
-        <SummaryCard label="With email" value={withEmail} sub={`${emailRate}% of submissions`} highlight />
+      <div className="mb-4 grid gap-4 sm:grid-cols-4">
+        <SummaryCard label="Completed" value={total} sub={`${completionRate}% completion rate`} highlight />
+        <SummaryCard label="Partial responses" value={partialTotal} sub={partialTotal === 0 ? "—" : "in-progress / abandoned"} />
+        <SummaryCard label="With email" value={withEmail} sub={`${emailRate}% of completed`} />
         <SummaryCard label="Without email" value={withoutEmail} />
+      </div>
+      <div className="mb-10 text-xs text-gray-500">
+        Charts below use <strong>completed</strong> responses only. Partial rows save every answer as the visitor advances, so even abandoned surveys are captured.
       </div>
 
       <section className="mb-12">

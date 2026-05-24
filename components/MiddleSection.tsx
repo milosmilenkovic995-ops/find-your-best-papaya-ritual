@@ -19,6 +19,24 @@ function CouponBox() {
   );
 }
 
+const SESSION_STORAGE_KEY = "znf_session_v1";
+
+function getOrCreateSessionId(): string {
+  if (typeof window === "undefined") return "";
+  try {
+    let id = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (!id) {
+      id = (window.crypto && typeof window.crypto.randomUUID === "function")
+        ? window.crypto.randomUUID()
+        : `s_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+      window.sessionStorage.setItem(SESSION_STORAGE_KEY, id);
+    }
+    return id;
+  } catch {
+    return `s_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+  }
+}
+
 export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
   const [step, setStep] = useState(1);
   const [done, setDone] = useState(false);
@@ -31,10 +49,12 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
 
   const [email, setEmail] = useState("");
   const [klid, setKlid] = useState("");
+  const [sessionId, setSessionId] = useState<string>("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    setSessionId(getOrCreateSessionId());
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
@@ -82,7 +102,10 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
 
   const hasValidEmail = email.trim().length > 0 && EMAIL_REGEX.test(email.trim());
 
-  const buildPayload = () => ({
+  const buildPayload = (completed: boolean, lastStep: number) => ({
+    sessionId,
+    completed,
+    lastStep,
     email: hasValidEmail ? email.trim() : null,
     klid: klid.trim() || null,
     path: "main_v2",
@@ -121,10 +144,22 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     submittedAt: new Date().toISOString(),
   });
 
+  // Fire-and-forget save. Used both for partial (per-step) and final (completed) writes.
+  // Same endpoint, different `completed` flag. Upserts on sessionId so one visitor = one row.
+  const sendSave = (completed: boolean, stepNum: number) => {
+    if (!sessionId) return;
+    fetch("/api/subscribe", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(buildPayload(completed, stepNum)),
+      keepalive: true, // survives page unload (browser tab close)
+    }).catch(() => {});
+  };
+
   const submitFinal = () => {
     setError("");
     setSubmittedWithEmail(hasValidEmail);
-    fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(buildPayload()) }).catch(() => {});
+    sendSave(true, step);
     setDone(true);
     scrollTop();
   };
@@ -133,6 +168,8 @@ export default function MiddleSection({ title, subtitle }: MiddleSectionProps) {
     if (!validate()) { scrollTop(); return; }
     setError("");
     if (isCouponStep) { submitFinal(); return; }
+    // Save what they've answered so far before advancing
+    sendSave(false, step);
     setStep(step + 1);
     scrollTop();
   };

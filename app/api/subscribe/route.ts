@@ -8,19 +8,34 @@ export async function POST(req: Request) {
     const body = await req.json();
     const headers = req.headers;
 
-    const submission = {
-      email: body.email || null,
+    // sessionId is required for partial-capture upsert.
+    // Without it we can't dedupe; reject so we don't create duplicate rows.
+    const sessionId = typeof body.sessionId === "string" ? body.sessionId.trim() : "";
+    if (!sessionId) {
+      return NextResponse.json(
+        { success: false, error: "Missing sessionId" },
+        { status: 400 }
+      );
+    }
+
+    const completed = body.completed === true;
+
+    const row = {
+      session_id: sessionId,
+      submitted_at: body.submittedAt || new Date().toISOString(),
+      completed,
+      last_step: typeof body.lastStep === "number" ? body.lastStep : null,
+      email: completed ? body.email || null : null,
       klaviyo_id: body.klid || null,
-      path_id: body.path || "unknown",
+      path_id: body.path || "main_v2",
       path_name: body.pathName || null,
-      submitted_via: body.submittedVia || null,
-      coupon_code: body.coupon || null,
-      discount_label: body.discount || null,
+      submitted_via: completed ? body.submittedVia || null : null,
+      coupon_code: completed ? body.coupon || null : null,
+      discount_label: completed ? body.discount || null : null,
       sorting_answer_id: body.sorting?.answerId || null,
       sorting_answer_label: body.sorting?.answerLabel || null,
       sorting_free_text: body.sorting?.freeText || null,
       answers: body.answers || [],
-      submitted_at: body.submittedAt || new Date().toISOString(),
       user_agent: headers.get("user-agent") || null,
       referrer: headers.get("referer") || null,
       ip_address:
@@ -30,15 +45,18 @@ export async function POST(req: Request) {
     };
 
     if (supabase) {
-      const { error } = await supabase.from("submissions").insert(submission);
-      if (error) console.error("Supabase insert error:", error);
+      const { error } = await supabase
+        .from("submissions")
+        .upsert(row, { onConflict: "session_id" });
+      if (error) console.error("Supabase upsert error:", error);
     } else {
-      console.log("Supabase not configured. Submission body:", JSON.stringify(submission).slice(0, 500));
+      console.log("Supabase not configured. Payload:", JSON.stringify(row).slice(0, 500));
     }
 
+    // Klaviyo subscribe only happens on COMPLETED submits with an email.
     const klaviyoKey = process.env.KLAVIYO_PRIVATE_API_KEY;
     const klaviyoList = process.env.KLAVIYO_LIST_ID;
-    if (body.email && body.submittedVia === "email" && klaviyoKey && klaviyoList) {
+    if (completed && body.email && body.submittedVia === "email" && klaviyoKey && klaviyoList) {
       try {
         await fetch(
           "https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/",
@@ -80,7 +98,7 @@ export async function POST(req: Request) {
       }
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, sessionId, completed });
   } catch (error) {
     console.error("Subscribe API error:", error);
     return NextResponse.json({ success: false, error: "Server error" }, { status: 500 });
