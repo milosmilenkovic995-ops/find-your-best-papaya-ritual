@@ -138,14 +138,6 @@ export default async function AdminPage({
   const fbPct = completedTotal > 0 ? Math.round((fb / completedTotal) * 100) : 0;
   const recent = dataset.slice(0, 30);
 
-  // Dropout breakdown for partial view
-  const dropoutByStep = new Map<number, number>();
-  if (view === "partial") {
-    for (const r of partialRows) {
-      const s = typeof r.last_step === "number" ? r.last_step : 0;
-      dropoutByStep.set(s, (dropoutByStep.get(s) || 0) + 1);
-    }
-  }
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
@@ -199,24 +191,6 @@ export default async function AdminPage({
             : "Answers captured from visitors who started but did NOT finish the survey. Each click on “Continue” saves their progress in real time."}
           {" "}Every option is listed, even when 0 customers picked it. Multi-select percentages can sum above 100%.
         </p>
-
-        {view === "partial" && partialTotal > 0 && (
-          <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
-            <div className="mb-2 text-xs font-extrabold uppercase tracking-wider text-amber-800">Where people drop off</div>
-            <div className="flex flex-wrap gap-2">
-              {Array.from(dropoutByStep.entries())
-                .sort((a, b) => (a[0] || 0) - (b[0] || 0))
-                .map(([s, n]) => (
-                  <span key={s} className="rounded-lg bg-white px-3 py-1.5 text-sm shadow-sm">
-                    <strong className="text-amber-700">{n}</strong>
-                    <span className="ml-1 text-gray-600">
-                      {s === 0 ? "before answering" : `after Q${s}`}
-                    </span>
-                  </span>
-                ))}
-            </div>
-          </div>
-        )}
 
         {datasetCount === 0 && (
           <div className="rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-500">
