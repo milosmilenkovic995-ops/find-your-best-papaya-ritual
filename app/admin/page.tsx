@@ -36,9 +36,9 @@ const KNOWN_SEGMENTS = ["buyer-30", "buyer-180", "non-buyer"] as const;
 type SegmentFilter = "all" | (typeof KNOWN_SEGMENTS)[number];
 
 const SEGMENT_LABELS: Record<string, string> = {
-  "buyer-30": "buyers 30",
-  "buyer-180": "buyers 30-180",
-  "non-buyer": "non buyers",
+  "buyer-30": "Buyers 30 Day",
+  "buyer-180": "Buyers 30-180 Day",
+  "non-buyer": "Non Buyers",
 };
 
 export default async function AdminPage({
