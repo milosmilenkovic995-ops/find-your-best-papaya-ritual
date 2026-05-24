@@ -18,7 +18,7 @@ function CouponBox() {
     <div className="mx-auto mb-7 max-w-md rounded-2xl border-2 border-dashed border-green-700 bg-green-50 px-6 py-5 text-center">
       <div className="mb-1 text-xs font-extrabold tracking-[0.18em] text-green-700">✨ YOUR $10 OFF CODE ✨</div>
       <div className="text-3xl font-extrabold tracking-wider text-slate-900">{COUPON}</div>
-      <div className="mt-2 text-sm text-gray-600">Use this code at checkout on your next order.</div>
+      <div className="mt-2 text-sm text-gray-600">Apply at checkout — works on your next order, no minimum.</div>
     </div>
   );
 }
@@ -159,10 +159,10 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
       return (
         <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
           <section className="rounded-3xl border-2 border-green-200 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-10 text-center shadow-md">
-            <div className="mb-4 text-7xl">💌</div>
-            <h2 className="mb-3 text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">Your personal offer is on the way! ✨</h2>
+            <div className="mb-4 text-7xl">💚</div>
+            <h2 className="mb-3 text-3xl font-extrabold leading-tight text-slate-900 md:text-4xl">Thanks — we hear you.</h2>
             <p className="mx-auto mb-7 max-w-xl text-base leading-7 text-gray-600 md:text-lg">
-              Thanks again 💚 — we&apos;ll send a personalized offer to <strong>{email.trim()}</strong> very soon. Keep an eye on your inbox.
+              Your $10 coupon is below, ready to use now. We&apos;ll also send a personalized offer to <strong>{email.trim()}</strong> in the next few days based on what you shared.
             </p>
             <CouponBox />
             <p className="mb-6 text-sm text-gray-500">Your $10 off code is yours to use right away — no need to wait for the email.</p>
@@ -177,9 +177,9 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
     return (
       <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
         <section className="rounded-3xl border border-gray-200 bg-white p-10 text-center shadow-sm">
-          <div className="mb-4 text-6xl">🎉</div>
-          <h2 className="mb-3 text-3xl font-extrabold text-slate-900 md:text-4xl">You&apos;re all set!</h2>
-          <p className="mx-auto mb-7 max-w-xl text-base leading-7 text-gray-600 md:text-lg">Thanks again for your feedback 💚. Here&apos;s your code — use it whenever you&apos;re ready.</p>
+          <div className="mb-4 text-6xl">💚</div>
+          <h2 className="mb-3 text-3xl font-extrabold text-slate-900 md:text-4xl">Thanks for telling us.</h2>
+          <p className="mx-auto mb-7 max-w-xl text-base leading-7 text-gray-600 md:text-lg">What you shared helps us decide what to fix next. Your $10 coupon is below — use it whenever you&apos;re ready.</p>
           <CouponBox />
           <div className="flex flex-wrap justify-center gap-3">
             <a href="https://www.znaturalfoods.com/" className="rounded-xl bg-green-700 px-6 py-3 font-extrabold text-white hover:bg-green-800">Start shopping →</a>
@@ -252,17 +252,17 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
         <section className="overflow-hidden rounded-3xl border-2 border-green-200 bg-gradient-to-br from-green-50 via-white to-emerald-50 p-8 shadow-md md:p-10">
           <div className="mb-3 text-center text-6xl">💚</div>
           <h2 className="mb-3 text-center text-2xl font-extrabold leading-tight text-slate-900 md:text-4xl">
-            Thank you for your time — we really appreciate it!
+            That&apos;s it — thank you.
           </h2>
           <p className="mx-auto mb-7 max-w-xl text-center text-base leading-7 text-gray-600 md:text-lg">
-            Here&apos;s your coupon code for instant use:
+            Your $10 coupon is ready. Use it on your next order.
           </p>
 
           <CouponBox />
 
           <div className="mx-auto mt-2 max-w-md">
             <label className="mb-2 block text-sm font-semibold text-slate-700">
-              If you want us to send you a personal offer, put email{" "}
+              Want a personalized offer too? Drop your email{" "}
               <span className="font-normal text-gray-400">(optional)</span>
             </label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" className="w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-[15px] outline-none focus:border-green-600" />
@@ -273,7 +273,7 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
       <div className="mt-7 flex items-center justify-between gap-3">
         <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:border-gray-400 disabled:opacity-40">← Back</button>
         <button type="button" onClick={handleContinue} className="rounded-xl bg-green-700 px-7 py-3 text-base font-extrabold text-white shadow-sm hover:bg-green-800">
-          {isCouponStep ? (hasValidEmail ? "Send me my personal offer 🎁" : "Finish survey →") : "Continue →"}
+          {isCouponStep ? (hasValidEmail ? "Send my personal offer →" : "Get my $10 coupon →") : "Continue →"}
         </button>
       </div>
     </main>

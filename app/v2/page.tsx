@@ -7,8 +7,8 @@ export default function PageV2() {
     <div className="min-h-screen bg-slate-50 text-slate-900">
       <Header />
       <MiddleSectionV2
-        title="Get $10 off your next order"
-        subtitle="Help us serve you better — answer 5 quick questions (about 60 seconds) and we'll send your $10 coupon the moment you finish. Your feedback shapes what we fix next."
+        title="$10 off — our way of saying thanks"
+        subtitle="5 questions, about 60 seconds. Tell us what's working and what's not — we'll use what you say to fix what matters most to you. Your coupon shows up the moment you finish."
       />
       <Footer />
     </div>
