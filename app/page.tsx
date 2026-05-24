@@ -8,7 +8,7 @@ export default function Page() {
       <Header />
       <MiddleSection
         title="$10 off — our way of saying thanks"
-        subtitle="5 questions, about 60 seconds. Tell us what's working and what's not — we'll use what you say to fix what matters most to you. Your coupon shows up the moment you finish."
+        subtitle="About 60 seconds. Tell us what's working and what's not — we'll use what you say to fix what matters most to you. Your coupon shows up the moment you finish."
       />
       <Footer />
     </div>
