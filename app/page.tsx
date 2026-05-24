@@ -1,6 +1,11 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import MiddleSection from "@/components/MiddleSection";
 import Footer from "@/components/Footer";
+
+export const metadata: Metadata = {
+  title: "Help us to serve you better 1",
+};
 
 export default function Page() {
   return (
@@ -9,7 +14,7 @@ export default function Page() {
       <MiddleSection
         title={
           <>
-            Answer a couple of questions <br className="hidden md:block" />and get a <strong>$10</strong> coupon for your next order
+            Answer a couple of questions <br className="hidden md:block" />and get a <strong>$10 coupon</strong> for your next order
           </>
         }
         subtitle={

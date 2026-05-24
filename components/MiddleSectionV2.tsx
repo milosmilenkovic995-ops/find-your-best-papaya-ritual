@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, type ReactNode } from "react";
+import confetti from "canvas-confetti";
 
 import {
   questionsV2 as questions,
@@ -15,12 +16,24 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function CouponBox() {
   return (
-    <div className="mx-auto mb-7 max-w-md rounded-2xl border-2 border-dashed border-green-700 bg-green-50 px-6 py-5 text-center">
+    <div className="mx-auto mb-6 max-w-md rounded-2xl border-2 border-dashed border-green-700 bg-green-50 px-6 py-5 text-center">
       <div className="mb-1 text-xs font-extrabold tracking-[0.18em] text-green-700">✨ YOUR $10 OFF CODE ✨</div>
       <div className="text-3xl font-extrabold tracking-wider text-slate-900">{COUPON}</div>
-      <div className="mt-2 text-sm text-gray-600">Apply at checkout — works on your next order, no minimum.</div>
     </div>
   );
+}
+
+function fireConfetti() {
+  const duration = 3000;
+  const animationEnd = Date.now() + duration;
+  const defaults = { startVelocity: 25, spread: 70, ticks: 60, zIndex: 50, gravity: 1, scalar: 0.8 };
+  const interval = setInterval(() => {
+    const timeLeft = animationEnd - Date.now();
+    if (timeLeft <= 0) { clearInterval(interval); return; }
+    const particleCount = 25 * (timeLeft / duration);
+    confetti({ ...defaults, particleCount, origin: { x: Math.random() * 0.2 + 0.1, y: Math.random() * 0.2 + 0.1 } });
+    confetti({ ...defaults, particleCount, origin: { x: Math.random() * 0.2 + 0.7, y: Math.random() * 0.2 + 0.1 } });
+  }, 300);
 }
 
 const SESSION_STORAGE_KEY = "znf_session_v2";
@@ -70,6 +83,12 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
   const totalSteps = totalQ + 1;
   const isCouponStep = step === totalSteps;
   const currentQ = step <= totalQ ? questions[step - 1] : null;
+
+  // Subtle 3-second confetti burst when the visitor reaches the final/coupon step.
+  useEffect(() => {
+    if (!isCouponStep) return;
+    fireConfetti();
+  }, [isCouponStep]);
 
   const scrollTop = () => { if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" }); };
 
@@ -175,9 +194,10 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
     // after we navigate away from the page below.
     sendSave(true, step);
     try { if (typeof window !== "undefined") window.sessionStorage.removeItem(SESSION_STORAGE_KEY); } catch {}
-    // Redirect to znaturalfoods.com with the discount auto-applied at checkout.
+    // Temporary: redirect to the homepage. Swap to /discount/${COUPON} once
+    // the coupon is created in Shopify.
     if (typeof window !== "undefined") {
-      window.location.href = `https://www.znaturalfoods.com/discount/${COUPON}`;
+      window.location.href = "https://www.znaturalfoods.com/";
       return;
     }
     setDone(true);
@@ -236,10 +256,12 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
 
   return (
     <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
-      <section className="mb-8 text-center">
-        <h1 className="text-3xl font-medium leading-tight md:text-4xl">{title}</h1>
-        <p className="mx-auto mt-4 max-w-2xl text-sm leading-6 text-gray-500 md:text-base md:leading-7">{subtitle}</p>
-      </section>
+      {!isCouponStep && (
+        <section className="mb-8 text-center">
+          <h1 className="text-3xl font-medium leading-tight md:text-4xl">{title}</h1>
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-600 md:text-lg md:leading-8">{subtitle}</p>
+        </section>
+      )}
 
       {error && (<div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>)}
 
@@ -301,9 +323,11 @@ export default function MiddleSectionV2({ title, subtitle }: MiddleSectionV2Prop
           <p className="mx-auto mb-3 max-w-xl text-base leading-7 text-gray-600 md:text-lg">
             Thank you for your valuable time, you helped us a lot. Your coupon is ready &mdash; click below and your coupon will be applied at checkout automatically.
           </p>
-          <p className="mx-auto max-w-xl text-xs italic leading-5 text-gray-500">
+          <p className="mx-auto mb-7 max-w-xl text-xs italic leading-5 text-gray-500">
             *The coupon is valid on orders over $50.
           </p>
+
+          <CouponBox />
         </section>
       )}
 
