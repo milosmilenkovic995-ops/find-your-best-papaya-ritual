@@ -34,9 +34,10 @@ type SubmissionRow = {
 export default async function AdminV2Page({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string; reset?: string }>;
+  searchParams: Promise<{ error?: string; reset?: string; view?: string }>;
 }) {
   const params = await searchParams;
+  const view: "completed" | "partial" = params.view === "partial" ? "partial" : "completed";
   const cookieStore = await cookies();
   const adminPass = process.env.ADMIN_PASSWORD || "";
   const authed = !!adminPass && cookieStore.get("znf_admin")?.value === adminPass;
@@ -81,15 +82,19 @@ export default async function AdminV2Page({
   }
 
   const all = submissions.filter((s) => s.path_id === PATH_ID_V2);
-  const current = all.filter((s) => s.completed !== false);
-  const partials = all.filter((s) => s.completed === false);
-  const total = current.length;
-  const partialTotal = partials.length;
+  const completedRows = all.filter((s) => s.completed !== false);
+  const partialRows = all.filter((s) => s.completed === false);
+  const completedTotal = completedRows.length;
+  const partialTotal = partialRows.length;
   const allTotal = all.length;
-  const completionRate = allTotal > 0 ? Math.round((total / allTotal) * 100) : 0;
-  const withEmail = current.filter((s) => s.email).length;
-  const withoutEmail = total - withEmail;
-  const emailRate = total > 0 ? Math.round((withEmail / total) * 100) : 0;
+  const completionRate = allTotal > 0 ? Math.round((completedTotal / allTotal) * 100) : 0;
+  const withEmail = completedRows.filter((s) => s.email).length;
+  const withoutEmail = completedTotal - withEmail;
+  const emailRate = completedTotal > 0 ? Math.round((withEmail / completedTotal) * 100) : 0;
+
+  // The dataset shown in the question-by-question breakdown depends on the active tab.
+  const dataset = view === "completed" ? completedRows : partialRows;
+  const datasetCount = dataset.length;
 
   type QStat = {
     question: typeof questions[number];
@@ -107,7 +112,7 @@ export default async function AdminV2Page({
   }));
   const byId = new Map(stats.map((s) => [s.question.id, s]));
 
-  for (const sub of current) {
+  for (const sub of dataset) {
     if (!Array.isArray(sub.answers)) continue;
     for (const a of sub.answers as AnswerEntry[]) {
       const stat = byId.get(a?.questionId || "");
@@ -126,9 +131,18 @@ export default async function AdminV2Page({
     }
   }
 
-  const fb = current.filter((s) => s.coupon_code === COUPON_CODE_V2).length;
-  const fbPct = total > 0 ? Math.round((fb / total) * 100) : 0;
-  const recent = current.slice(0, 30);
+  const fb = completedRows.filter((s) => s.coupon_code === COUPON_CODE_V2).length;
+  const fbPct = completedTotal > 0 ? Math.round((fb / completedTotal) * 100) : 0;
+  const recent = dataset.slice(0, 30);
+
+  // Dropout breakdown for partial view: counts of where people abandoned
+  const dropoutByStep = new Map<number, number>();
+  if (view === "partial") {
+    for (const r of partialRows) {
+      const s = typeof r.last_step === "number" ? r.last_step : 0;
+      dropoutByStep.set(s, (dropoutByStep.get(s) || 0) + 1);
+    }
+  }
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
@@ -155,20 +169,62 @@ export default async function AdminV2Page({
       {dbError && (<div className="mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{dbError}</div>)}
 
       <div className="mb-4 grid gap-4 sm:grid-cols-4">
-        <SummaryCard label="Completed" value={total} sub={`${completionRate}% completion rate`} highlight />
+        <SummaryCard label="Completed" value={completedTotal} sub={`${completionRate}% completion rate`} highlight />
         <SummaryCard label="Partial responses" value={partialTotal} sub={partialTotal === 0 ? "—" : "in-progress / abandoned"} />
         <SummaryCard label="With email" value={withEmail} sub={`${emailRate}% of completed`} />
         <SummaryCard label="Without email" value={withoutEmail} />
       </div>
-      <div className="mb-10 text-xs text-gray-500">
-        Charts below use <strong>completed</strong> responses only. Partial rows save every answer as the visitor advances, so even abandoned surveys are captured.
+
+      {/* Tabs: choose which dataset feeds the charts and recent-rows table below */}
+      <div className="mb-8 flex gap-2 border-b border-gray-200">
+        <a
+          href="/admin/v2"
+          className={`-mb-px border-b-2 px-4 py-2 text-sm font-bold transition ${view === "completed" ? "border-green-700 text-green-700" : "border-transparent text-gray-500 hover:text-slate-900"}`}
+        >
+          Completed ({completedTotal})
+        </a>
+        <a
+          href="/admin/v2?view=partial"
+          className={`-mb-px border-b-2 px-4 py-2 text-sm font-bold transition ${view === "partial" ? "border-amber-600 text-amber-700" : "border-transparent text-gray-500 hover:text-slate-900"}`}
+        >
+          Partial ({partialTotal})
+        </a>
       </div>
 
       <section className="mb-12">
-        <h2 className="mb-2 text-2xl font-extrabold text-slate-900">Question-by-question breakdown</h2>
+        <h2 className="mb-2 text-2xl font-extrabold text-slate-900">
+          {view === "completed" ? "Completed responses" : "Partial responses"} · question breakdown
+        </h2>
         <p className="mb-6 text-sm text-gray-500">
-          Every answer option is listed, even when 0 customers picked it. Multi-select percentages can sum above 100% because each respondent can pick multiple.
+          {view === "completed"
+            ? "Responses from customers who reached the final step and claimed their coupon."
+            : "Answers captured from visitors who started but did NOT finish the survey. Each click on “Continue” saves their progress in real time."}
+          {" "}Every option is listed, even when 0 customers picked it. Multi-select percentages can sum above 100%.
         </p>
+
+        {view === "partial" && partialTotal > 0 && (
+          <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5">
+            <div className="mb-2 text-xs font-extrabold uppercase tracking-wider text-amber-800">Where people drop off</div>
+            <div className="flex flex-wrap gap-2">
+              {Array.from(dropoutByStep.entries())
+                .sort((a, b) => (a[0] || 0) - (b[0] || 0))
+                .map(([s, n]) => (
+                  <span key={s} className="rounded-lg bg-white px-3 py-1.5 text-sm shadow-sm">
+                    <strong className="text-amber-700">{n}</strong>
+                    <span className="ml-1 text-gray-600">
+                      {s === 0 ? "before answering" : `after Q${s}`}
+                    </span>
+                  </span>
+                ))}
+            </div>
+          </div>
+        )}
+
+        {datasetCount === 0 && (
+          <div className="rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-500">
+            {view === "completed" ? "No completed responses yet." : "No partial responses yet."}
+          </div>
+        )}
         <div className="space-y-5">
           {stats.map((s, qi) => {
             const q = s.question;
@@ -218,6 +274,7 @@ export default async function AdminV2Page({
         </div>
       </section>
 
+      {view === "completed" && (
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-extrabold text-slate-900">Coupon issued</h2>
         <div className="rounded-2xl border-2 border-dashed border-green-700 bg-green-50 p-6">
@@ -230,23 +287,48 @@ export default async function AdminV2Page({
           </div>
         </div>
       </section>
+      )}
 
       <section className="mb-8 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
-        <div className="border-b border-gray-200 px-6 py-4 text-lg font-bold text-slate-900">Recent submissions</div>
+        <div className="border-b border-gray-200 px-6 py-4 text-lg font-bold text-slate-900">
+          {view === "completed" ? "Recent submissions" : "Recent partial sessions"}
+        </div>
         {recent.length === 0 ? (
           <div className="p-6 text-sm text-gray-500">No data yet.</div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-600">
-                <tr><th className="px-4 py-3">When</th><th className="px-4 py-3">Email</th><th className="px-4 py-3">Coupon</th></tr>
+                <tr>
+                  <th className="px-4 py-3">When</th>
+                  {view === "completed" ? (
+                    <>
+                      <th className="px-4 py-3">Email</th>
+                      <th className="px-4 py-3">Coupon</th>
+                    </>
+                  ) : (
+                    <>
+                      <th className="px-4 py-3">Reached</th>
+                      <th className="px-4 py-3">Answers</th>
+                    </>
+                  )}
+                </tr>
               </thead>
               <tbody>
                 {recent.map((s) => (
                   <tr key={s.id} className="border-t border-gray-100">
                     <td className="px-4 py-3 text-gray-600">{new Date(s.submitted_at).toLocaleString()}</td>
-                    <td className="px-4 py-3 text-gray-600">{s.email || "—"}</td>
-                    <td className="px-4 py-3 text-gray-600">{s.coupon_code || "—"}</td>
+                    {view === "completed" ? (
+                      <>
+                        <td className="px-4 py-3 text-gray-600">{s.email || "—"}</td>
+                        <td className="px-4 py-3 text-gray-600">{s.coupon_code || "—"}</td>
+                      </>
+                    ) : (
+                      <>
+                        <td className="px-4 py-3 text-gray-600">{s.last_step ? `Q${s.last_step}` : "—"}</td>
+                        <td className="px-4 py-3 text-gray-600">{Array.isArray(s.answers) ? s.answers.length : 0}</td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>
