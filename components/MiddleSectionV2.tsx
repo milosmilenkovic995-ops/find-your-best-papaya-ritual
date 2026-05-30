@@ -83,7 +83,8 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    setSessionId(getOrCreateSessionId());
+    const sid = getOrCreateSessionId();
+    setSessionId(sid);
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
@@ -92,7 +93,76 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
     if (e) setEmail(e);
     if (k) setKlid(k);
     if (seg) setSegment(seg);
-  }, []);
+
+    // --- Email-prefill: read ?q1=ANSWER_ID (and q2..qN) and apply them.
+    // Used when the customer clicks an answer button inside an email — we want
+    // their Q1 answer saved immediately and the survey UI to jump past it.
+    const prefSingle: Record<string, string> = {};
+    const prefMulti: Record<string, string[]> = {};
+    let highestPrefilled = 0;
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      const raw = p.get(q.id);
+      if (!raw) continue;
+      const validIds = (q.answers || []).map((a) => a.id);
+      if (q.type === "single") {
+        if (validIds.includes(raw)) {
+          prefSingle[q.id] = raw;
+          highestPrefilled = i + 1;
+        }
+      } else if (q.type === "multi") {
+        const ids = raw.split(",").map((x) => x.trim()).filter((x) => validIds.includes(x));
+        if (ids.length > 0) {
+          prefMulti[q.id] = ids;
+          highestPrefilled = i + 1;
+        }
+      }
+    }
+    if (highestPrefilled > 0) {
+      setSingle(prefSingle);
+      setMulti(prefMulti);
+      setStep(highestPrefilled + 1); // jump past the answered questions
+
+      // Fire an immediate partial save using local sid (state may not have updated yet).
+      const answers = questions.map((q) => {
+        if (q.type === "multi") {
+          const ids = prefMulti[q.id] || [];
+          const labels = ids.map((id) => q.answers!.find((a) => a.id === id)?.label || id);
+          return {
+            questionId: q.id, questionTitle: q.title, questionType: "multi",
+            answerIds: ids, answerLabels: labels,
+            answerId: ids[0] || "", answerLabel: labels[0] || "",
+            freeText: null,
+          };
+        } else if (q.type === "single") {
+          const id = prefSingle[q.id] || "";
+          const label = q.answers!.find((a) => a.id === id)?.label || "";
+          return {
+            questionId: q.id, questionTitle: q.title, questionType: "single",
+            answerIds: id ? [id] : [], answerLabels: label ? [label] : [],
+            answerId: id, answerLabel: label,
+            freeText: null,
+          };
+        }
+        return { questionId: q.id, questionTitle: q.title, questionType: "text", answerIds: [], answerLabels: [], answerId: "", answerLabel: "", freeText: null };
+      });
+      fetch("/api/subscribe-v2", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId: sid,
+          completed: false,
+          lastStep: highestPrefilled,
+          segment: seg || null,
+          path: PATH_ID_V2,
+          pathName: PATH_NAME_V2,
+          answers,
+          submittedAt: new Date().toISOString(),
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    }
+  }, [initialSegment]);
 
   const totalQ = questions.length;
   const totalSteps = totalQ + 1;
