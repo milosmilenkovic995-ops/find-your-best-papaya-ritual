@@ -341,7 +341,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
   }
 
   return (
-    <main className={`mx-auto max-w-3xl px-6 pt-12 ${isCouponStep ? "pb-16" : "pb-28"}`}>
+    <main className="mx-auto max-w-3xl px-6 pb-16 pt-12">
       {!isCouponStep && (
         <section className="mb-8 text-center">
           <h1 className="text-3xl font-medium leading-tight md:text-4xl">{title}</h1>
@@ -463,12 +463,9 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
           </div>
         </>
       ) : (
-        // Sticky bottom button bar — always visible, no scrolling to find Continue.
-        <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white shadow-[0_-4px_12px_rgba(0,0,0,0.04)]">
-          <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-6 py-4">
-            <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:border-gray-400 disabled:opacity-40">&larr; Back</button>
-            <button type="button" onClick={handleContinue} className="rounded-xl bg-green-700 px-7 py-3 text-base font-extrabold text-white shadow-sm hover:bg-green-800">Continue &rarr;</button>
-          </div>
+        <div className="mt-7 flex items-center justify-between gap-3">
+          <button type="button" onClick={handleBack} disabled={step === 1} className="rounded-xl border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-slate-700 hover:border-gray-400 disabled:opacity-40">&larr; Back</button>
+          <button type="button" onClick={handleContinue} className="rounded-xl bg-green-700 px-7 py-3 text-base font-extrabold text-white shadow-sm hover:bg-green-800">Continue &rarr;</button>
         </div>
       )}
     </main>
