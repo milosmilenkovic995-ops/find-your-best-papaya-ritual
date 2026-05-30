@@ -351,22 +351,15 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
           <h2 className="mb-7 text-2xl font-extrabold text-slate-900 md:text-3xl">{currentQ.title}</h2>
 
           {currentQ.type === "multi" && (
-            <div className="space-y-3">
+            <div className="grid gap-3 md:grid-cols-2">
               {currentQ.answers!.map((a) => {
                 const selected = (multi[currentQ.id] || []).includes(a.id);
                 return (
-                  <button
-                    key={a.id}
-                    type="button"
-                    onClick={() => toggleMulti(currentQ.id, a.id)}
-                    className={`flex w-full items-center justify-between rounded-xl border-2 border-green-700 px-5 py-4 text-left text-base font-semibold transition ${selected ? "bg-green-700 text-white" : "bg-white text-green-800 hover:bg-green-50"}`}
-                  >
-                    <span>{a.label}</span>
-                    {selected && (
-                      <svg className="ml-3 h-5 w-5 shrink-0 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M5 12l5 5L20 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    )}
+                  <button key={a.id} type="button" onClick={() => toggleMulti(currentQ.id, a.id)} className={`flex items-center gap-3 rounded-xl border p-4 text-left transition ${selected ? "border-green-700 bg-green-50 shadow-sm" : "border-gray-200 bg-white hover:border-green-600 hover:shadow-sm"}`}>
+                    <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border-2 ${selected ? "border-green-700 bg-green-700" : "border-gray-300 bg-white"}`}>
+                      {selected && (<svg className="h-3 w-3 text-white" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.5l2.5 2.5L9.5 3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>)}
+                    </span>
+                    <span className="text-[15px] font-medium text-slate-900">{a.label}</span>
                   </button>
                 );
               })}
@@ -374,22 +367,15 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
           )}
 
           {currentQ.type === "single" && (
-            <div className="space-y-3">
+            <div className="grid gap-3 md:grid-cols-2">
               {currentQ.answers!.map((a) => {
                 const selected = single[currentQ.id] === a.id;
                 return (
-                  <button
-                    key={a.id}
-                    type="button"
-                    onClick={() => pickSingle(currentQ.id, a.id)}
-                    className={`flex w-full items-center justify-between rounded-xl border-2 border-green-700 px-5 py-4 text-left text-base font-semibold transition ${selected ? "bg-green-700 text-white" : "bg-white text-green-800 hover:bg-green-50"}`}
-                  >
-                    <span>{a.label}</span>
-                    {selected && (
-                      <svg className="ml-3 h-5 w-5 shrink-0 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M5 12l5 5L20 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    )}
+                  <button key={a.id} type="button" onClick={() => pickSingle(currentQ.id, a.id)} className={`flex items-center gap-3 rounded-xl border p-4 text-left transition ${selected ? "border-green-700 bg-green-50 shadow-sm" : "border-gray-200 bg-white hover:border-green-600 hover:shadow-sm"}`}>
+                    <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 ${selected ? "border-green-700 bg-green-700" : "border-gray-300 bg-white"}`}>
+                      {selected && (<span className="h-2 w-2 rounded-full bg-white" />)}
+                    </span>
+                    <span className="text-[15px] font-medium text-slate-900">{a.label}</span>
                   </button>
                 );
               })}
