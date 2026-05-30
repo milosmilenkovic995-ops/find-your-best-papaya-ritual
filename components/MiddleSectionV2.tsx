@@ -296,12 +296,13 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
     if (isCouponStep) { submitFinal(); return; }
     sendSave(false, step);
     setStep(step + 1);
-    scrollTop();
+    // No scroll — keep current scroll position so the next question
+    // appears where they were, not at the top of the page.
   };
 
   const handleBack = () => {
     setError("");
-    if (step > 1) { setStep(step - 1); scrollTop(); }
+    if (step > 1) { setStep(step - 1); }
   };
 
   if (done) {

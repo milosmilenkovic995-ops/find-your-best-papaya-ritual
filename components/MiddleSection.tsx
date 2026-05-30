@@ -285,15 +285,16 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
     if (!validate()) { scrollTop(); return; }
     setError("");
     if (isCouponStep) { submitFinal(); return; }
-    // Save what they've answered so far before advancing
+    // Save what they've answered so far before advancing.
+    // No scroll — keep the customer's current scroll position so the
+    // next question appears where they were, not at the top of the page.
     sendSave(false, step);
     setStep(step + 1);
-    scrollTop();
   };
 
   const handleBack = () => {
     setError("");
-    if (step > 1) { setStep(step - 1); scrollTop(); }
+    if (step > 1) { setStep(step - 1); }
   };
 
   /* ---------------- Done state (after submit) ---------------- */
