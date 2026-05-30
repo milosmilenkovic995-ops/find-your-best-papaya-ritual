@@ -88,19 +88,79 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    setSessionId(getOrCreateSessionId());
+    const sid = getOrCreateSessionId();
+    setSessionId(sid);
     const p = new URLSearchParams(window.location.search);
     const e = p.get("email") || "";
     const k = p.get("klid") || p.get("kl_id") || "";
-    // Source order: server-prop (set by middleware-rewritten URL) → URL params (direct test URLs).
     const rawSeg = initialSegment || p.get("segment") || p.get("seg") || p.get("s") || "";
-    // Translate URL code (e.g. "3") to readable DB name (e.g. "buyer-30").
-    // If the value isn't in the map, keep it as-is so direct readable URLs still work.
     const seg = SEGMENT_URL_MAP[rawSeg] || rawSeg;
     if (e) setEmail(e);
     if (k) setKlid(k);
     if (seg) setSegment(seg);
-  }, []);
+
+    // Email-prefill: ?q1=ANSWER_ID (or comma-separated for multi) preselects
+    // answers from a click in the email. UI stays on Q1 with the answer
+    // visible so the customer can add free text or change their pick.
+    const prefSingle: Record<string, string> = {};
+    const prefMulti: Record<string, string[]> = {};
+    let anyPrefill = false;
+    for (let i = 0; i < questions.length; i++) {
+      const q = questions[i];
+      const raw = p.get(q.id);
+      if (!raw) continue;
+      const validIds = (q.answers || []).map((a) => a.id);
+      if (q.type === "single") {
+        if (validIds.includes(raw)) { prefSingle[q.id] = raw; anyPrefill = true; }
+      } else if (q.type === "multi") {
+        const ids = raw.split(",").map((x) => x.trim()).filter((x) => validIds.includes(x));
+        if (ids.length > 0) { prefMulti[q.id] = ids; anyPrefill = true; }
+      }
+    }
+    if (anyPrefill) {
+      setSingle(prefSingle);
+      setMulti(prefMulti);
+      // Save immediately so we capture the email-click engagement
+      // even if the customer bounces from Q1.
+      const answers = questions.map((q) => {
+        if (q.type === "multi") {
+          const ids = prefMulti[q.id] || [];
+          const labels = ids.map((id) => q.answers!.find((a) => a.id === id)?.label || id);
+          return {
+            questionId: q.id, questionTitle: q.title, questionType: "multi",
+            answerIds: ids, answerLabels: labels,
+            answerId: ids[0] || "", answerLabel: labels[0] || "",
+            freeText: null,
+          };
+        } else if (q.type === "single") {
+          const id = prefSingle[q.id] || "";
+          const label = q.answers!.find((a) => a.id === id)?.label || "";
+          return {
+            questionId: q.id, questionTitle: q.title, questionType: "single",
+            answerIds: id ? [id] : [], answerLabels: label ? [label] : [],
+            answerId: id, answerLabel: label,
+            freeText: null,
+          };
+        }
+        return { questionId: q.id, questionTitle: q.title, questionType: "text", answerIds: [], answerLabels: [], answerId: "", answerLabel: "", freeText: null };
+      });
+      fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sessionId: sid,
+          completed: false,
+          lastStep: 1,
+          segment: seg || null,
+          path: "main_v2",
+          pathName: "Customer Feedback Survey",
+          answers,
+          submittedAt: new Date().toISOString(),
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    }
+  }, [initialSegment]);
 
   const totalQ = questions.length;
   const totalSteps = totalQ + 1; // 8 dots total

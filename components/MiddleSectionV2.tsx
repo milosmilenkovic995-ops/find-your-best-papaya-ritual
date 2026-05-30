@@ -121,7 +121,8 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
     if (highestPrefilled > 0) {
       setSingle(prefSingle);
       setMulti(prefMulti);
-      setStep(highestPrefilled + 1); // jump past the answered questions
+      // Stay on Q1 with the answer pre-selected so the customer can add
+      // a free-text comment or change their pick before continuing.
 
       // Fire an immediate partial save using local sid (state may not have updated yet).
       const answers = questions.map((q) => {

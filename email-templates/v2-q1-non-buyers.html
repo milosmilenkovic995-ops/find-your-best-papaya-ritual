@@ -1,0 +1,71 @@
+<!--
+  ZNF email Q1 block — v2 survey, "Non Buyers" segment.
+
+  Drop this HTML inside your Klaviyo email where you want the question
+  to appear. It is just the question + 5 answer buttons — your usual
+  brand header, intro copy, and footer should wrap around it.
+
+  Each button takes the customer to the v2 survey at Q1 with their
+  click preselected, so they can confirm, change, or add free text.
+  Their click is also saved as a partial response immediately, tagged
+  with segment = non-buyer.
+-->
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <tr>
+    <td style="padding:8px 0 16px;">
+      <p style="margin:0; font-size:18px; font-weight:700; color:#0f172a; line-height:1.4;">
+        The last time you tried to browse or buy on our website, how easy was it?
+      </p>
+    </td>
+  </tr>
+
+  <tr><td style="padding:6px 0;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
+        <a href="https://help-us-to-serve-you-better-2.vercel.app/0?email={{ person.email }}&q1=very_easy" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
+          Very easy &mdash; everything worked smoothly
+        </a>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:6px 0;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
+        <a href="https://help-us-to-serve-you-better-2.vercel.app/0?email={{ person.email }}&q1=mostly_ok" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
+          Mostly okay, with a few small issues
+        </a>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:6px 0;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
+        <a href="https://help-us-to-serve-you-better-2.vercel.app/0?email={{ person.email }}&q1=harder" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
+          Harder than it should have been
+        </a>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:6px 0;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
+        <a href="https://help-us-to-serve-you-better-2.vercel.app/0?email={{ person.email }}&q1=very_frustrating" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
+          Very frustrating
+        </a>
+      </td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:6px 0;">
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
+        <a href="https://help-us-to-serve-you-better-2.vercel.app/0?email={{ person.email }}&q1=gave_up" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
+          I gave up before finishing
+        </a>
+      </td></tr>
+    </table>
+  </td></tr>
+</table>
