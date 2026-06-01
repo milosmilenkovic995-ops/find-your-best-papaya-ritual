@@ -2,7 +2,7 @@
 
 # Z Natural Foods Customer Feedback Survey — Project Status
 
-Last updated: 2026-05-31.
+Last updated: 2026-06-01.
 
 ## What this project is
 
@@ -134,12 +134,13 @@ lib/
 middleware.ts            — /3 /18 /0 path rewrites + host-based v2 routing
 
 email-templates/         — Klaviyo HTML blocks (paste into custom HTML editor)
-  v1-q1-buyers-30-day.html
-  v1-q1-buyers-30-180-day.html
-  v1-q1-non-buyers.html
-  v2-q1-buyers-30-day.html     ← uses new card+grid look (mimics survey)
-  v2-q1-buyers-30-180-day.html ← still the OLD stacked-button look (TODO)
-  v2-q1-non-buyers.html        ← still the OLD stacked-button look (TODO)
+  v1-q1-buyers-30-day.html      ← card+grid design with checkbox icon ☐
+  v1-q1-buyers-30-180-day.html  ← same, /18 URL
+  v1-q1-non-buyers.html         ← same, /0 URL
+  v2-q1-buyers-30-day.html      ← card+grid design with radio icon ○
+  v2-q1-buyers-30-180-day.html  ← same, /18 URL
+  v2-q1-non-buyers.html         ← same, /0 URL
+  ALL 6 use the same design system (see "Email template design" section below).
 
 supabase/
   partial-capture-schema.sql   — full DROP+CREATE of both tables (DON'T re-run on prod data!)
@@ -190,20 +191,12 @@ Don't touch these unless rolling back.
   (www.* doesn't expose `/discount/CODE`). All discount URLs go to
   `checkout.znaturalfoods.com/discount/CODE` instead. Main CTA and
   category cards on the final page use this pattern.
-- **Email templates not yet updated to the new card+grid design**:
-  Only `v2-q1-buyers-30-day.html` was redesigned to mimic the in-survey
-  question card (white card, 2-col grid, radio circles, optional
-  textarea-look helper below). The other 5 templates still use the
-  earlier stacked green-button design. Mirror the new design to:
-    - `v1-q1-buyers-30-day.html`
-    - `v1-q1-buyers-30-180-day.html`
-    - `v1-q1-non-buyers.html`
-    - `v2-q1-buyers-30-180-day.html`
-    - `v2-q1-non-buyers.html`
-  Use sed substitution from the v2-30-day file as a starting point.
-  KEY: do NOT nest `<table>` inside `<a>` tags — Klaviyo strips them
-  out. Use `<a>` with display:block, padding, border styling, and
-  inline text content only (Unicode `&#9675;` for the radio circle).
+- **(Done 2026-06-01) Email templates** — all 6 now use the card+grid
+  design with mobile media queries. See "Email template design" below
+  for the design spec. The user keeps the live versions in Klaviyo
+  (which is the source of truth for email send) — the repo files
+  match the latest version we shipped together but if the user tweaks
+  fonts/colors in Klaviyo directly, the repo will drift.
 - **Category card slugs** (verified live):
   - `/collections/fruit-powders`
   - `/collections/protein-powders` (label: "Protein & Collagens")
@@ -269,6 +262,75 @@ done
   burst from both top corners.
 - **3 category cards** under the final-step CTA, each linking to its
   collection on znaturalfoods.com via the same discount URL pattern.
+
+## Email template design (current as of 2026-06-01)
+
+All 6 templates in `email-templates/` share the same design system. If
+the user asks to change colors/fonts/spacing, change ALL 6 consistently
+(or use sed to propagate from one canonical file).
+
+**Layout**
+- Outer wrap `<td>`: `padding:30px` on desktop, `16px` on mobile (via media query)
+- Card: `<div>` (NOT `<table>` — see "lesson learned" below) with:
+  - `max-width:600px`
+  - `background:#ffffff`
+  - `border: 3px solid #15803d` (brand green)
+  - `border-radius: 20px` (with `-webkit-` and `-moz-` prefixes for safety)
+  - `padding: 30px` desktop, `20px` mobile
+- Answer cells: 2-column grid on desktop, single-column stack on mobile
+  - Each cell is an `<a>` with `display:block` (so the whole tile is clickable)
+  - `border: 2px solid #cbd5e1` (light gray)
+  - `border-radius: 12px`
+  - `padding: 14px 16px`
+
+**Typography**
+- Font: `'Montserrat', Arial, sans-serif` (Montserrat loaded via Google Fonts
+  `@import` in the `<style>` tag at top of the block)
+- Question title: 20px / weight 700, color `#0f172a`. On mobile: 18px.
+- Answer text: 16px / weight 400, color `#0f172a`
+- Helper label: 16px / weight 600, color `#334155`
+- "(optional)" suffix: weight 400, color `#94a3b8`
+- Placeholder text in fake textarea: 16px / 400, color `#94a3b8`
+
+**Icons inside answer cells**
+- v2 (single-select Q1): Unicode `&#9675;` (○ white circle), color `#94a3b8`, 18px
+- v1 (multi-select Q1): Unicode `&#9744;` (☐ ballot box), color `#94a3b8`, 16px
+
+**Mobile media query** (every template has this block at the top):
+```css
+@media only screen and (max-width: 600px) {
+  .m-outer { padding: 16px !important; }
+  .m-card  { padding: 20px !important; }
+  .m-title { font-size: 18px !important; }
+  .m-stack { display: block !important; width: 100% !important; padding: 0 0 10px 0 !important; }
+}
+```
+And the classes are applied to:
+- `class="m-outer"` on the outer wrap `<td>`
+- `class="m-card"` on the green-bordered `<div>`
+- `class="m-title"` on the question `<p>` at the top
+- `class="m-stack"` on every grid cell `<td>` (the ones with `width="50%"`)
+
+**URL pattern in every answer button:**
+```
+https://help-us-to-serve-you-better-{1|2}.vercel.app/{3|18|0}?email={{ person.email }}&q1=<ANSWER_ID>
+```
+
+**Lessons learned (don't re-break)**
+- **Never nest `<table>` inside `<a>`** in email HTML. Klaviyo (and Outlook,
+  some Gmail clients) strip the table out, leaving empty bordered boxes with
+  content rendered below. Use `<a>` with `display:block` + inline text +
+  inline `<span>` for icons.
+- **`border-radius` on `<table>` doesn't render reliably.** Move the border
+  + radius + background onto a `<div>` inside the `<td>`. That's why the
+  card is a `<div>` and not a `<table>`.
+- **Email clients block web fonts** in maybe ~40% of cases. Always include
+  a fallback (`Arial, sans-serif`) so the email looks fine when Montserrat
+  doesn't load.
+- **`@import` in `<style>` works in most modern clients** (Apple Mail, Gmail
+  web, Yahoo, Klaviyo preview). Outlook desktop ignores it (falls back to Arial).
+- **Outlook desktop ignores `border-radius` entirely** — shows square corners.
+  Acceptable, since Outlook desktop is ~5% of consumer email.
 
 ## Don't break these
 

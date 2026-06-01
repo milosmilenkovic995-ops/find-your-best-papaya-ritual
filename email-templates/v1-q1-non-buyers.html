@@ -1,121 +1,71 @@
 <!--
   ZNF email Q1 block — v1 survey, "Non Buyers" segment.
+  Card design (white card, gray-bordered answer cells with checkboxes,
+  green outer border) that mimics the in-survey question card.
 
-  Drop this HTML inside your Klaviyo email where you want the question
-  to appear. It is just the question + answer buttons — your usual
-  brand header, intro copy, and footer should wrap around it.
+  Klaviyo-ready: paste into a Custom HTML block. Brand header, intro
+  copy, and footer come from the surrounding Klaviyo template.
 
-  V1 Q1 is multi-select with 10 options. Each button preselects ONE
-  area in the survey; the customer can add more on the survey page.
-  Their click is saved as a partial response immediately, tagged with
-  segment = non-buyer.
+  V1 Q1 is multi-select (10 options). Customer click preselects ONE
+  in the survey and saves a partial row tagged segment = non-buyer.
+  Customer can add more answers + a free-text comment on the survey.
+
+  Mobile optimization: @media query stacks the 2-column grid to a
+  single column on screens ≤ 600px and tightens padding.
 -->
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+  @media only screen and (max-width: 600px) {
+    .m-outer { padding: 16px !important; }
+    .m-card  { padding: 20px !important; }
+    .m-title { font-size: 18px !important; }
+    .m-stack { display: block !important; width: 100% !important; padding: 0 0 10px 0 !important; }
+  }
+</style>
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
   <tr>
-    <td style="padding:8px 0 16px;">
-      <p style="margin:0; font-size:18px; font-weight:700; color:#0f172a; line-height:1.4;">
-        What are the biggest areas where we can improve?
-      </p>
+    <td align="center" class="m-outer" style="padding:30px;">
+      <div class="m-card" style="display:block; max-width:600px; margin:0 auto; background-color:#ffffff; border:3px solid #15803d; border-radius:20px; -webkit-border-radius:20px; -moz-border-radius:20px; padding:30px; box-sizing:border-box;">
+
+        <p class="m-title" style="margin:0 0 24px; font-family:'Montserrat',Arial,sans-serif; font-size:20px; font-weight:700; line-height:1.3; color:#0f172a;">
+          What are the biggest areas where we can improve?
+        </p>
+
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=quality" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Quality of product</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=price" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Price</a></td>
+          </tr>
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=ux" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;User experience on the website</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=checkout" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Checkout process</a></td>
+          </tr>
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=payment" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Payment process</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=shipping" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Shipping and delivery</a></td>
+          </tr>
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=packaging" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Packaging</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=customer_service" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Customer service</a></td>
+          </tr>
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 0 0;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=speed" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Website speed / loading times</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 0 6px;"><a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=info" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Product information and descriptions</a></td>
+          </tr>
+        </table>
+
+        <p style="margin:24px 0 8px; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:600; color:#334155;">
+          Add a few words
+          <span style="color:#94a3b8; font-weight:400;">(optional) &mdash; for "Other" or extra context</span>
+        </p>
+        <div style="border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff;">
+          <p style="margin:0; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; color:#94a3b8; line-height:1.5;">
+            Click any answer above and add your thoughts on the next page&hellip;
+          </p>
+        </div>
+
+      </div>
     </td>
   </tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=quality" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Quality of product
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=price" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Price
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=ux" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          User experience on the website
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=checkout" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Checkout process
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=payment" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Payment process
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=shipping" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Shipping and delivery
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=packaging" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Packaging
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=customer_service" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Customer service
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=speed" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Website speed / loading times
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
-
-  <tr><td style="padding:6px 0;">
-    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-      <tr><td bgcolor="#ffffff" style="border:2px solid #15803d; border-radius:10px;">
-        <a href="https://help-us-to-serve-you-better-1.vercel.app/0?email={{ person.email }}&q1=info" target="_blank" style="display:block; padding:14px 18px; color:#15803d; font-size:15px; font-weight:600; text-decoration:none; font-family:inherit; text-align:left;">
-          Product information and descriptions
-        </a>
-      </td></tr>
-    </table>
-  </td></tr>
 </table>

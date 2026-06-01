@@ -1,67 +1,63 @@
 <!--
   ZNF email Q1 block — v2 survey, "Buyers 30 Day" segment.
-  Designed to mimic the in-survey question card.
+  Card design (white card, gray-bordered answer cells with radio
+  circles, green outer border) that mimics the in-survey question card.
 
-  Klaviyo-friendly: no nested tables inside <a>, no display:flex/grid.
-  Uses a Unicode "○" character for the radio circle so it renders in
-  every email client (Gmail, Outlook desktop, Apple Mail, mobile clients).
+  Klaviyo-ready: paste into a Custom HTML block. Brand header, intro
+  copy, and footer come from the surrounding Klaviyo template.
+
+  V2 Q1 is single-select (6 options). Customer click preselects the
+  answer in the survey and saves a partial row tagged segment = buyer-30.
+  Customer can confirm/change + add a free-text comment in the survey.
+
+  Mobile optimization: @media query stacks the 2-column grid to a
+  single column on screens ≤ 600px and tightens padding.
 -->
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#f8fafc;">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+  @media only screen and (max-width: 600px) {
+    .m-outer { padding: 16px !important; }
+    .m-card  { padding: 20px !important; }
+    .m-title { font-size: 18px !important; }
+    .m-stack { display: block !important; width: 100% !important; padding: 0 0 10px 0 !important; }
+  }
+</style>
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
   <tr>
-    <td align="center" style="padding:16px;">
+    <td align="center" class="m-outer" style="padding:30px;">
+      <div class="m-card" style="display:block; max-width:600px; margin:0 auto; background-color:#ffffff; border:3px solid #15803d; border-radius:20px; -webkit-border-radius:20px; -moz-border-radius:20px; padding:30px; box-sizing:border-box;">
 
-      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="max-width:600px; width:100%; background-color:#ffffff; border:1px solid #e5e7eb; border-radius:16px;">
-        <tr>
-          <td style="padding:28px;">
+        <p class="m-title" style="margin:0 0 24px; font-family:'Montserrat',Arial,sans-serif; font-size:20px; font-weight:700; line-height:1.3; color:#0f172a;">
+          The last time you tried to browse or buy on our website, how easy was it?
+        </p>
 
-            <!-- Question title -->
-            <p style="margin:0 0 24px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:22px; font-weight:800; line-height:1.3; color:#0f172a;">
-              The last time you tried to browse or buy on our website, how easy was it?
-            </p>
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=very_easy" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Very easy &mdash; everything worked smoothly</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=mostly_ok" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Mostly okay, with a few small issues</a></td>
+          </tr>
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=harder" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Harder than it should have been</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=very_frustrating" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Very frustrating</a></td>
+          </tr>
+          <tr>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 0 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=gave_up" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;I gave up before finishing</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 0 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=other" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Other</a></td>
+          </tr>
+        </table>
 
-            <!-- 2-column answer grid -->
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-              <tr>
-                <td width="50%" valign="top" style="padding:0 6px 12px 0;">
-                  <a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=very_easy" target="_blank" style="display:block; border:1px solid #e5e7eb; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:1.4;"><span style="color:#d1d5db; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Very easy &mdash; everything worked smoothly</a>
-                </td>
-                <td width="50%" valign="top" style="padding:0 0 12px 6px;">
-                  <a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=mostly_ok" target="_blank" style="display:block; border:1px solid #e5e7eb; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:1.4;"><span style="color:#d1d5db; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Mostly okay, with a few small issues</a>
-                </td>
-              </tr>
-              <tr>
-                <td width="50%" valign="top" style="padding:0 6px 12px 0;">
-                  <a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=harder" target="_blank" style="display:block; border:1px solid #e5e7eb; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:1.4;"><span style="color:#d1d5db; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Harder than it should have been</a>
-                </td>
-                <td width="50%" valign="top" style="padding:0 0 12px 6px;">
-                  <a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=very_frustrating" target="_blank" style="display:block; border:1px solid #e5e7eb; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:1.4;"><span style="color:#d1d5db; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Very frustrating</a>
-                </td>
-              </tr>
-              <tr>
-                <td width="50%" valign="top" style="padding:0 6px 0 0;">
-                  <a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=gave_up" target="_blank" style="display:block; border:1px solid #e5e7eb; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:1.4;"><span style="color:#d1d5db; font-size:18px;">&#9675;</span>&nbsp;&nbsp;I gave up before finishing</a>
-                </td>
-                <td width="50%" valign="top" style="padding:0 0 0 6px;">
-                  <a href="https://help-us-to-serve-you-better-2.vercel.app/3?email={{ person.email }}&q1=other" target="_blank" style="display:block; border:1px solid #e5e7eb; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:500; line-height:1.4;"><span style="color:#d1d5db; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Other</a>
-                </td>
-              </tr>
-            </table>
+        <p style="margin:24px 0 8px; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:600; color:#334155;">
+          What would you improve, or anything else to add?
+          <span style="color:#94a3b8; font-weight:400;">(optional)</span>
+        </p>
+        <div style="border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff;">
+          <p style="margin:0; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; color:#94a3b8; line-height:1.5;">
+            Click any answer above and add your thoughts on the next page&hellip;
+          </p>
+        </div>
 
-            <!-- Free-text hint -->
-            <p style="margin:24px 0 8px; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; color:#334155;">
-              <strong>What would you improve, or anything else to add?</strong>
-              <span style="color:#94a3b8; font-weight:400;">(optional)</span>
-            </p>
-            <div style="border:1px solid #e5e7eb; border-radius:12px; padding:14px 16px; background-color:#ffffff;">
-              <p style="margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; color:#cbd5e1; line-height:1.5;">
-                Click any answer above and add your thoughts on the next page&hellip;
-              </p>
-            </div>
-
-          </td>
-        </tr>
-      </table>
-
+      </div>
     </td>
   </tr>
 </table>
