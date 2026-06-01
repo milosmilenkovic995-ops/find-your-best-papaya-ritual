@@ -283,7 +283,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
     try { if (typeof window !== "undefined") window.sessionStorage.removeItem(SESSION_STORAGE_KEY); } catch {}
     // Auto-apply via Shopify checkout subdomain.
     if (typeof window !== "undefined") {
-      window.location.href = `https://checkout.znaturalfoods.com/discount/${COUPON}`;
+      window.location.href = `https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=%2Fcollections%2Fall-products`;
       return;
     }
     setDone(true);
@@ -411,7 +411,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
             Thank you for your valuable time, you helped us a lot. Your coupon is ready &mdash; click below and your coupon will be applied at checkout automatically.
           </p>
           <p className="mx-auto mb-7 max-w-xl text-xs italic leading-5 text-gray-500">
-            *The coupon is valid on orders over $50.
+            *The coupon is valid for 7 days on orders over $50.
           </p>
 
           <CouponBox />
