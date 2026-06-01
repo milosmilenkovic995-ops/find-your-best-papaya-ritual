@@ -404,7 +404,7 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
             Thank you for your feedback
           </h2>
           <p className="mx-auto mb-3 max-w-xl text-base leading-7 text-gray-600 md:text-lg">
-            Thank you for your valuable time, you helped us a lot. Your coupon is ready &mdash; click below and your coupon will be applied at checkout automatically.
+            Thank you for your valuable time, you helped us a lot. Your coupon is ready &mdash; click below to start shopping and enter the code at checkout to get your $10 off.
           </p>
           <p className="mx-auto mb-7 max-w-xl text-xs italic leading-5 text-gray-500">
             *The coupon is valid for 7 days on orders over $50.
@@ -430,7 +430,7 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
               the coupon and (with redirect param) lands on the collection. */}
           <div className="mt-10">
             <p className="mb-4 text-center text-xs font-semibold uppercase tracking-widest text-gray-500">
-              Or shop by category &mdash; your $10 coupon will apply automatically
+              Or shop by category
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <a
