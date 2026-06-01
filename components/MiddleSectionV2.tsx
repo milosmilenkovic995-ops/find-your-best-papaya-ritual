@@ -18,6 +18,32 @@ type MiddleSectionV2Props = {
 const COUPON = COUPON_CODE_V2;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// UTM campaign name for this survey version.
+const UTM_CAMPAIGN = "customer_feedback_v2";
+
+// Neutral per-segment codes for UTM tracking — deliberately opaque so the
+// link never reveals buyer / non-buyer status to the customer.
+const SEGMENT_UTM_CODE: Record<string, string> = {
+  "buyer-30": "a",
+  "buyer-180": "b",
+  "non-buyer": "c",
+};
+
+// Build a storefront collection URL with UTM tracking. The coupon no longer
+// auto-applies via the /discount/ endpoint (storefront changed on their side),
+// so we link straight to the collection; the THANKYOU10 code is shown on-page
+// for manual entry at checkout.
+function buildShopUrl(collection: string, linkCode: string, segment: string): string {
+  const segCode = SEGMENT_UTM_CODE[segment] || "x";
+  const params = new URLSearchParams({
+    utm_source: "znf_survey",
+    utm_medium: "survey",
+    utm_campaign: UTM_CAMPAIGN,
+    utm_content: `${segCode}_${linkCode}`,
+  });
+  return `https://www.znaturalfoods.com/collections/${collection}?${params.toString()}`;
+}
+
 function CouponBox() {
   return (
     <div className="mx-auto mb-6 max-w-md rounded-2xl border-2 border-dashed border-green-700 bg-green-50 px-6 py-5 text-center">
@@ -283,7 +309,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
     try { if (typeof window !== "undefined") window.sessionStorage.removeItem(SESSION_STORAGE_KEY); } catch {}
     // Auto-apply via Shopify checkout subdomain.
     if (typeof window !== "undefined") {
-      window.location.href = `https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=%2Fcollections%2Fall-products`;
+      window.location.href = buildShopUrl("all-products", "main", segment);
       return;
     }
     setDone(true);
@@ -437,7 +463,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
             </p>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               <a
-                href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/fruit-powders`}
+                href={buildShopUrl("fruit-powders", "fruit", segment)}
                 className="rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -445,7 +471,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
                 <div className="text-sm font-bold text-slate-900">Fruit Powders</div>
               </a>
               <a
-                href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/protein-powders`}
+                href={buildShopUrl("protein-powders", "protein", segment)}
                 className="rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -453,7 +479,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
                 <div className="text-sm font-bold text-slate-900">Protein &amp; Collagens</div>
               </a>
               <a
-                href={`https://checkout.znaturalfoods.com/discount/${COUPON}?redirect=/collections/seasonings-spices`}
+                href={buildShopUrl("seasonings-spices", "seasonings", segment)}
                 className="rounded-2xl border border-gray-200 bg-white px-4 py-4 text-center shadow-sm transition hover:border-green-600 hover:shadow-md"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
