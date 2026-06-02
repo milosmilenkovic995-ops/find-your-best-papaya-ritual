@@ -15,13 +15,14 @@ export async function POST(req: Request) {
     return NextResponse.redirect(new URL("/admin?reset=error", req.url));
   }
 
-  // Delete everything from both tables. The .not("id", "is", null) clause is a
+  // Wipe the v1 `submissions` table. The .not("id", "is", null) clause is a
   // tautology that matches every row (Supabase requires a filter to delete).
-  const r1 = await supabase.from("events").delete().not("id", "is", null);
-  const r2 = await supabase.from("submissions").delete().not("id", "is", null);
+  // NOTE: the old `events` table was dropped in partial-capture-schema.sql;
+  // deleting from it returned a 404 error and aborted the whole reset.
+  const r = await supabase.from("submissions").delete().not("id", "is", null);
 
-  if (r1.error || r2.error) {
-    console.error("Reset error:", r1.error || r2.error);
+  if (r.error) {
+    console.error("Reset error:", r.error);
     return NextResponse.redirect(new URL("/admin?reset=error", req.url));
   }
 
