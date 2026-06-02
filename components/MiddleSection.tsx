@@ -46,10 +46,37 @@ function buildShopUrl(collection: string, linkCode: string, segment: string): st
 
 
 function CouponBox() {
+  const [copied, setCopied] = useState(false);
+  const copyCode = async () => {
+    try {
+      await navigator.clipboard.writeText(COUPON);
+    } catch {
+      // Fallback for browsers that block the async clipboard API.
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = COUPON;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      } catch {}
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
   return (
     <div className="mx-auto mb-6 max-w-md rounded-2xl border-2 border-dashed border-green-700 bg-green-50 px-6 py-5 text-center">
       <div className="mb-1 text-xs font-extrabold tracking-[0.18em] text-green-700">✨ YOUR $10 OFF CODE ✨</div>
       <div className="text-3xl font-extrabold tracking-wider text-slate-900">{COUPON}</div>
+      <button
+        type="button"
+        onClick={copyCode}
+        className="mt-3 inline-flex items-center gap-1.5 rounded-lg border border-green-700 bg-white px-4 py-2 text-sm font-bold text-green-800 shadow-sm transition hover:bg-green-700 hover:text-white"
+      >
+        {copied ? "✓ Copied!" : "📋 Click to copy"}
+      </button>
     </div>
   );
 }
