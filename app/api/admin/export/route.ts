@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { supabase } from "@/lib/supabase";
+import { supabase, fetchAllRows } from "@/lib/supabase";
 import { questions } from "@/lib/questions";
 
 export const runtime = "nodejs";
@@ -32,13 +32,11 @@ export async function GET() {
     return new Response("Database not configured", { status: 500 });
   }
 
-  const { data, error } = await supabase
-    .from("submissions")
-    .select("*")
-    .order("submitted_at", { ascending: false });
+  // Paginate past PostgREST's 1000-row cap so the export contains every row.
+  const { rows: data, error } = await fetchAllRows<Record<string, unknown>>("submissions");
 
   if (error || !data) {
-    return new Response(error?.message || "No data", { status: 500 });
+    return new Response(error || "No data", { status: 500 });
   }
 
   type Row = Record<string, string>;

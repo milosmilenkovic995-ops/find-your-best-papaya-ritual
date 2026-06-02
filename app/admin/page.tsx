@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { supabase } from "@/lib/supabase";
+import { supabase, fetchAllRows } from "@/lib/supabase";
 import { questions, COUPON_CODE } from "@/lib/questions";
 import ResetButton from "./ResetButton";
 
@@ -83,13 +83,10 @@ export default async function AdminPage({
   let submissions: SubmissionRow[] = [];
   let dbError: string | null = null;
   if (supabase) {
-    const { data, error } = await supabase
-      .from("submissions")
-      .select("*")
-      .order("submitted_at", { ascending: false })
-      .limit(5000);
-    if (error) dbError = error.message;
-    else if (data) submissions = data as SubmissionRow[];
+    // Paginate past PostgREST's 1000-row cap so all responses are counted.
+    const { rows, error } = await fetchAllRows<SubmissionRow>("submissions");
+    if (error) dbError = error;
+    else submissions = rows;
   } else {
     dbError = "Supabase not configured.";
   }
