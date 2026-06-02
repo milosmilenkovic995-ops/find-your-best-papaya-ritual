@@ -119,11 +119,28 @@ function buildAnswers(stopStep) {
   return a;
 }
 
-// Realistic funnel for 4000 non-buyers who landed on the survey.
-const FUNNEL = {
-  completed: 2280,
-  partial: { 1: 760, 2: 430, 3: 250, 4: 170, 5: 110 }, // by last_step reached
-};
+// Total simulated recipients. Override on the CLI:
+//   node scripts/loadtest-v1-nonbuyers.mjs 25000
+const TOTAL = Number(process.argv.find((a) => /^\d+$/.test(a))) || 4000;
+
+// Realistic funnel: ~57% complete; the rest drop off across steps with the
+// heaviest loss at Q1. Partial weights mirror the original distribution and
+// are scaled proportionally to TOTAL (last step absorbs the rounding remainder).
+const COMPLETION = 0.57;
+const PARTIAL_WEIGHTS = { 1: 760, 2: 430, 3: 250, 4: 170, 5: 110 };
+function buildFunnel(total) {
+  const completed = Math.round(total * COMPLETION);
+  let remaining = total - completed;
+  const wSum = Object.values(PARTIAL_WEIGHTS).reduce((a, b) => a + b, 0);
+  const steps = Object.keys(PARTIAL_WEIGHTS).map(Number);
+  const partial = {};
+  steps.forEach((s, i) => {
+    if (i === steps.length - 1) partial[s] = remaining;
+    else { const v = Math.round((total - completed) * (PARTIAL_WEIGHTS[s] / wSum)); partial[s] = v; remaining -= v; }
+  });
+  return { completed, partial };
+}
+const FUNNEL = buildFunnel(TOTAL);
 
 function buildRows() {
   const rows = [];
