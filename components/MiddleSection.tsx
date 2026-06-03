@@ -402,6 +402,16 @@ export default function MiddleSection({ title, subtitle, initialSegment = "" }: 
 
       {currentQ && (
         <section className="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm md:p-9">
+          {/* Progress bar — shows how far through the questions the visitor is. */}
+          <div className="mb-6">
+            <div className="mb-2 flex items-center justify-between text-xs font-bold uppercase tracking-wider text-green-700">
+              <span>Question {step} of {totalQ}</span>
+              <span>{Math.round((step / totalQ) * 100)}%</span>
+            </div>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-gray-100">
+              <div className="h-full rounded-full bg-green-700 transition-all duration-300" style={{ width: `${(step / totalQ) * 100}%` }} />
+            </div>
+          </div>
           <h2 className="mb-7 text-2xl font-extrabold text-slate-900 md:text-3xl">{currentQ.title}</h2>
 
           {currentQ.type === "multi" && (
