@@ -21,12 +21,12 @@ export default async function PageV2({
         initialSegment={initialSegment}
         title={
           <>
-            Answer a couple of questions <br className="hidden md:block" />and get a <strong>$10 coupon</strong> for your next order
+            Answer <strong>3 quick questions</strong> <br className="hidden md:block" />and get a <strong>$10 coupon</strong> for your next order
           </>
         }
         subtitle={
           <>
-            This only takes around 30 seconds. Your feedback helps us make your shopping experience better, and as a thank-you for your valuable time, you&rsquo;ll receive <strong>$10 OFF</strong> your next order.
+            Just 3 questions, around 30 seconds. Your feedback helps us fix what&rsquo;s not working on our website, and as a thank-you for your valuable time, you&rsquo;ll receive <strong>$10 OFF</strong> your next order.
           </>
         }
       />

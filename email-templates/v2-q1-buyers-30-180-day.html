@@ -1,14 +1,15 @@
 <!--
-  ZNF email Q1 block — v2 survey, "Buyers 30-180 Day" segment.
-  Card design (white card, gray-bordered answer cells with radio
-  circles, green outer border) that mimics the in-survey question card.
+  ZNF email Q1 block — Round 2 (2026-08-04), "Buyers 30-180 Day" segment.
+  Card design (white card, gray-bordered answer cells with checkbox
+  icons, green outer border) that mimics the in-survey question card.
 
   Klaviyo-ready: paste into a Custom HTML block. Brand header, intro
   copy, and footer come from the surrounding Klaviyo template.
 
-  V2 Q1 is single-select (6 options). Customer click preselects the
-  answer in the survey and saves a partial row tagged segment = buyer-180.
-  Customer can confirm/change + add a free-text comment in the survey.
+  Q1 is now MULTI-select (6 page options). Customer click preselects
+  ONE answer in the survey and saves a partial row tagged segment
+  = buyer-180. Customer can add more page selections + a free-text
+  comment in the survey.
 
   Mobile optimization: @media query stacks the 2-column grid to a
   single column on screens ≤ 600px and tightens padding.
@@ -29,26 +30,26 @@
       <div class="m-card" style="display:block; max-width:600px; margin:0 auto; background-color:#ffffff; border:3px solid #15803d; border-radius:20px; -webkit-border-radius:20px; -moz-border-radius:20px; padding:30px; box-sizing:border-box;">
 
         <p class="m-title" style="margin:0 0 24px; font-family:'Montserrat',Arial,sans-serif; font-size:20px; font-weight:700; line-height:1.3; color:#0f172a;">
-          The last time you tried to browse or buy on our website, how easy was it?
+          Which page(s) of our website have given you the most trouble?
         </p>
 
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
           <tr>
-            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=very_easy" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Very easy &mdash; everything worked smoothly</a></td>
-            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=mostly_ok" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Mostly okay, with a few small issues</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=homepage" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Homepage / main navigation</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=category" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Product category pages</a></td>
           </tr>
           <tr>
-            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=harder" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Harder than it should have been</a></td>
-            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=very_frustrating" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Very frustrating</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 12px 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=product_page" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Individual product pages</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 12px 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=search" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Search results</a></td>
           </tr>
           <tr>
-            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 0 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=gave_up" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;I gave up before finishing</a></td>
-            <td width="50%" valign="top" class="m-stack" style="padding:0 0 0 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=other" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:18px;">&#9675;</span>&nbsp;&nbsp;Other</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 6px 0 0;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=cart_checkout" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;Cart, checkout, or payment</a></td>
+            <td width="50%" valign="top" class="m-stack" style="padding:0 0 0 6px;"><a href="https://help-us-to-serve-you-better-2.vercel.app/18?email={{ person.email }}&q1=no_trouble" target="_blank" style="display:block; border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff; text-decoration:none; color:#0f172a; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:400; line-height:1.4;"><span style="color:#94a3b8; font-size:16px;">&#9744;</span>&nbsp;&nbsp;I haven't had trouble on any page</a></td>
           </tr>
         </table>
 
         <p style="margin:24px 0 8px; font-family:'Montserrat',Arial,sans-serif; font-size:16px; font-weight:600; color:#334155;">
-          What would you improve, or anything else to add?
+          Write something else you want to tell us, or how we could fix it
           <span style="color:#94a3b8; font-weight:400;">(optional)</span>
         </p>
         <div style="border:2px solid #cbd5e1; border-radius:12px; padding:14px 16px; background-color:#ffffff;">

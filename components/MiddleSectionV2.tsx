@@ -420,7 +420,7 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
 
           {(currentQ.type === "multi" || currentQ.type === "single") && (
             <div className="mt-6">
-              <label className="mb-2 block text-sm font-semibold text-slate-700">What would you improve, or anything else to add? <span className="font-normal text-gray-400">(optional)</span></label>
+              <label className="mb-2 block text-sm font-semibold text-slate-700">Write something else you want to tell us, or how we could fix it <span className="font-normal text-gray-400">(optional)</span></label>
               <textarea value={freeTexts[currentQ.id] || ""} onChange={(e) => setFreeText(currentQ.id, e.target.value)} rows={2} className="w-full resize-y rounded-xl border border-gray-300 px-4 py-3 text-[15px] outline-none focus:border-green-600" placeholder="Add a few words here..." />
             </div>
           )}
