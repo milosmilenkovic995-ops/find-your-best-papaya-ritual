@@ -55,7 +55,7 @@ export const questionsV2: Question[] = [
       { id: "slow", label: "Pages loaded too slowly or the site froze" },
       { id: "broken_content", label: "Images or buttons were missing or broken" },
       { id: "errors", label: "I got an error message or a “404 not found” page" },
-      { id: "search_empty", label: "Search returned no results (even for a product I know you sell)" },
+      { id: "payment_rejected", label: "My payment was rejected even though I know my card works elsewhere" },
       { id: "mobile_bad", label: "Site worked badly on my phone (small buttons, broken layout)" },
       { id: "no_tech_problems", label: "I haven't had technical problems" },
     ],
