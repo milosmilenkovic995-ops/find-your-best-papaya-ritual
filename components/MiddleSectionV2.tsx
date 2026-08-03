@@ -379,6 +379,23 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
       {error && (<div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>)}
 
       {currentQ && (
+        <div className="mb-4 flex items-center justify-center gap-3 text-sm font-semibold text-slate-600">
+          <span>Question {step} of {totalQ}</span>
+          <span className="text-base leading-none tracking-widest" aria-hidden>
+            {Array.from({ length: totalQ }, (_, i) => {
+              const filled = i < step;
+              return (
+                <span key={i}>
+                  <span className={filled ? "text-green-700" : "text-slate-300"}>{filled ? "●" : "○"}</span>
+                  {i < totalQ - 1 && <span className="mx-0.5 text-slate-300">─</span>}
+                </span>
+              );
+            })}
+          </span>
+        </div>
+      )}
+
+      {currentQ && (
         <section className="rounded-2xl border border-gray-200 bg-white p-7 shadow-sm md:p-9">
           <h2 className="mb-7 text-2xl font-extrabold text-slate-900 md:text-3xl">{currentQ.title}</h2>
 
