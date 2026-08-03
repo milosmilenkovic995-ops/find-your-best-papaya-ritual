@@ -379,19 +379,38 @@ export default function MiddleSectionV2({ title, subtitle, initialSegment = "" }
       {error && (<div className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>)}
 
       {currentQ && (
-        <div className="mb-4 flex items-center justify-center gap-3 text-sm font-semibold text-slate-600">
-          <span>Question {step} of {totalQ}</span>
-          <span className="text-base leading-none tracking-widest" aria-hidden>
+        <div className="mx-auto mb-8 flex w-fit max-w-full flex-wrap items-center justify-center gap-5 rounded-full border-2 border-green-300 bg-green-50 px-7 py-4 shadow-sm md:mb-10 md:gap-7 md:px-10 md:py-5">
+          <span className="text-lg font-extrabold uppercase tracking-wider text-green-800 md:text-xl">
+            Question {step} of {totalQ}
+          </span>
+          <div className="flex items-center gap-3 md:gap-4" aria-hidden>
             {Array.from({ length: totalQ }, (_, i) => {
-              const filled = i < step;
+              const position = i + 1;
+              const isCurrent = position === step;
+              const isCompleted = position < step;
+              const lineFilled = step > position;
               return (
-                <span key={i}>
-                  <span className={filled ? "text-green-700" : "text-slate-300"}>{filled ? "●" : "○"}</span>
-                  {i < totalQ - 1 && <span className="mx-0.5 text-slate-300">─</span>}
-                </span>
+                <div key={i} className="flex items-center gap-3 md:gap-4">
+                  <span
+                    className={`inline-block h-5 w-5 rounded-full border-2 md:h-6 md:w-6 ${
+                      isCompleted
+                        ? "border-green-700 bg-green-700"
+                        : isCurrent
+                          ? "border-green-700 bg-green-700 ring-4 ring-green-200"
+                          : "border-slate-300 bg-white"
+                    }`}
+                  />
+                  {i < totalQ - 1 && (
+                    <span
+                      className={`inline-block h-1.5 w-8 rounded-full md:w-12 ${
+                        lineFilled ? "bg-green-700" : "bg-slate-300"
+                      }`}
+                    />
+                  )}
+                </div>
               );
             })}
-          </span>
+          </div>
         </div>
       )}
 
